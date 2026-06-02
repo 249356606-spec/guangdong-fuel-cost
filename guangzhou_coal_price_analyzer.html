@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广东省燃料成本分析系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', '微软雅黑', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 30px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 顶部标题栏 */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px 16px 0 0;
+            padding: 20px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 0 0 16px 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 数据概览卡片 */
+        .overview-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .overview-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        .overview-card:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 8px 25px rgba(240, 147, 251, 0.4);
+        }
+
+        .overview-card:nth-child(2):hover {
+            box-shadow: 0 12px 35px rgba(240, 147, 251, 0.5);
+        }
+
+        .overview-card:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+        }
+
+        .overview-card:nth-child(3):hover {
+            box-shadow: 0 12px 35px rgba(79, 172, 254, 0.5);
+        }
+
+        .overview-card:nth-child(4) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            box-shadow: 0 8px 25px rgba(67, 233, 123, 0.4);
+        }
+
+        .overview-card:nth-child(4):hover {
+            box-shadow: 0 12px 35px rgba(67, 233, 123, 0.5);
+        }
+
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .card-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .card-unit {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* 图表区域 */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid #e8e8ef;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .chart-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-icon {
+            font-size: 24px;
+            margin-right: 12px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .chart-container {
+            height: 320px;
+            position: relative;
+        }
+
+        /* 数据表格 */
+        .data-table-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid #e8e8ef;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-icon {
+            font-size: 24px;
+            margin-right: 12px;
+        }
+
+        .table-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .data-table th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        .data-table th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        .data-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f5;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .data-table tr:hover td {
+            background-color: #f8f9ff;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:last-child td:first-child {
+            border-radius: 0 0 0 8px;
+        }
+
+        .data-table tr:last-child td:last-child {
+            border-radius: 0 0 8px 0;
+        }
+
+        .price-highlight {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* 数据来源说明 */
+        .data-source {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            border-radius: 12px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .data-source strong {
+            color: #1a1a2e;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .overview-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .overview-cards {
+                grid-template-columns: 1fr;
+            }
+            .card-value {
+                font-size: 28px;
+            }
+        }
+
+        /* 动画效果 */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部标题栏 -->
+        <div class="header fade-in">
+            <h1>📊 广东省燃料成本分析系统</h1>
+            <div class="subtitle">广州港煤炭价格行情 | 数据来源：广东省能源运销协会</div>
+        </div>
+
+        <!-- 主内容 -->
+        <div class="main-content">
+            <!-- 数据概览卡片 -->
+            <div class="overview-cards fade-in">
+                <div class="overview-card">
+                    <div class="card-icon">🌏</div>
+                    <div class="card-title">澳洲优混（进口）5500大卡</div>
+                    <div class="card-value">955</div>
+                    <div class="card-unit">元/吨（最新）</div>
+                </div>
+                <div class="overview-card">
+                    <div class="card-icon">🏔️</div>
+                    <div class="card-title">优混（山西）5500大卡</div>
+                    <div class="card-value">930</div>
+                    <div class="card-unit">元/吨（最新）</div>
+                </div>
+                <div class="overview-card">
+                    <div class="card-icon">🇮🇩</div>
+                    <div class="card-title">印尼煤（进口）4800大卡</div>
+                    <div class="card-value">780</div>
+                    <div class="card-unit">元/吨（最新）</div>
+                </div>
+                <div class="overview-card">
+                    <div class="card-icon">📦</div>
+                    <div class="card-title">大混1#（山西）5000大卡</div>
+                    <div class="card-value">855</div>
+                    <div class="card-unit">元/吨（最新）</div>
+                </div>
+            </div>
+
+            <!-- 图表区域 -->
+            <div class="charts-section">
+                <div class="chart-card slide-up">
+                    <div class="chart-header">
+                        <span class="chart-icon">📈</span>
+                        <span class="chart-title">进口煤价格趋势（澳洲/印尼）</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chartImport"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card slide-up">
+                    <div class="chart-header">
+                        <span class="chart-icon">📉</span>
+                        <span class="chart-title">国内煤价格趋势（山西产）</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="chartDomestic"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 数据表格 -->
+            <div class="data-table-section slide-up">
+                <div class="table-header">
+                    <span class="table-icon">📋</span>
+                    <span class="table-title">广州港煤炭价格明细表</span>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>澳洲优混<br>5500大卡</th>
+                            <th>优混<br>5500大卡</th>
+                            <th>大混1#<br>5000大卡</th>
+                            <th>大混2#<br>4500大卡</th>
+                            <th>印尼煤1#<br>4800大卡</th>
+                            <th>印尼煤2#<br>4500大卡</th>
+                            <th>印尼煤3#<br>3800大卡</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 数据来源说明 -->
+            <div class="data-source fade-in">
+                <strong>📌 数据来源：</strong>广东省能源运销协会（www.gdetsa.org.cn）<br>
+                <strong>📊 数据说明：</strong>以上价格为广州港煤炭场地价，单位：元/吨<br>
+                <strong>📅 更新时间：</strong>2026年6月2日<br>
+                <strong>💡 温馨提示：</strong>点击图表可查看详细数据，悬停表格行可高亮显示
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 广州港煤炭价格数据
+        const priceData = [
+            {date: '2026-05-06', '澳洲优混_5500': 895, '优混_5500': 890, '大混1#_5000': 805, '大混2#_4500': 720, '印尼煤1#_4800': 740, '印尼煤2#_4500': 705, '印尼煤3#_3800': 600},
+            {date: '2026-05-07', '澳洲优混_5500': 905, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 750, '印尼煤2#_4500': 715, '印尼煤3#_3800': 610},
+            {date: '2026-05-08', '澳洲优混_5500': 905, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 750, '印尼煤2#_4500': 715, '印尼煤3#_3800': 610},
+            {date: '2026-05-09', '澳洲优混_5500': 905, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 750, '印尼煤2#_4500': 715, '印尼煤3#_3800': 610},
+            {date: '2026-05-11', '澳洲优混_5500': 905, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 750, '印尼煤2#_4500': 715, '印尼煤3#_3800': 610},
+            {date: '2026-05-12', '澳洲优混_5500': 915, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 760, '印尼煤2#_4500': 725, '印尼煤3#_3800': 620},
+            {date: '2026-05-13', '澳洲优混_5500': 915, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 760, '印尼煤2#_4500': 725, '印尼煤3#_3800': 620},
+            {date: '2026-05-14', '澳洲优混_5500': 915, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 760, '印尼煤2#_4500': 725, '印尼煤3#_3800': 620},
+            {date: '2026-05-15', '澳洲优混_5500': 915, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 760, '印尼煤2#_4500': 725, '印尼煤3#_3800': 620},
+            {date: '2026-05-18', '澳洲优混_5500': 915, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 760, '印尼煤2#_4500': 725, '印尼煤3#_3800': 620},
+            {date: '2026-05-19', '澳洲优混_5500': 940, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 760, '印尼煤2#_4500': 725, '印尼煤3#_3800': 620},
+            {date: '2026-05-20', '澳洲优混_5500': 940, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 760, '印尼煤2#_4500': 725, '印尼煤3#_3800': 620},
+            {date: '2026-05-21', '澳洲优混_5500': 940, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 760, '印尼煤2#_4500': 725, '印尼煤3#_3800': 620},
+            {date: '2026-05-22', '澳洲优混_5500': 940, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 760, '印尼煤2#_4500': 725, '印尼煤3#_3800': 620},
+            {date: '2026-05-25', '澳洲优混_5500': 940, '优混_5500': 900, '大混1#_5000': 815, '大混2#_4500': 730, '印尼煤1#_4800': 760, '印尼煤2#_4500': 725, '印尼煤3#_3800': 620},
+            {date: '2026-05-26', '澳洲优混_5500': 945, '优混_5500': 910, '大混1#_5000': 835, '大混2#_4500': 740, '印尼煤1#_4800': 770, '印尼煤2#_4500': 735, '印尼煤3#_3800': 630},
+            {date: '2026-05-27', '澳洲优混_5500': 945, '优混_5500': 910, '大混1#_5000': 835, '大混2#_4500': 740, '印尼煤1#_4800': 770, '印尼煤2#_4500': 735, '印尼煤3#_3800': 630},
+            {date: '2026-05-28', '澳洲优混_5500': 945, '优混_5500': 910, '大混1#_5000': 835, '大混2#_4500': 740, '印尼煤1#_4800': 770, '印尼煤2#_4500': 735, '印尼煤3#_3800': 630},
+            {date: '2026-05-29', '澳洲优混_5500': 955, '优混_5500': 930, '大混1#_5000': 855, '大混2#_4500': 760, '印尼煤1#_4800': 780, '印尼煤2#_4500': 745, '印尼煤3#_3800': 640},
+            {date: '2026-06-01', '澳洲优混_5500': 955, '优混_5500': 930, '大混1#_5000': 855, '大混2#_4500': 760, '印尼煤1#_4800': 780, '印尼煤2#_4500': 745, '印尼煤3#_3800': 640}
+        ];
+
+        // 初始化图表
+        function initCharts() {
+            const dates = priceData.map(d => d.date.substring(5));
+
+            // 进口煤价格趋势图
+            const ctxImport = document.getElementById('chartImport').getContext('2d');
+            new Chart(ctxImport, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [
+                        {
+                            label: '澳洲优混 5500大卡',
+                            data: priceData.map(d => d['澳洲优混_5500']),
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.15)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#667eea',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        },
+                        {
+                            label: '印尼煤1# 4800大卡',
+                            data: priceData.map(d => d['印尼煤1#_4800']),
+                            borderColor: '#f5576c',
+                            backgroundColor: 'rgba(245, 87, 108, 0.15)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#f5576c',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        },
+                        {
+                            label: '印尼煤2# 4500大卡',
+                            data: priceData.map(d => d['印尼煤2#_4500']),
+                            borderColor: '#4facfe',
+                            backgroundColor: 'rgba(79, 172, 254, 0.15)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#4facfe',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        },
+                        {
+                            label: '印尼煤3# 3800大卡',
+                            data: priceData.map(d => d['印尼煤3#_3800']),
+                            borderColor: '#43e97b',
+                            backgroundColor: 'rgba(67, 233, 123, 0.15)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#43e97b',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            position: 'top',
+                            labels: {
+                                font: { family: 'Microsoft YaHei', size: 12 },
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        tooltip: { 
+                            mode: 'index', 
+                            intersect: false,
+                            titleFont: { family: 'Microsoft YaHei' },
+                            bodyFont: { family: 'Microsoft YaHei' }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            display: true, 
+                            title: { display: true, text: '日期', font: { family: 'Microsoft YaHei', size: 12 } },
+                            ticks: { font: { family: 'Microsoft YaHei', size: 11 } }
+                        },
+                        y: { 
+                            display: true, 
+                            title: { display: true, text: '价格（元/吨）', font: { family: 'Microsoft YaHei', size: 12 } },
+                            min: 500, 
+                            max: 1200,
+                            ticks: { font: { family: 'Microsoft YaHei', size: 11 } }
+                        }
+                    }
+                }
+            });
+
+            // 国内煤价格趋势图
+            const ctxDomestic = document.getElementById('chartDomestic').getContext('2d');
+            new Chart(ctxDomestic, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [
+                        {
+                            label: '优混 5500大卡',
+                            data: priceData.map(d => d['优混_5500']),
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.15)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#667eea',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        },
+                        {
+                            label: '大混1# 5000大卡',
+                            data: priceData.map(d => d['大混1#_5000']),
+                            borderColor: '#f093fb',
+                            backgroundColor: 'rgba(240, 147, 251, 0.15)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#f093fb',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        },
+                        {
+                            label: '大混2# 4500大卡',
+                            data: priceData.map(d => d['大混2#_4500']),
+                            borderColor: '#4facfe',
+                            backgroundColor: 'rgba(79, 172, 254, 0.15)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#4facfe',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            position: 'top',
+                            labels: {
+                                font: { family: 'Microsoft YaHei', size: 12 },
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        tooltip: { 
+                            mode: 'index', 
+                            intersect: false,
+                            titleFont: { family: 'Microsoft YaHei' },
+                            bodyFont: { family: 'Microsoft YaHei' }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            display: true, 
+                            title: { display: true, text: '日期', font: { family: 'Microsoft YaHei', size: 12 } },
+                            ticks: { font: { family: 'Microsoft YaHei', size: 11 } }
+                        },
+                        y: { 
+                            display: true, 
+                            title: { display: true, text: '价格（元/吨）', font: { family: 'Microsoft YaHei', size: 12 } },
+                            min: 500, 
+                            max: 1200,
+                            ticks: { font: { family: 'Microsoft YaHei', size: 11 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 更新数据表格
+        function updateTable() {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = '';
+
+            priceData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 600; color: #667eea;">${row.date}</td>
+                    <td>${row['澳洲优混_5500']}</td>
+                    <td>${row['优混_5500']}</td>
+                    <td>${row['大混1#_5000']}</td>
+                    <td>${row['大混2#_4500']}</td>
+                    <td>${row['印尼煤1#_4800']}</td>
+                    <td>${row['印尼煤2#_4500']}</td>
+                    <td>${row['印尼煤3#_3800']}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            updateTable();
+        });
+    </script>
+</body>
+</html>

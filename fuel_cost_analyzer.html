@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广东省燃料成本分析系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* macOS风格的标题栏 */
+        .title-bar {
+            background: linear-gradient(180deg, #e8e8e8 0%, #d4d4d4 100%);
+            border-radius: 10px 10px 0 0;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #c4c4c4;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .close-btn {
+            background-color: #ff5f57;
+        }
+
+        .minimize-btn {
+            background-color: #ffbd2e;
+        }
+
+        .maximize-btn {
+            background-color: #28c840;
+        }
+
+        .title-text {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1d1d1f;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            background: white;
+            border-radius: 0 0 10px 10px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 数据输入区域 */
+        .data-input-section {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1d1d1f;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #6e6e73;
+            margin-bottom: 6px;
+        }
+
+        .input-group input {
+            padding: 10px 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #007aff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: #007aff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056cc;
+        }
+
+        .btn-secondary {
+            background-color: #e8e8ed;
+            color: #1d1d1f;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d2d2d7;
+        }
+
+        /* 图表区域 */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1d1d1f;
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* 数据表格 */
+        .data-table-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .data-table th {
+            background: #f5f5f7;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+        }
+
+        .data-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .data-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* 状态指示器 */
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-online {
+            background-color: #28c840;
+        }
+
+        .status-offline {
+            background-color: #ff5f57;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 动画效果 */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 工具提示 */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #1d1d1f;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 窗口标题栏 -->
+        <div class="title-bar">
+            <div class="window-controls">
+                <button class="control-btn close-btn"></button>
+                <button class="control-btn minimize-btn"></button>
+                <button class="control-btn maximize-btn"></button>
+            </div>
+            <div class="title-text">广东省燃料成本分析系统</div>
+            <div class="status-indicator status-online"></div>
+        </div>
+
+        <!-- 主内容 -->
+        <div class="main-content">
+            <!-- 数据输入区域 -->
+            <div class="data-input-section fade-in">
+                <h2 class="section-title">📊 数据输入</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label>日期</label>
+                        <input type="date" id="dateInput" value="2026-06-02">
+                    </div>
+                    <div class="input-group">
+                        <label>CCTD秦皇岛5500大卡（元/吨）</label>
+                        <input type="number" id="cctd5500Input" placeholder="输入价格">
+                    </div>
+                    <div class="input-group">
+                        <label>CCTD综合结算5500大卡（元/吨）</label>
+                        <input type="number" id="cctd5500zInput" placeholder="输入价格">
+                    </div>
+                    <div class="input-group">
+                        <label>CCTD综合结算5000大卡（元/吨）</label>
+                        <input type="number" id="cctd5000Input" placeholder="输入价格">
+                    </div>
+                    <div class="input-group">
+                        <label>CCTD综合结算4500大卡（元/吨）</label>
+                        <input type="number" id="cctd4500Input" placeholder="输入价格">
+                    </div>
+                    <div class="input-group">
+                        <label>广州港进口煤5500大卡（元/吨）</label>
+                        <input type="number" id="gz5500Input" placeholder="输入价格">
+                    </div>
+                    <div class="input-group">
+                        <label>广州港进口煤5000大卡（元/吨）</label>
+                        <input type="number" id="gz5000Input" placeholder="输入价格">
+                    </div>
+                    <div class="input-group">
+                        <label>广州港进口煤4500大卡（元/吨）</label>
+                        <input type="number" id="gz4500Input" placeholder="输入价格">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                    <button class="btn btn-secondary" onclick="clearInputs()">清空</button>
+                    <button class="btn btn-primary" onclick="addData()">添加数据</button>
+                    <button class="btn btn-primary" onclick="loadSampleData()">加载示例数据</button>
+                </div>
+            </div>
+
+            <!-- 图表区域 -->
+            <div class="charts-section">
+                <div class="chart-card fade-in">
+                    <h3 class="chart-title">📈 CCTD动力煤价格趋势</h3>
+                    <div class="chart-container">
+                        <canvas id="cctdChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card fade-in">
+                    <h3 class="chart-title">📉 广州港进口煤价格趋势</h3>
+                    <div class="chart-container">
+                        <canvas id="gzChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 数据表格 -->
+            <div class="data-table-section fade-in">
+                <h2 class="section-title">📋 历史数据</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>CCTD 5500</th>
+                            <th>CCTD 5000</th>
+                            <th>CCTD 4500</th>
+                            <th>广州港 5500</th>
+                            <th>广州港 5000</th>
+                            <th>广州港 4500</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTableBody">
+                        <!-- 数据将通过JavaScript动态填充 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // 全局变量
+        let chartData = [];
+        let cctdChart = null;
+        let gzChart = null;
+
+        // 初始化图表
+        function initCharts() {
+            // CCTD价格趋势图
+            const cctdCtx = document.getElementById('cctdChart').getContext('2d');
+            cctdChart = new Chart(cctdCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: '5500大卡',
+                            data: [],
+                            borderColor: '#007aff',
+                            backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '5000大卡',
+                            data: [],
+                            borderColor: '#34c759',
+                            backgroundColor: 'rgba(52, 199, 89, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '4500大卡',
+                            data: [],
+                            borderColor: '#ff9500',
+                            backgroundColor: 'rgba(255, 149, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: '日期'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: '价格（元/吨）'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 广州港进口煤价格趋势图
+            const gzCtx = document.getElementById('gzChart').getContext('2d');
+            gzChart = new Chart(gzCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: '5500大卡',
+                            data: [],
+                            borderColor: '#af52de',
+                            backgroundColor: 'rgba(175, 82, 222, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '5000大卡',
+                            data: [],
+                            borderColor: '#ff2d55',
+                            backgroundColor: 'rgba(255, 45, 85, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '4500大卡',
+                            data: [],
+                            borderColor: '#5ac8fa',
+                            backgroundColor: 'rgba(90, 200, 250, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: '日期'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: '价格（元/吨）'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 添加数据
+        function addData() {
+            const date = document.getElementById('dateInput').value;
+            const cctd5500 = parseFloat(document.getElementById('cctd5500Input').value);
+            const cctd5500z = parseFloat(document.getElementById('cctd5500zInput').value);
+            const cctd5000 = parseFloat(document.getElementById('cctd5000Input').value);
+            const cctd4500 = parseFloat(document.getElementById('cctd4500Input').value);
+            const gz5500 = parseFloat(document.getElementById('gz5500Input').value);
+            const gz5000 = parseFloat(document.getElementById('gz5000Input').value);
+            const gz4500 = parseFloat(document.getElementById('gz4500Input').value);
+
+            if (!date || isNaN(cctd5500) || isNaN(gz5500)) {
+                alert('请填写完整信息');
+                return;
+            }
+
+            const newData = {
+                date: date,
+                cctd5500: cctd5500,
+                cctd5500z: cctd5500z,
+                cctd5000: cctd5000,
+                cctd4500: cctd4500,
+                gz5500: gz5500,
+                gz5000: gz5000,
+                gz4500: gz4500
+            };
+
+            chartData.push(newData);
+            chartData.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            updateCharts();
+            updateTable();
+            clearInputs();
+        }
+
+        // 清空输入
+        function clearInputs() {
+            document.getElementById('cctd5500Input').value = '';
+            document.getElementById('cctd5500zInput').value = '';
+            document.getElementById('cctd5000Input').value = '';
+            document.getElementById('cctd4500Input').value = '';
+            document.getElementById('gz5500Input').value = '';
+            document.getElementById('gz5000Input').value = '';
+            document.getElementById('gz4500Input').value = '';
+        }
+
+        // 加载示例数据
+        function loadSampleData() {
+            const sampleData = [
+                { date: '2026-01-01', cctd5500: 780, cctd5500z: 720, cctd5000: 680, cctd4500: 620, gz5500: 850, gz5000: 780, gz4500: 710 },
+                { date: '2026-01-08', cctd5500: 785, cctd5500z: 725, cctd5000: 685, cctd4500: 625, gz5500: 855, gz5000: 785, gz4500: 715 },
+                { date: '2026-01-15', cctd5500: 790, cctd5500z: 730, cctd5000: 690, cctd4500: 630, gz5500: 860, gz5000: 790, gz4500: 720 },
+                { date: '2026-01-22', cctd5500: 795, cctd5500z: 735, cctd5000: 695, cctd4500: 635, gz5500: 865, gz5000: 795, gz4500: 725 },
+                { date: '2026-01-29', cctd5500: 800, cctd5500z: 740, cctd5000: 700, cctd4500: 640, gz5500: 870, gz5000: 800, gz4500: 730 },
+                { date: '2026-02-05', cctd5500: 805, cctd5500z: 745, cctd5000: 705, cctd4500: 645, gz5500: 875, gz5000: 805, gz4500: 735 },
+                { date: '2026-02-12', cctd5500: 810, cctd5500z: 750, cctd5000: 710, cctd4500: 650, gz5500: 880, gz5000: 810, gz4500: 740 },
+                { date: '2026-02-19', cctd5500: 815, cctd5500z: 755, cctd5000: 715, cctd4500: 655, gz5500: 885, gz5000: 815, gz4500: 745 },
+                { date: '2026-02-26', cctd5500: 820, cctd5500z: 760, cctd5000: 720, cctd4500: 660, gz5500: 890, gz5000: 820, gz4500: 750 },
+                { date: '2026-03-05', cctd5500: 825, cctd5500z: 765, cctd5000: 725, cctd4500: 665, gz5500: 895, gz5000: 825, gz4500: 755 }
+            ];
+
+            chartData = sampleData;
+            updateCharts();
+            updateTable();
+        }
+
+        // 更新图表
+        function updateCharts() {
+            const dates = chartData.map(d => d.date);
+            
+            // 更新CCTD图表
+            cctdChart.data.labels = dates;
+            cctdChart.data.datasets[0].data = chartData.map(d => d.cctd5500);
+            cctdChart.data.datasets[1].data = chartData.map(d => d.cctd5000);
+            cctdChart.data.datasets[2].data = chartData.map(d => d.cctd4500);
+            cctdChart.update();
+
+            // 更新广州港图表
+            gzChart.data.labels = dates;
+            gzChart.data.datasets[0].data = chartData.map(d => d.gz5500);
+            gzChart.data.datasets[1].data = chartData.map(d => d.gz5000);
+            gzChart.data.datasets[2].data = chartData.map(d => d.gz4500);
+            gzChart.update();
+        }
+
+        // 更新表格
+        function updateTable() {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = '';
+
+            chartData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.date}</td>
+                    <td>${row.cctd5500}</td>
+                    <td>${row.cctd5000}</td>
+                    <td>${row.cctd4500}</td>
+                    <td>${row.gz5500}</td>
+                    <td>${row.gz5000}</td>
+                    <td>${row.gz4500}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            loadSampleData();
+        });
+    </script>
+</body>
+</html>

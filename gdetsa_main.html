@@ -1,0 +1,666 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>首页-广东省能源运销协会</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="广东省能源运销协会">
+<meta name="keywords" content="能源运销协会">
+<meta name="description" content="广东能源运销协会">
+<link href="favicon.ico" type="image/x-icon" rel="icon">
+<link href="favicon.ico" type="image/x-icon" rel="shortcut icon">
+<link href="/App/Tpl/Home/Default/Public/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/Public/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/App/Tpl/Home/Default/Public/js/common.js"></script>
+<script type="text/javascript" src="/Public/jquery/jquery.SuperSlide.js"></script>
+<!--[if lte IE 6]>
+<script type="text/javascript" src="/App/Tpl/Home/Default/Public/js/minmax.js"></script>
+<script type="text/javascript" src="/App/Tpl/Home/Default/Public/js/pngfix.js"></script>
+<script language="javascript" type="text/javascript">EvPNG.fix("#logo img");</script>
+<![endif]-->
+<script>
+	$(document).ready(function(e) {
+		pageInit();
+		function pageInit(){
+			if( $("#top_1").length > 0 ){
+				if( "0" == 1 ){
+					$.get("/index.php/public/getJson/l/cn", null, function(data){ UpdateLoginStatus(data['MemberID'], data['MemberName']); },"json");
+				}else{
+					UpdateLoginStatus("", "");
+				}
+			}
+		}
+		function UpdateLoginStatus(id, name){
+			var html = "";
+			if( id ){
+				html += '<span class="MemberName">'+name+'&nbsp;</span>';
+				html += '<a href="/index.php/member/public/index" target="_blank">[会员中心]&nbsp;</a>';
+				html += '<a href="/index.php/member/public/logout" target="_self">[退出登录]</a>';
+			}else{
+				html += '<a href="/index.php/public/login/l/cn" target="_self">[登录]&nbsp;</a>';
+				//html += '<a href="/index.php/public/reg/l/cn" target="_self">[注册]&nbsp;</a>';//
+			}
+			$("#top_1").html( html );
+		}
+	});
+</script>
+<script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+<script>LA.init({id: "JSzdsVopFXuvzQfb",ck: "JSzdsVopFXuvzQfb"})</script>
+</head>
+<body class="body_index">
+	<!--顶部 开始-->
+<div id="top_main">
+	<div id="top">
+		<!--div id="top_1"></div-->
+		<div id="top_2">
+            <!--eq name="EnableWap" value="1">
+            	<a href="/index.php/wap" target="_blank">
+                	<span class="MobileEdition">手机版&nbsp;</span>
+                </a>
+            </eq-->
+            <!--notempty name="Language">
+                <a href="/index.php?l=cn" target="_self">简体中文版&nbsp;</a>
+            	<a href="/index.php?l=en" target="_self">English</a>
+            </notempty>
+		</div-->
+	</div>
+</div>
+<!--顶部 结束-->
+<!--Logo 开始-->
+<div id="logo_main">
+    <div id="logo">
+            <!--网站Logo 开始-->
+            <!--div class="WebLogo">
+            </div-->     
+            <!--网站Logo 结束-->
+    </div>
+</div>
+<!--Logo 结束-->
+
+<!--导航条 开始-->
+<div id="navigation_main">
+	<div id="navigation">
+        <ul class="navigationlist">
+            <li>
+                    <a href="/index.php" target="_self" class="current">首页</a>
+                                                        </li><li>
+                      
+                    	 <a href="http://www.gdetsa.org.cn/index.php/xhjj.html" target="_self"  >协会介绍</a>                    <ul class="subnavigationlist">
+                           <li><a href="/index.php/xhjj.html" target="_self">协会简介</a></li><li><a href="/index.php/xhzc.html" target="_self">协会章程</a></li><li><a href="/index.php/zzjg.html" target="_self">组织架构</a></li><li><a href="/index.php/msc.html" target="_self">秘书处</a></li>                        </ul>                </li><li>
+                      
+                    	 <a href="/index.php/tzgg.html" target="_self"  >通知公告</a>                                    </li><li>
+                      
+                    	 <a href="/index.php/info.html" target="_self"  >行业新闻</a>                                    </li><li>
+                      
+                    	 <a href="/index.php/xhdt.html" target="_self"  >协会动态</a>                    <ul class="subnavigationlist">
+                           <li><a href="/index.php/xhdt1.html" target="_self">协会动态</a></li><li><a href="/index.php/xhkw.html" target="_self">协会刊物</a></li>                        </ul>                </li><li>
+                      
+                    	 <a href="/index.php/djdt.html" target="_self"  >党建动态</a>                    <ul class="subnavigationlist">
+                           <li><a href="/index.php/xxyd.html" target="_self">学习园地</a></li><li><a href="/index.php/esdzt.html" target="_self">二十大专题</a></li><li><a href="/index.php/dsxxjy.html" target="_self">党史学习教育</a></li><li><a href="/index.php/zbxw.html" target="_self">支部新闻</a></li>                        </ul>                </li><li>
+                      
+                    	 <a href="/index.php/sjzx.html" target="_self"  >数据中心</a>                    <ul class="subnavigationlist">
+                           <li><a href="/index.php/xyzysj.html" target="_self">行业重要数据</a></li><li><a href="/index.php/jgxx.html" target="_self">价格信息</a></li><li><a href="/index.php/kcxx.html" target="_self">库存信息</a></li>                        </ul>                </li><li>
+                      
+                    	 <a href="/index.php/hytd.html" target="_self"  >会员名录</a>                                    </li><li>
+                      
+                    	 <a href="/index.php/zcfg.html" target="_self"  >政策法规</a>                    <ul class="subnavigationlist">
+                           <li><a href="/index.php/gjzc.html" target="_self">国家政策</a></li><li><a href="/index.php/sjzc.html" target="_self">省级政策</a></li>                        </ul>                </li><li>
+                      
+                    	 <a href="http://www.gdetsa.org.cn/index.php/public/login/l/cn" target="_self"  >会员登陆</a>                                    </li><li>
+                      
+                    	 <a href="http://www.gdetsa.org.cn/index.php/member/public/index" target="_blank"  >会员中心</a>                                    </li><li>
+                      
+                    	 <a href="/index.php/lxwm.html" target="_self"  >联系我们</a>                    <ul class="subnavigationlist">
+                           <li><a href="/index.php/guestbook.html" target="_self">在线留言</a></li>                        </ul>                </li><li>
+                      
+                    	 <a href="/index.php/jrxh.html" target="_self"  >加入协会</a>                                    </li>        </ul>
+	</div>
+</div>
+<!--导航条 结束-->
+
+<!--JS幻灯片 开始->
+<div id="banner_main">
+    <div id="banner">
+             <ul class="bannerlist">
+                             </ul>
+    </div>
+    <div class="hd"><ul></ul></div>
+</div>
+<script>
+	if( $(".bannerlist li").length > 0 ){
+		$('#banner_main').slide({ titCell:'.hd ul', mainCell:'#banner ul', autoPlay:true, autoPage:true, delayTime:500, interTime:3000, effect:'left'});
+		$(window).resize(function() {  CenterBanner(); });
+		$(window).load(function() { CenterBanner(); });
+	}else{
+		$("#banner_main").hide();
+	}
+	
+	function CenterBanner(){
+		var imgWidth = parseInt( $(".bannerlist li img:first").width() );
+		if( imgWidth <= 0 ) return;
+		var winWidth = parseInt( $(window).width() );
+		var offset = parseInt( (winWidth-imgWidth)/2 );
+		$(".bannerlist li img").css("margin-left", offset+'px' );
+	}
+</script>
+<!--JS幻灯片 结束-->
+
+<!--公告 开始-->
+    <div id="announcement">
+        <div class="announcement_title">通知公告：</div>
+        <div class="announcement_body">
+            <ul class="announcementlist">
+                <li>
+                     	<a href="/index.php/tzgg/34442.html" target="_blank" title="中共中央办公厅 国务院办公厅关于推动行业协会商会深化改革的意见">中共中央办公厅 国务院办公厅关于推动行业协会商会深化改革的意见</a>
+                        <span><img src="/App/Tpl/Home/Default/Public/images/news.gif" />2026-04-14</span>
+                     </li>r<li>
+                     	<a href="/index.php/info/32207.html" target="_blank" title="广东省能源局关于征集能源产业科技创新有关材料的通知">广东省能源局关于征集能源产业科技创新有关材料的通知</a>
+                        <span><img src="/App/Tpl/Home/Default/Public/images/news.gif" />2024-08-29</span>
+                     </li>r<li>
+                     	<a href="/index.php/tzgg/31919.html" target="_blank" title="关于表彰第一批2023年度广东省能源行业保供先进单位和先进个人的决定">关于表彰第一批2023年度广东省能源行业保供先进单位和先进个人的决定</a>
+                        <span><img src="/App/Tpl/Home/Default/Public/images/news.gif" />2024-06-20</span>
+                     </li>r<li>
+                     	<a href="/index.php/tzgg/31842.html" target="_blank" title="关于表彰2023年度能源行业保供先进单位和个人的通知">关于表彰2023年度能源行业保供先进单位和个人的通知</a>
+                        <span><img src="/App/Tpl/Home/Default/Public/images/news.gif" />2024-05-30</span>
+                     </li>r<li>
+                     	<a href="/index.php/tzgg/31760.html" target="_blank" title="广东省能源运销协会关于组织开展碳汇计量评估师（5月份）培训班的通知">广东省能源运销协会关于组织开展碳汇计量评估师（5月份）培训班的通知</a>
+                        <span><img src="/App/Tpl/Home/Default/Public/images/news.gif" />2024-05-10</span>
+                     </li>r            </ul>
+        </div>
+        <div class="announcement_bottom">
+        	<div class="left_title1"></div>  
+<div class="left_body1">  
+    <form class="form1" name="frmInfoSearch" method="post" action="/index.php/channel/search/l/cn" >
+         <input name="Keywords" class="form_text1" type="text" value="" placeholder="请输入关键词" maxlength="50" />
+         <input class="form_button1"  name="submit" type="submit" value="" />
+    <input type="hidden" name="__hash__" value="6666cd76f96956469e7be39d750cc7d9_f907fbf68dbdc194626c7ab675fcacc9" /></form>
+</div>
+<div class="left_bottom1"></div>  
+        </div>
+    </div>
+    <script>$('#announcement').slide({ mainCell:'ul.announcementlist', autoPlay:true, delayTime:500, interTime:3000, vis: 1, effect:'topLoop'});</script>
+    <!--公告 结束-->    <!--主体内容 开始-->
+    <div class="index">
+    	  <!--左侧区域 开始-->
+       	  <div id="index_1">
+          		<!--第1版块 开始-->
+                <div id="index_1_1">
+                    <div  id="picnews">
+                        <div class="bd">
+                            <ul class="gridlist1">
+                                <li>
+                                            <a href="/index.php/xhdt1/34520.html" target="_blank" title="以劳动赋能能源，以实干奔赴前程｜广东省能源运销协会祝您五一劳动节快乐">
+                                                <img src="/Upload/1777521384.png" alt="以劳动赋能能源，以实干奔赴前程｜广东省能源运销协会祝您五一劳动节快乐" title="以劳动赋能能源，以实干奔赴前程｜广东省能源运销协会祝您五一劳动节快乐" />
+                                            </a>
+                                        </li><li>
+                                            <a href="/index.php/xhdt1/34464.html" target="_blank" title="广东省能源运销协会召开2026年轮值会长办公会  共谋能源行业高质量发展">
+                                                <img src="/Upload/1776654575.jpg" alt="广东省能源运销协会召开2026年轮值会长办公会  共谋能源行业高质量发展" title="广东省能源运销协会召开2026年轮值会长办公会  共谋能源行业高质量发展" />
+                                            </a>
+                                        </li><li>
+                                            <a href="/index.php/xhdt1/34233.html" target="_blank" title="广东省商务厅国际经贸发展中心领导一行莅临协会调研交流">
+                                                <img src="/Upload/1770780172.jpg" alt="广东省商务厅国际经贸发展中心领导一行莅临协会调研交流" title="广东省商务厅国际经贸发展中心领导一行莅临协会调研交流" />
+                                            </a>
+                                        </li>                            </ul>
+                        </div>
+                        <div class="hd"><ul></ul></div>
+                        <div class="bt">
+                            <ul>
+                                <li><a href="/index.php/xhdt1/34520.html" target="_blank" title="以劳动赋能能源，以实干奔赴前程｜广东省能源运销协会祝您五一劳动节快乐">以劳动赋能能源，以实干奔赴前程｜广东省能源运销协会祝您五一劳动节快乐</a></li><li><a href="/index.php/xhdt1/34464.html" target="_blank" title="广东省能源运销协会召开2026年轮值会长办公会  共谋能源行业高质量发展">广东省能源运销协会召开2026年轮值会长办公会  共谋能源行业高质量发展</a></li><li><a href="/index.php/xhdt1/34233.html" target="_blank" title="广东省商务厅国际经贸发展中心领导一行莅临协会调研交流">广东省商务厅国际经贸发展中心领导一行莅临协会调研交流</a></li>                            </ul>
+                        </div>
+                        <script>
+                            $(document).ready(function(e) {
+                                $("#picnews").slide({ titCell:".hd ul", mainCell:".bd ul",effect:"left", autoPlay:true, autoPage:true, trigger:"mouseover", startFun:function(i){		 
+                                    $(".bt ul li").eq(i).animate({"bottom":0}).siblings().animate({"bottom":-36});	
+                                }
+                                });	
+                            });
+                         </script>
+                    </div>
+                </div>
+                <!--第1版块 结束-->
+                
+                <!--第2板块 开始-->
+                <div id="index_1_2">
+                	<div class="left_title3">
+                    	<span class="more" ><a href="/index.php/xhdt1.html" target="_blank">更多>></a></span>
+                    	<h2>协会动态</h2>
+                    </div>
+                	<div class="left_body3">
+						<ul class="textlist1">
+							<li class="first">
+                                        	<span class="float_right">2026-04-30</span>
+											<h2><a href="/index.php/xhdt1/34520.html" target="_blank" title="以劳动赋能能源，以实干奔赴前程｜广东省能源运销协会祝您五一劳动节快乐">以劳动赋能能源，以实干奔赴前程｜广东省能源运销协会祝您五一劳动节快乐</a></h2>
+											<p>
+</p>
+										</li>
+																			<li><span class="float_right">2026-04-20</span><a href="/index.php/xhdt1/34464.html" target="_blank" title="广东省能源运销协会召开2026年轮值会长办公会  共谋能源行业高质量发展">广东省能源运销协会召开2026年轮值会长办公会  共谋能源行业高质量发展</a></li>										<li><span class="float_right">2026-02-11</span><a href="/index.php/xhdt1/34233.html" target="_blank" title="广东省商务厅国际经贸发展中心领导一行莅临协会调研交流">广东省商务厅国际经贸发展中心领导一行莅临协会调研交流</a></li>										<li><span class="float_right">2026-02-05</span><a href="/index.php/xhdt1/34203.html" target="_blank" title="守住安全底线，一刻不能松、一丝不能退">守住安全底线，一刻不能松、一丝不能退</a></li>										<li><span class="float_right">2026-02-05</span><a href="/index.php/xhdt1/34202.html" target="_blank" title="2026年全省能源工作会议在广州召开">2026年全省能源工作会议在广州召开</a></li>										<li><span class="float_right">2025-12-30</span><a href="/index.php/xhdt1/34025.html" target="_blank" title=".岁序更替，华章日新，广东省能源运销协会祝大家2026年新年快乐，万事如意！">.岁序更替，华章日新，广东省能源运销协会祝大家2026年新年快乐，万事如意！</a></li>						</ul>
+					</div>
+					<div class="left_bottom3"></div>
+                </div>
+                <div class="clear"></div>
+                <!--第2板块 结束-->
+                
+                <!--第3板块 开始-->
+                <div id="index_1_3">
+                	<div class="left_title3">
+                    	<span class="more" ><a href="/index.php/info.html" target="_blank">更多>></a></span>
+                    	<h2>行业新闻</h2>
+                    </div>
+                	<div class="left_body3">
+						<ul class="textlist1">
+							<li>
+                                	<span class="float_right">2026-06-01</span>
+                                    <a href="/index.php/info/34626.html" target="_blank" title="印尼煤炭“国家专营”落地，全球煤市迎来新变局？">印尼煤炭“国家专营”落地，全球煤市迎来新变局？</a>
+                                </li><li>
+                                	<span class="float_right">2026-06-01</span>
+                                    <a href="/index.php/info/34625.html" target="_blank" title="南方地区高温天气用电形势怎么看？国家能源局解读">南方地区高温天气用电形势怎么看？国家能源局解读</a>
+                                </li><li>
+                                	<span class="float_right">2026-06-01</span>
+                                    <a href="/index.php/info/34624.html" target="_blank" title="国家能源局：激发能源领域民企创新发展动能">国家能源局：激发能源领域民企创新发展动能</a>
+                                </li><li>
+                                	<span class="float_right">2026-06-01</span>
+                                    <a href="/index.php/info/34623.html" target="_blank" title="多重共振，旺季到来，煤炭市场不用讲故事">多重共振，旺季到来，煤炭市场不用讲故事</a>
+                                </li><li>
+                                	<span class="float_right">2026-05-29</span>
+                                    <a href="/index.php/info/34620.html" target="_blank" title="国家发改委组织召开视频会议安排部署全国迎峰度夏能源保供工作">国家发改委组织召开视频会议安排部署全国迎峰度夏能源保供工作</a>
+                                </li><li>
+                                	<span class="float_right">2026-05-29</span>
+                                    <a href="/index.php/info/34619.html" target="_blank" title="6个“人工智能+”煤炭高价值场景发布">6个“人工智能+”煤炭高价值场景发布</a>
+                                </li><li>
+                                	<span class="float_right">2026-05-29</span>
+                                    <a href="/index.php/info/34618.html" target="_blank" title="2026年1-4月全国电力市场交易电量同比增长25.6%">2026年1-4月全国电力市场交易电量同比增长25.6%</a>
+                                </li><li>
+                                	<span class="float_right">2026-05-28</span>
+                                    <a href="/index.php/info/34613.html" target="_blank" title="AI与能源的“双向奔赴” 25家能源企业签署《开放高价值场景倡议书》">AI与能源的“双向奔赴” 25家能源企业签署《开放高价值场景倡议书》</a>
+                                </li>						</ul>
+					</div>
+					<div class="left_bottom3"></div>
+                </div>
+                <!--第3板块 结束-->
+                <!--第4板块 开始-->
+                <div id="index_1_4">
+                	<div class="left_title3">
+                    	<span class="more" ><a href="/index.php/xyzysj.html" target="_blank">更多>></a></span>
+                    	<h2>行业重要数据-</h2>
+                    </div>
+                	<div class="left_body3">
+						<ul class="textlist1">
+							<li>
+                                	<span class="float_right">2026-05-28</span>
+                                    <a href="/index.php/xyzysj/34611.html" target="_blank" title="煤炭行业重要数据（2026.5.28更新）">煤炭行业重要数据（2026.5.28更新）</a>
+                                </li><li>
+                                	<span class="float_right">2026-05-26</span>
+                                    <a href="/index.php/xyzysj/34600.html" target="_blank" title="煤炭行业重要数据（2026.5.26更新）">煤炭行业重要数据（2026.5.26更新）</a>
+                                </li><li>
+                                	<span class="float_right">2026-05-21</span>
+                                    <a href="/index.php/xyzysj/34585.html" target="_blank" title="煤炭行业重要数据（2026.5.21更新）">煤炭行业重要数据（2026.5.21更新）</a>
+                                </li><li>
+                                	<span class="float_right">2026-05-20</span>
+                                    <a href="/index.php/xyzysj/34578.html" target="_blank" title="煤炭行业重要数据（2026.5.20更新）">煤炭行业重要数据（2026.5.20更新）</a>
+                                </li><li>
+                                	<span class="float_right">2026-05-14</span>
+                                    <a href="/index.php/xyzysj/34559.html" target="_blank" title="煤炭行业重要数据（2026.5.14更新）">煤炭行业重要数据（2026.5.14更新）</a>
+                                </li><li>
+                                	<span class="float_right">2026-05-12</span>
+                                    <a href="/index.php/xyzysj/34548.html" target="_blank" title="煤炭行业重要数据（2026.5.12更新）">煤炭行业重要数据（2026.5.12更新）</a>
+                                </li><li>
+                                	<span class="float_right">2026-05-07</span>
+                                    <a href="/index.php/xyzysj/34529.html" target="_blank" title="煤炭行业重要数据（2026.5.7更新）">煤炭行业重要数据（2026.5.7更新）</a>
+                                </li><li>
+                                	<span class="float_right">2026-04-30</span>
+                                    <a href="/index.php/xyzysj/34516.html" target="_blank" title="煤炭行业重要数据（2026.4.30更新）">煤炭行业重要数据（2026.4.30更新）</a>
+                                </li>						</ul>
+					</div>
+					<div class="left_bottom3"></div>
+                </div>
+                <!--第4板块 结束-->
+                
+                <!--上栏广告 开始-->
+                <div id="index_1_5">
+                	<li><a href="" target="_blank"><img src="/Upload/public/ad1.jpg" /></a></li>                                    </div>
+                <!--上栏广告 结束-->
+                
+                <!--第5板块 开始-->
+                <div id="index_1_6">
+                	<div class="left_title3">
+                    	<span class="more" ><a href="/index.php/kcxx.html" target="_blank">更多>></a></span>
+                    	<h2>库存信息</h2>
+                    </div>
+                	<div class="left_body3">
+						<ul class="textlist1">
+							<li>
+                                	<span class="float_right">2026-06-01</span>
+                                    <a href="/index.php/kcxx/34627.html" target="_blank" title="2026年6月1日广州港港口库存 ">2026年6月1日广州港港口库存 </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-29</span>
+                                    <a href="/index.php/kcxx/34621.html" target="_blank" title="2026年5月29日广州港港口库存 ">2026年5月29日广州港港口库存 </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-28</span>
+                                    <a href="/index.php/kcxx/34615.html" target="_blank" title="2026年5月28日广州港港口库存  ">2026年5月28日广州港港口库存  </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-27</span>
+                                    <a href="/index.php/kcxx/34610.html" target="_blank" title="2026年5月27日广州港港口库存 ">2026年5月27日广州港港口库存 </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-27</span>
+                                    <a href="/index.php/kcxx/34605.html" target="_blank" title="2026年5月26日广州港港口库存  ">2026年5月26日广州港港口库存  </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-25</span>
+                                    <a href="/index.php/kcxx/34599.html" target="_blank" title="2026年5月25日广州港港口库存   ">2026年5月25日广州港港口库存   </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-22</span>
+                                    <a href="/index.php/kcxx/34594.html" target="_blank" title="2026年5月22日广州港港口库存 ">2026年5月22日广州港港口库存 </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-21</span>
+                                    <a href="/index.php/kcxx/34590.html" target="_blank" title="2026年5月21日广州港港口库存 ">2026年5月21日广州港港口库存 </a>
+                                </li>						</ul>
+					</div>
+					<div class="left_bottom3"></div>
+                </div>
+                <!--第5板块 结束-->
+                
+                <!--第6板块 开始-->
+                <div id="index_1_7">
+                	<div class="left_title3">
+                    	<span class="more" ><a href="/index.php/jgxx.html" target="_blank">更多>></a></span>
+                    	<h2>价格信息</h2>
+                    </div>
+                	<div class="left_body3">
+						<ul class="textlist1">
+							<li>
+                                	<span class="float_right">2026-06-01</span>
+                                    <a href="/index.php/jgxx/34622.html" target="_blank" title="2026年6月1日广州港煤炭价格 ">2026年6月1日广州港煤炭价格 </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-29</span>
+                                    <a href="/index.php/jgxx/34617.html" target="_blank" title="2026年5月29日广州港煤炭价格  ">2026年5月29日广州港煤炭价格  </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-28</span>
+                                    <a href="/index.php/jgxx/34614.html" target="_blank" title="2026年5月28日广州港煤炭价格 ">2026年5月28日广州港煤炭价格 </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-27</span>
+                                    <a href="/index.php/jgxx/34608.html" target="_blank" title="2026年5月27日广州港煤炭价格  ">2026年5月27日广州港煤炭价格  </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-26</span>
+                                    <a href="/index.php/jgxx/34604.html" target="_blank" title="2026年5月26日广州港煤炭价格  ">2026年5月26日广州港煤炭价格  </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-25</span>
+                                    <a href="/index.php/jgxx/34596.html" target="_blank" title="2026年5月25日广州港煤炭价格 ">2026年5月25日广州港煤炭价格 </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-22</span>
+                                    <a href="/index.php/jgxx/34595.html" target="_blank" title="2026年5月22日广州港煤炭价格  ">2026年5月22日广州港煤炭价格  </a>
+                                </li><li>
+                                	<span class="float_right">2026-05-21</span>
+                                    <a href="/index.php/jgxx/34586.html" target="_blank" title="2026年5月21日广州港煤炭价格  ">2026年5月21日广州港煤炭价格  </a>
+                                </li>						</ul>
+					</div>
+					<div class="left_bottom3"></div>
+                </div>
+                <!--第6板块 结束-->
+                
+                <!--下栏广告 开始-->
+                <div id="index_1_8">
+                	                                    </div>
+                <!--下栏广告 结束-->
+                
+                <!--第7板块 开始-->
+                <div id="index_1_9">
+                	<div class="left_title3">
+                    	<span class="more" ><a href="/index.php/gjzc.html" target="_blank">更多>></a></span>
+                    	<h2>国家政策</h2>
+                    </div>
+                	<div class="left_body3">
+						<ul class="textlist1">
+							<li>
+                                	<span class="float_right">2021-12-16</span>
+                                    <a href="/index.php/gjzc/29953.html" target="_blank" title="明年1月1日起 我国调整部分商品关税">明年1月1日起 我国调整部分商品关税</a>
+                                </li><li>
+                                	<span class="float_right">2021-12-15</span>
+                                    <a href="/index.php/gjzc/29924.html" target="_blank" title="两部委关于振作工业经济运行 推动工业高质量发展的实施方案的通知">两部委关于振作工业经济运行 推动工业高质量发展的实施方案的通知</a>
+                                </li><li>
+                                	<span class="float_right">2021-07-26</span>
+                                    <a href="/index.php/gjzc/29617.html" target="_blank" title="国家发展改革委关于做好2021年能源迎峰度夏工作的通知">国家发展改革委关于做好2021年能源迎峰度夏工作的通知</a>
+                                </li><li>
+                                	<span class="float_right">2021-02-02</span>
+                                    <a href="/index.php/info/29487.html" target="_blank" title="能源局印发《2021年能源监管工作要点》">能源局印发《2021年能源监管工作要点》</a>
+                                </li><li>
+                                	<span class="float_right">2020-12-08</span>
+                                    <a href="/index.php/gjzc/29458.html" target="_blank" title="国家发改委关于做好2021年煤炭中长期合同签订履行工作的通知">国家发改委关于做好2021年煤炭中长期合同签订履行工作的通知</a>
+                                </li><li>
+                                	<span class="float_right">2020-12-07</span>
+                                    <a href="/index.php/info/29455.html" target="_blank" title="生态环境部持续推进全国碳市场建设">生态环境部持续推进全国碳市场建设</a>
+                                </li><li>
+                                	<span class="float_right">2020-11-23</span>
+                                    <a href="/index.php/gjzc/29420.html" target="_blank" title="习近平提出3点主张：加大应对气候变化力度 深入推进清洁能源转型 构筑尊重自然的生态系统">习近平提出3点主张：加大应对气候变化力度 深入推进清洁能源转型 构筑尊重自然的生态系统</a>
+                                </li><li>
+                                	<span class="float_right">2020-11-23</span>
+                                    <a href="/index.php/gjzc/29421.html" target="_blank" title="电厂库存保持在高位 为啥煤价还在红区？">电厂库存保持在高位 为啥煤价还在红区？</a>
+                                </li>						</ul>
+					</div>
+					<div class="left_bottom3"></div>
+                </div>
+                <!--第7板块 结束-->
+                
+                <!--第8板块 开始-->
+                <div id="index_1_10">
+                	<div class="left_title3">
+                    	<span class="more" ><a href="/index.php/dsgs1j.html" target="_blank">更多>></a></span>
+                    	<h2>党史故事100讲</h2>
+                    </div>
+                	<div class="left_body3">
+						<ul class="textlist1">
+							<li>
+                                	<span class="float_right">2021-09-15</span>
+                                    <a href="https://mp.weixin.qq.com/s/2hMqdHbnmHxrrtEPfR2Psg" target="_blank" title="党史100讲|第六十讲 两弹一星 扬眉吐气">党史100讲|第六十讲 两弹一星 扬眉吐气</a>
+                                </li><li>
+                                	<span class="float_right">2021-09-14</span>
+                                    <a href="https://mp.weixin.qq.com/s/PEhH-VN-qQteWavM0Bb11g" target="_blank" title="党史100讲|第五十九讲 艰苦奋斗 奋发图强">党史100讲|第五十九讲 艰苦奋斗 奋发图强</a>
+                                </li><li>
+                                	<span class="float_right">2021-09-14</span>
+                                    <a href="https://mp.weixin.qq.com/s/r5ynDH9GwoOAik6y1CCY6g" target="_blank" title="党史100讲|第五十八讲 八大盛会 确立重心">党史100讲|第五十八讲 八大盛会 确立重心</a>
+                                </li><li>
+                                	<span class="float_right">2021-09-08</span>
+                                    <a href="https://mp.weixin.qq.com/s/kdgEXA6YDN0X6hc6UoFLSQ" target="_blank" title="党史100讲|第五十七讲 三大改造 改天换地">党史100讲|第五十七讲 三大改造 改天换地</a>
+                                </li><li>
+                                	<span class="float_right">2021-09-06</span>
+                                    <a href="https://mp.weixin.qq.com/s/WWAvy3_tz3-FJ4XEhR597g" target="_blank" title="党史100讲|第五十六讲 首届人大 奠定国本">党史100讲|第五十六讲 首届人大 奠定国本</a>
+                                </li><li>
+                                	<span class="float_right">2021-09-03</span>
+                                    <a href="https://mp.weixin.qq.com/s/LegwiOey97Dzz_Cxz1OoNw" target="_blank" title="党史100讲|第五十五讲 改造社会 惩治腐败">党史100讲|第五十五讲 改造社会 惩治腐败</a>
+                                </li><li>
+                                	<span class="float_right">2021-09-02</span>
+                                    <a href="https://mp.weixin.qq.com/s/TblYVtoRU_68G8quGmByeg" target="_blank" title="党史100讲|第五十四讲 统一财经 恢复经济">党史100讲|第五十四讲 统一财经 恢复经济</a>
+                                </li><li>
+                                	<span class="float_right">2021-09-01</span>
+                                    <a href="https://mp.weixin.qq.com/s/mgZrWbkuysFx-1DS2GKKsQ" target="_blank" title="党史100讲|第五十三讲 抗美援朝 保家卫国">党史100讲|第五十三讲 抗美援朝 保家卫国</a>
+                                </li>						</ul>
+					</div>
+					<div class="left_bottom3"></div>
+                </div>
+                <!--第8板块 结束-->
+                
+    	  </div>
+          <!--左侧区域 结束-->
+          
+          <!--右侧区域 开始-->
+    	  <div id="index_2"> 
+               <!--第9板块 开始-->
+               <div id="index_2_1">
+                	<div class="left_title4">
+                    	<span class="more" ><a href="/index.php/xyzysj.html" target="_blank">更多>></a></span>
+                    	<h2>行业重要数据</h2>
+                    </div>
+                	<div class="left_body4">
+						<ul class="textlist2">
+							<li>
+                                    <a href="/index.php/xyzysj/34611.html" target="_blank" title="煤炭行业重要数据（2026.5.28更新）">煤炭行业重要数据（2026.5.28更新）</a>
+                                </li><li>
+                                    <a href="/index.php/xyzysj/34600.html" target="_blank" title="煤炭行业重要数据（2026.5.26更新）">煤炭行业重要数据（2026.5.26更新）</a>
+                                </li><li>
+                                    <a href="/index.php/xyzysj/34585.html" target="_blank" title="煤炭行业重要数据（2026.5.21更新）">煤炭行业重要数据（2026.5.21更新）</a>
+                                </li><li>
+                                    <a href="/index.php/xyzysj/34578.html" target="_blank" title="煤炭行业重要数据（2026.5.20更新）">煤炭行业重要数据（2026.5.20更新）</a>
+                                </li><li>
+                                    <a href="/index.php/xyzysj/34559.html" target="_blank" title="煤炭行业重要数据（2026.5.14更新）">煤炭行业重要数据（2026.5.14更新）</a>
+                                </li><li>
+                                    <a href="/index.php/xyzysj/34548.html" target="_blank" title="煤炭行业重要数据（2026.5.12更新）">煤炭行业重要数据（2026.5.12更新）</a>
+                                </li>						</ul>
+					</div>
+					<div class="left_bottom4"></div>
+               </div>
+               <!--第9板块 结束-->
+               
+               <!--第10板块 开始-->
+               <div id="index_2_2">
+                	<div class="left_title4">
+                    	<span class="more" ><a href="/index.php/hytd.html" target="_blank">更多>></a></span>
+                    	<h2>会员名录</h2>
+                    </div>
+                	<div class="left_body4">
+						<ul class="textlist3">
+							<li>
+                                    <a href="/index.php/hytd/29566.html" target="_blank" title="轮值会长单位-中远海运散货运输有限公司">轮值会长单位-中远海运散货运输有限公司</a><br />
+                                    <p>——
+	中远海运散货运输有限公司（简称：中远...</p>
+                                </li><li>
+                                    <a href="/index.php/hytd/29567.html" target="_blank" title="轮值会长单位-广州港股份有限公司">轮值会长单位-广州港股份有限公司</a><br />
+                                    <p>——
+	&nbsp; &nbsp; &nbs...</p>
+                                </li><li>
+                                    <a href="/index.php/hytd/29568.html" target="_blank" title="轮值会长单位-广州发展能源物流集团有限公司">轮值会长单位-广州发展能源物流集团有限公司</a><br />
+                                    <p>——
+	&nbsp; &nbsp; &nbs...</p>
+                                </li><li>
+                                    <a href="/index.php/hytd/29569.html" target="_blank" title="轮值会长单位-广东省能源集团有限公司">轮值会长单位-广东省能源集团有限公司</a><br />
+                                    <p>——
+	广东省能源集团有限公司成立于2001...</p>
+                                </li><li>
+                                    <a href="/index.php/hytd/29570.html" target="_blank" title="轮值会长单位-深圳能源集团股份有限公司">轮值会长单位-深圳能源集团股份有限公司</a><br />
+                                    <p>——
+	深圳能源集团股份有限公司（简称：深圳...</p>
+                                </li>						</ul>
+					</div>
+                    <script>
+						 $('.left_body4').slide({ mainCell:'ul.textlist3', autoPlay:true, delayTime:500, interTime:3000, vis:5, effect:'topLoop'});
+                    </script>
+					<div class="left_bottom4"></div>
+               </div>		
+               <!--第10板块 结束-->
+               
+               <!--第11板块 开始-->
+               <div id="index_2_2">
+                	<div class="left_title4">
+                    	<span class="more" ><a href="/index.php/djdt.html" target="_blank">更多>></a></span>
+                    	<h2>党建动态</h2>
+                    </div>
+                	<div class="left_body4">
+						<ul class="textlist3">
+							<li>
+                                    <a href="/index.php/xxyd/34616.html" target="_blank" title="总书记的人民情怀 | “必须深刻把握中国式现代化对教育、科技、人才的需求”">总书记的人民情怀 | “必须深刻把握中国式现代化对教育、科技、人才的需求”</a>
+                                </li><li>
+                                    <a href="/index.php/xxyd/34574.html" target="_blank" title="中共中央办公厅印发《中国共产党发展党员工作细则》">中共中央办公厅印发《中国共产党发展党员工作细则》</a>
+                                </li><li>
+                                    <a href="/index.php/xxyd/34575.html" target="_blank" title="高标准高质量做好发展党员工作——中央组织部负责人就修订颁布《中国共产党发展党员工作细则》答记者问">高标准高质量做好发展党员工作——中央组织部负责人就修订颁布《中国共产党发展党员工作细则》答记者问</a>
+                                </li><li>
+                                    <a href="/index.php/xxyd/34528.html" target="_blank" title="习近平：在省部级主要领导干部学习贯彻党的二十届四中全会精神专题研讨班上的讲话">习近平：在省部级主要领导干部学习贯彻党的二十届四中全会精神专题研讨班上的讲话</a>
+                                </li><li>
+                                    <a href="/index.php/xxyd/34513.html" target="_blank" title="习近平：着力提高防范应对自然灾害能力 切实维护人民群众生命财产安全">习近平：着力提高防范应对自然灾害能力 切实维护人民群众生命财产安全</a>
+                                </li><li>
+                                    <a href="/index.php/xxyd/34514.html" target="_blank" title="中共中央政治局召开会议 分析研究当前经济形势和经济工作 中共中央总书记习近平主持会议">中共中央政治局召开会议 分析研究当前经济形势和经济工作 中共中央总书记习近平主持会议</a>
+                                </li><li>
+                                    <a href="/index.php/xxyd/34492.html" target="_blank" title="习近平近日作出重要指示强调 把“义乌发展经验”进一步总结好运用好 探索走出符合各自实际的高质量发展之路">习近平近日作出重要指示强调 把“义乌发展经验”进一步总结好运用好 探索走出符合各自实际的高质量发展之路</a>
+                                </li>						</ul>
+					</div>
+                    <script>
+						 $('.left_body4').slide({ mainCell:'ul.textlist3', autoPlay:true, delayTime:500, interTime:3000, vis:5, effect:'topLoop'});
+                    </script>
+					<div class="left_bottom4"></div>
+               </div>		
+               <!--第11板块 结束-->
+               
+               <!--第12板块 开始-->
+               <div id="index_2_4">
+                	                                   </div>
+               <!--第12板块 结束-->
+               
+               <!--第13板块 开始-->
+               <div id="index_2_5">
+                	<div class="left_title4">
+                    	<span class="more" ><a href="/index.php/zyzs.html" target="_blank">更多>></a></span>
+                    	<h2>重要指数</h2>
+                    </div>
+                	<div class="left_body4">
+						<ul class="textlist2">
+							<li>
+                                    <a href="/index.php/zyzs/29562.html" target="_blank" title="2021年7月2日进口煤到岸价格指数">2021年7月2日进口煤到岸价格指数</a><br />
+                                </li><li>
+                                    <a href="/index.php/zyzs/29559.html" target="_blank" title="2021年7月5日沿海煤炭运费 ">2021年7月5日沿海煤炭运费 </a><br />
+                                </li><li>
+                                    <a href="/index.php/jgxx/29485.html" target="_blank" title="2021年1月25日环渤海动力煤现货参考价 ">2021年1月25日环渤海动力煤现货参考价 </a><br />
+                                </li><li>
+                                    <a href="/index.php/jgxx/29486.html" target="_blank" title="2021年1月26日沿海煤炭运费">2021年1月26日沿海煤炭运费</a><br />
+                                </li><li>
+                                    <a href="/index.php/zyzs/29468.html" target="_blank" title="2020年12月11日中国沿海煤炭运价综合指数">2020年12月11日中国沿海煤炭运价综合指数</a><br />
+                                </li><li>
+                                    <a href="/index.php/zyzs/29469.html" target="_blank" title="2020年12月11日国际航运指数">2020年12月11日国际航运指数</a><br />
+                                </li><li>
+                                    <a href="/index.php/zyzs/29464.html" target="_blank" title="2020年12月14日环渤海动力煤现货参考价 ">2020年12月14日环渤海动力煤现货参考价 </a><br />
+                                </li>						</ul>
+					</div>
+					<div class="left_bottom4"></div>
+               </div>		
+               <!--第13板块 结束-->
+          </div>
+          <!--右侧区域 结束-->
+          <div class="clear"></div>
+	</div>
+    <!--主体内容 结束-->
+    <!-- 友情链接 开始-->
+<div id="link_main">
+	<div id="link">
+        <div class="link_title hd">
+			<ul class="titlelist">
+				<li>友情链接</li>			</ul>
+		</div>
+        <div class="link_body bd">
+			<ul class="linklist">
+									</ul>        </div>
+         <div class="link_bottom"></div>
+     </div>
+	 <script type="text/javascript">jQuery("#link").slide();</script>
+</div>
+<!-- 友情链接 结束-->
+
+<!-- 底部版权 开始-->
+<div id="copyright_main">
+	<div id="copyright">
+    	   <div class="bottom_navigation">
+                                    <a  href="/index.php" target="_self" >首页</a><span class="line">|</span>                    <a  href="http://www.gdetsa.org.cn/index.php/xhjj.html" target="_self" >协会介绍</a><span class="line">|</span>                    <a  href="/index.php/tzgg.html" target="_self" >通知公告</a><span class="line">|</span>                    <a  href="/index.php/info.html" target="_self" >行业新闻</a><span class="line">|</span>                    <a  href="/index.php/xhdt.html" target="_self" >协会动态</a><span class="line">|</span>                    <a  href="/index.php/djdt.html" target="_self" >党建动态</a><span class="line">|</span>                    <a  href="/index.php/sjzx.html" target="_self" >数据中心</a><span class="line">|</span>                    <a  href="/index.php/hytd.html" target="_self" >会员名录</a><span class="line">|</span>                    <a  href="/index.php/zcfg.html" target="_self" >政策法规</a><span class="line">|</span>                    <a  href="http://www.gdetsa.org.cn/index.php/public/login/l/cn" target="_self" >会员登陆</a><span class="line">|</span>                    <a  href="http://www.gdetsa.org.cn/index.php/member/public/index" target="_blank" >会员中心</a><span class="line">|</span>                    <a  href="/index.php/lxwm.html" target="_self" >联系我们</a><span class="line">|</span>                    <a  href="/index.php/jrxh.html" target="_self" >加入协会</a>           </div>
+           <div class="bottom_info">
+                <b>联系人：</b>刘小姐&nbsp;&nbsp;                                <b>电话：</b>020-38932352&nbsp;&nbsp;                <b>传真：</b>020-38932359&nbsp;&nbsp;                <b>邮件：</b>gd0928@163.com&nbsp;&nbsp;<br />
+                <b>网址：</b><a  href="http://www.gdetsa.org.cn" target="_self">http://www.gdetsa.org.cn</a>&nbsp;&nbsp;                <b>地址：</b>广州市荔湾区沙面大街64号首层<br />                <a  href="http://www.gdetsa.org.cn" target="_self">广东省能源运销协会</a>&nbsp;
+                版权所有&nbsp;2023-2028&nbsp; <a href=https://beian.miit.gov.cn>粤ICP备19148317号</a>&nbsp; 
+           </div>
+           <div class="TechnicalSupport">
+                    <b>技术支持：</b><a href="#" target="_blank">广州网昱计算机有限公司</a>
+                </div>           <div class="WxQrcode">
+           		<img src="/Upload/qr_cn.png" width="100%" height="100%"/>
+                <span>扫一扫关注</span>
+           </div> 
+	</div>
+</div>
+
+		<!--gotop start-->
+		<script type='text/javascript' src='/Public/jquery/common.js'></script>
+		<script>
+			scrolltotop.controlattrs={offsetx:20, offsety:150};
+			scrolltotop.controlHTML = '<img src="/Public/Images/gotop/1.gif" />';
+			scrolltotop.anchorkeyword = '#gotop';
+			scrolltotop.title = '回顶部';
+			scrolltotop.init();
+		</script>
+		<!--gotop end-->
+		
+
+
+
+<!-- 底部版权 结束-->
+</body>
+</html>
