@@ -1,0 +1,20 @@
+# Cache files
+*.png
+*.jpg
+cctd_*.html
+gdetsa_*.html
+guangzhou_port_*.html
+lng_*.html
+shengyi_*.html
+cqlng_page.html
+search_results.html
+downloaded_images.json
+price_links.json
+all_price_links.json
+recognized_prices.json
+
+# Keep main files
+!guangdong_fuel_cost_system.html
+!update_fuel_cost.py
+!README.md
+!*.csv
