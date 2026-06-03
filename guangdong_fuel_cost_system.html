@@ -6,7 +6,6 @@
     <title>广东省燃料成本分析系统</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/map/js/china.js"></script>
     <style>
         * {
             margin: 0;
@@ -1168,90 +1167,119 @@
                 }
                 window.guangdongMapChart = echarts.init(mapDom);
                 
-                // Weather data for Guangdong cities
-                const weatherData = [
-                    { name: '广州市', value: 32, humidity: 75, weather: '多云转阵雨' },
-                    { name: '深圳市', value: 31, humidity: 80, weather: '阵雨' },
-                    { name: '珠海市', value: 30, humidity: 82, weather: '中雨' },
-                    { name: '汕头市', value: 29, humidity: 78, weather: '多云' },
-                    { name: '佛山市', value: 33, humidity: 72, weather: '多云转晴' },
-                    { name: '韶关市', value: 28, humidity: 68, weather: '晴' },
-                    { name: '湛江市', value: 31, humidity: 85, weather: '大雨' },
-                    { name: '肇庆市', value: 29, humidity: 76, weather: '阵雨' },
-                    { name: '江门市', value: 30, humidity: 80, weather: '中雨' },
-                    { name: '茂名市', value: 31, humidity: 83, weather: '大雨' },
-                    { name: '惠州市', value: 30, humidity: 77, weather: '多云转阵雨' },
-                    { name: '梅州市', value: 27, humidity: 70, weather: '多云' },
-                    { name: '汕尾市', value: 29, humidity: 79, weather: '阵雨' },
-                    { name: '河源市', value: 28, humidity: 73, weather: '多云' },
-                    { name: '阳江市', value: 31, humidity: 84, weather: '大雨' },
-                    { name: '清远市', value: 28, humidity: 71, weather: '多云' },
-                    { name: '东莞市', value: 32, humidity: 76, weather: '多云转阵雨' },
-                    { name: '中山市', value: 30, humidity: 81, weather: '阵雨' },
-                    { name: '潮州市', value: 29, humidity: 77, weather: '多云' },
-                    { name: '揭阳市', value: 30, humidity: 78, weather: '多云转阵雨' },
-                    { name: '云浮市', value: 29, humidity: 74, weather: '多云' }
-                ];
-                
-                const option = {
-                    title: {
-                        text: '广东省实时气温分布',
-                        subtext: '单位：°C',
-                        left: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: function(params) {
-                            const data = weatherData.find(d => d.name === params.name);
-                            if (data) {
-                                return `${data.name}<br/>气温：${data.value}°C<br/>湿度：${data.humidity}%<br/>天气：${data.weather}`;
-                            }
-                            return params.name;
-                        }
-                    },
-                    visualMap: {
-                        min: 25,
-                        max: 35,
-                        left: 'left',
-                        top: 'bottom',
-                        text: ['高温', '低温'],
-                        inRange: {
-                            color: ['#ffd43b', '#ffa8a8', '#ff8787', '#ff6b6b', '#e03131']
-                        },
-                        calculable: true
-                    },
-                    series: [{
-                        name: '气温',
-                        type: 'map',
-                        map: '广东',
-                        roam: true,
-                        emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: 14,
-                                fontWeight: 'bold'
+                // Load Guangdong map data
+                fetch('https://geo.datav.aliyun.com/areas_v3/bound/440000_full.json')
+                    .then(response => response.json())
+                    .then(geoJson => {
+                        echarts.registerMap('广东', geoJson);
+                        
+                        // Weather data for Guangdong cities
+                        const weatherData = [
+                            { name: '广州市', value: 32, humidity: 75, weather: '多云转阵雨' },
+                            { name: '深圳市', value: 31, humidity: 80, weather: '阵雨' },
+                            { name: '珠海市', value: 30, humidity: 82, weather: '中雨' },
+                            { name: '汕头市', value: 29, humidity: 78, weather: '多云' },
+                            { name: '佛山市', value: 33, humidity: 72, weather: '多云转晴' },
+                            { name: '韶关市', value: 28, humidity: 68, weather: '晴' },
+                            { name: '湛江市', value: 31, humidity: 85, weather: '大雨' },
+                            { name: '肇庆市', value: 29, humidity: 76, weather: '阵雨' },
+                            { name: '江门市', value: 30, humidity: 80, weather: '中雨' },
+                            { name: '茂名市', value: 31, humidity: 83, weather: '大雨' },
+                            { name: '惠州市', value: 30, humidity: 77, weather: '多云转阵雨' },
+                            { name: '梅州市', value: 27, humidity: 70, weather: '多云' },
+                            { name: '汕尾市', value: 29, humidity: 79, weather: '阵雨' },
+                            { name: '河源市', value: 28, humidity: 73, weather: '多云' },
+                            { name: '阳江市', value: 31, humidity: 84, weather: '大雨' },
+                            { name: '清远市', value: 28, humidity: 71, weather: '多云' },
+                            { name: '东莞市', value: 32, humidity: 76, weather: '多云转阵雨' },
+                            { name: '中山市', value: 30, humidity: 81, weather: '阵雨' },
+                            { name: '潮州市', value: 29, humidity: 77, weather: '多云' },
+                            { name: '揭阳市', value: 30, humidity: 78, weather: '多云转阵雨' },
+                            { name: '云浮市', value: 29, humidity: 74, weather: '多云' }
+                        ];
+                        
+                        const option = {
+                            title: {
+                                text: '广东省实时气温分布',
+                                subtext: '单位：°C | 湿度：%',
+                                left: 'center',
+                                textStyle: { fontSize: 16 },
+                                subtextStyle: { fontSize: 12 }
                             },
-                            itemStyle: {
-                                areaColor: '#ffd43b'
-                            }
-                        },
-                        label: {
-                            show: true,
-                            formatter: function(params) {
-                                const data = weatherData.find(d => d.name === params.name);
-                                if (data) {
-                                    return `${params.name.replace('市', '')}\n${data.value}°C\n${data.humidity}%`;
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: function(params) {
+                                    const data = weatherData.find(d => d.name === params.name);
+                                    if (data) {
+                                        return `<strong>${data.name}</strong><br/>` +
+                                               `🌡️ 气温：${data.value}°C<br/>` +
+                                               `💧 湿度：${data.humidity}%<br/>` +
+                                               `☁️ 天气：${data.weather}`;
+                                    }
+                                    return params.name;
                                 }
-                                return params.name;
                             },
-                            fontSize: 11,
-                            color: '#333'
-                        },
-                        data: weatherData
-                    }]
-                };
-                
-                window.guangdongMapChart.setOption(option);
+                            visualMap: {
+                                min: 25,
+                                max: 35,
+                                left: 'left',
+                                top: 'bottom',
+                                text: ['高温', '低温'],
+                                textStyle: { fontSize: 12 },
+                                inRange: {
+                                    color: ['#5ac8fa', '#43e97b', '#ffd43b', '#ffa8a8', '#ff6b6b', '#e03131']
+                                },
+                                calculable: true
+                            },
+                            series: [{
+                                name: '气温',
+                                type: 'map',
+                                map: '广东',
+                                roam: true,
+                                scaleLimit: { min: 0.8, max: 3 },
+                                emphasis: {
+                                    label: {
+                                        show: true,
+                                        fontSize: 14,
+                                        fontWeight: 'bold',
+                                        color: '#fff'
+                                    },
+                                    itemStyle: {
+                                        areaColor: '#ffd43b',
+                                        shadowBlur: 10,
+                                        shadowColor: 'rgba(0,0,0,0.3)'
+                                    }
+                                },
+                                label: {
+                                    show: true,
+                                    formatter: function(params) {
+                                        const data = weatherData.find(d => d.name === params.name);
+                                        if (data) {
+                                            return `{name|${params.name.replace('市', '')}}\n{temp|${data.value}°C}\n{humi|${data.humidity}%}`;
+                                        }
+                                        return params.name;
+                                    },
+                                    rich: {
+                                        name: { fontSize: 11, color: '#333', fontWeight: 'bold' },
+                                        temp: { fontSize: 13, color: '#e03131', fontWeight: 'bold' },
+                                        humi: { fontSize: 10, color: '#666' }
+                                    }
+                                },
+                                itemStyle: {
+                                    areaColor: '#e8f4f8',
+                                    borderColor: '#fff',
+                                    borderWidth: 1
+                                },
+                                data: weatherData
+                            }]
+                        };
+                        
+                        window.guangdongMapChart.setOption(option);
+                    })
+                    .catch(error => {
+                        console.error('Failed to load map data:', error);
+                        mapDom.innerHTML = '<div style="text-align:center;padding:50px;color:#999;">地图加载失败</div>';
+                    });
                 
                 // Handle resize
                 window.addEventListener('resize', function() {
