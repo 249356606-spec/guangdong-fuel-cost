@@ -854,18 +854,20 @@ var guangdongGeoData = {"type": "FeatureCollection", "features": [{"type": "Feat
                 </div>
             </div>
 
-            <!-- Weather Charts -->
+            <!-- 30天气温和降水量图表 -->
             <div class="charts-grid">
-                <div class="chart-card">
-                    <div class="chart-title">📈 主要城市气温趋势</div>
-                    <div class="chart-container">
-                        <canvas id="tempTrendChart"></canvas>
+                <div class="chart-card" style="grid-column: span 2;">
+                    <div class="chart-title">📈 未来30天最高气温趋势（广州、深圳、珠海、韶关、阳江、揭阳）</div>
+                    <div class="chart-container" style="height: 350px;">
+                        <canvas id="temp30Chart"></canvas>
                     </div>
                 </div>
-                <div class="chart-card">
-                    <div class="chart-title">🌧️ 降水量分布</div>
-                    <div class="chart-container">
-                        <canvas id="rainChart"></canvas>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-card" style="grid-column: span 2;">
+                    <div class="chart-title">🌧️ 未来30天降水量趋势（广州、深圳、珠海、韶关、阳江、揭阳）</div>
+                    <div class="chart-container" style="height: 350px;">
+                        <canvas id="rain30Chart"></canvas>
                     </div>
                 </div>
             </div>
@@ -1178,35 +1180,35 @@ var guangdongGeoData = {"type": "FeatureCollection", "features": [{"type": "Feat
                         
                         // Weather data for Guangdong cities
                         const weatherData = [
-                            { name: '广州市', value: 32, humidity: 75, weather: '多云转阵雨' },
-                            { name: '深圳市', value: 31, humidity: 80, weather: '阵雨' },
-                            { name: '珠海市', value: 30, humidity: 82, weather: '中雨' },
-                            { name: '汕头市', value: 29, humidity: 78, weather: '多云' },
-                            { name: '佛山市', value: 33, humidity: 72, weather: '多云转晴' },
-                            { name: '韶关市', value: 28, humidity: 68, weather: '晴' },
-                            { name: '湛江市', value: 31, humidity: 85, weather: '大雨' },
-                            { name: '肇庆市', value: 29, humidity: 76, weather: '阵雨' },
-                            { name: '江门市', value: 30, humidity: 80, weather: '中雨' },
-                            { name: '茂名市', value: 31, humidity: 83, weather: '大雨' },
-                            { name: '惠州市', value: 30, humidity: 77, weather: '多云转阵雨' },
-                            { name: '梅州市', value: 27, humidity: 70, weather: '多云' },
-                            { name: '汕尾市', value: 29, humidity: 79, weather: '阵雨' },
-                            { name: '河源市', value: 28, humidity: 73, weather: '多云' },
-                            { name: '阳江市', value: 31, humidity: 84, weather: '大雨' },
-                            { name: '清远市', value: 28, humidity: 71, weather: '多云' },
-                            { name: '东莞市', value: 32, humidity: 76, weather: '多云转阵雨' },
-                            { name: '中山市', value: 30, humidity: 81, weather: '阵雨' },
-                            { name: '潮州市', value: 29, humidity: 77, weather: '多云' },
-                            { name: '揭阳市', value: 30, humidity: 78, weather: '多云转阵雨' },
-                            { name: '云浮市', value: 29, humidity: 74, weather: '多云' }
+                            { name: '广州市', value: 32, humidity: 75, weather: '多云转阵雨', highTemp: 32 },
+                            { name: '深圳市', value: 31, humidity: 80, weather: '阵雨' , highTemp: 31},
+                            { name: '珠海市', value: 30, humidity: 82, weather: '中雨' , highTemp: 30},
+                            { name: '汕头市', value: 29, humidity: 78, weather: '多云' , highTemp: 29},
+                            { name: '佛山市', value: 33, humidity: 72, weather: '多云转晴' , highTemp: 33},
+                            { name: '韶关市', value: 28, humidity: 68, weather: '晴' , highTemp: 28},
+                            { name: '湛江市', value: 31, humidity: 85, weather: '大雨' , highTemp: 31},
+                            { name: '肇庆市', value: 29, humidity: 76, weather: '阵雨' , highTemp: 29},
+                            { name: '江门市', value: 30, humidity: 80, weather: '中雨' , highTemp: 30},
+                            { name: '茂名市', value: 31, humidity: 83, weather: '大雨' , highTemp: 31},
+                            { name: '惠州市', value: 30, humidity: 77, weather: '多云转阵雨' , highTemp: 30},
+                            { name: '梅州市', value: 27, humidity: 70, weather: '多云' , highTemp: 27},
+                            { name: '汕尾市', value: 29, humidity: 79, weather: '阵雨' , highTemp: 29},
+                            { name: '河源市', value: 28, humidity: 73, weather: '多云' , highTemp: 28},
+                            { name: '阳江市', value: 31, humidity: 84, weather: '大雨' , highTemp: 31},
+                            { name: '清远市', value: 28, humidity: 71, weather: '多云' , highTemp: 28},
+                            { name: '东莞市', value: 32, humidity: 76, weather: '多云转阵雨' , highTemp: 32},
+                            { name: '中山市', value: 30, humidity: 81, weather: '阵雨' , highTemp: 30},
+                            { name: '潮州市', value: 29, humidity: 77, weather: '多云' , highTemp: 29},
+                            { name: '揭阳市', value: 30, humidity: 78, weather: '多云转阵雨' , highTemp: 30},
+                            { name: '云浮市', value: 29, humidity: 74, weather: '多云' , highTemp: 29}
                         ];
                         
                         const option = {
                             title: {
-                                text: '广东省实时气温分布',
-                                subtext: '单位：°C | 湿度：%',
+                                text: '广东省今日最高气温分布',
+                                subtext: '单位：°C（最高气温）',
                                 left: 'center',
-                                textStyle: { fontSize: 16 },
+                                textStyle: { fontSize: 16 , highTemp: 29},
                                 subtextStyle: { fontSize: 12 }
                             },
                             tooltip: {
@@ -1215,7 +1217,7 @@ var guangdongGeoData = {"type": "FeatureCollection", "features": [{"type": "Feat
                                     const data = weatherData.find(d => d.name === params.name);
                                     if (data) {
                                         return `<strong>${data.name}</strong><br/>` +
-                                               `🌡️ 气温：${data.value}°C<br/>` +
+                                               `🌡️ 最高气温：${data.highTemp}°C<br/>` +
                                                `💧 湿度：${data.humidity}%<br/>` +
                                                `☁️ 天气：${data.weather}`;
                                     }
@@ -1258,14 +1260,13 @@ var guangdongGeoData = {"type": "FeatureCollection", "features": [{"type": "Feat
                                     formatter: function(params) {
                                         const data = weatherData.find(d => d.name === params.name);
                                         if (data) {
-                                            return `{name|${params.name.replace('市', '')}}\n{temp|${data.value}°C}\n{humi|${data.humidity}%}`;
+                                            return `{name|${params.name.replace('市', '')}}\n{temp|${data.highTemp}°C}`;
                                         }
                                         return params.name;
                                     },
                                     rich: {
                                         name: { fontSize: 11, color: '#333', fontWeight: 'bold' },
-                                        temp: { fontSize: 13, color: '#e03131', fontWeight: 'bold' },
-                                        humi: { fontSize: 10, color: '#666' }
+                                        temp: { fontSize: 14, color: '#e03131', fontWeight: 'bold' }
                                     }
                                 },
                                 itemStyle: {
@@ -1291,55 +1292,91 @@ var guangdongGeoData = {"type": "FeatureCollection", "features": [{"type": "Feat
                 });
             }
 
-            // Temperature trend chart
-            const tempCanvas = document.getElementById('tempTrendChart');
-            if (tempCanvas) {
-                const tempCtx = tempCanvas.getContext('2d');
-                if (window.tempTrendChart && typeof window.tempTrendChart.destroy === 'function') {
-                    window.tempTrendChart.destroy();
+            // 30天气温趋势图
+            const temp30Canvas = document.getElementById('temp30Chart');
+            if (temp30Canvas) {
+                const temp30Ctx = temp30Canvas.getContext('2d');
+                if (window.temp30Chart && typeof window.temp30Chart.destroy === 'function') {
+                    window.temp30Chart.destroy();
                 }
-                tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                temp30Ctx.clearRect(0, 0, temp30Canvas.width, temp30Canvas.height);
 
-                window.tempTrendChart = new Chart(tempCtx, {
+                // 30天日期标签
+                const dates30 = [];
+                for (let i = 3; i <= 7; i++) dates30.push('06-0' + i);
+                for (let i = 10; i <= 30; i++) dates30.push('06-' + i);
+                dates30.push('07-01', '07-02');
+
+                window.temp30Chart = new Chart(temp30Ctx, {
                     type: 'line',
                     data: {
-                        labels: ['今日', '明日', '后天', '第4天', '第5天', '第6天', '第7天'],
+                        labels: dates30,
                         datasets: [
                             {
                                 label: '广州',
-                                data: [32, 31, 33, 32, 31, 30, 32],
+                                data: [32,33,34,33,32,33,34,35,34,33,32,33,34,35,34,33,32,33,34,35,34,33,32,33,34,35,34,33,32,33],
                                 borderColor: '#ff6b6b',
-                                backgroundColor: 'rgba(255, 107, 107, 0.1)',
                                 tension: 0.4,
                                 fill: false,
                                 borderWidth: 2,
                                 borderDash: [5, 5],
-                                pointRadius: 4,
+                                pointRadius: 3,
                                 pointBackgroundColor: '#ff6b6b'
                             },
                             {
                                 label: '深圳',
-                                data: [31, 30, 32, 31, 30, 29, 31],
+                                data: [31,32,33,32,31,32,33,34,33,32,31,32,33,34,33,32,31,32,33,34,33,32,31,32,33,34,33,32,31,32],
                                 borderColor: '#4facfe',
-                                backgroundColor: 'rgba(79, 172, 254, 0.1)',
                                 tension: 0.4,
                                 fill: false,
                                 borderWidth: 2,
                                 borderDash: [5, 5],
-                                pointRadius: 4,
+                                pointRadius: 3,
                                 pointBackgroundColor: '#4facfe'
                             },
                             {
-                                label: '韶关',
-                                data: [28, 27, 29, 28, 27, 26, 28],
+                                label: '珠海',
+                                data: [30,31,32,31,30,31,32,33,32,31,30,31,32,33,32,31,30,31,32,33,32,31,30,31,32,33,32,31,30,31],
                                 borderColor: '#43e97b',
-                                backgroundColor: 'rgba(67, 233, 123, 0.1)',
                                 tension: 0.4,
                                 fill: false,
                                 borderWidth: 2,
                                 borderDash: [5, 5],
-                                pointRadius: 4,
+                                pointRadius: 3,
                                 pointBackgroundColor: '#43e97b'
+                            },
+                            {
+                                label: '韶关',
+                                data: [28,29,30,29,28,29,30,31,30,29,28,29,30,31,30,29,28,29,30,31,30,29,28,29,30,31,30,29,28,29],
+                                borderColor: '#764ba2',
+                                tension: 0.4,
+                                fill: false,
+                                borderWidth: 2,
+                                borderDash: [5, 5],
+                                pointRadius: 3,
+                                pointBackgroundColor: '#764ba2'
+                            },
+                            {
+                                label: '阳江',
+                                data: [31,32,33,32,31,32,33,34,33,32,31,32,33,34,33,32,31,32,33,34,33,32,31,32,33,34,33,32,31,32],
+                                borderColor: '#ff9500',
+                                tension: 0.4,
+                                fill: false,
+                                borderWidth: 2,
+                                borderDash: [5, 5],
+                                pointRadius: 3,
+                                pointBackgroundColor: '#ff9500'
+                            },
+                            {
+                                label: '揭阳',
+                                data: [30,31,32,31,30,31,32,33,32,31,30,31,32,33,32,31,30,31,32,33,32,31,30,31,32,33,32,31,30,31],
+                                borderColor: '#5ac8fa',
+                                tension: 0.4,
+                                fill: false,
+                                borderWidth: 2,
+                                borderDash: [5, 5],
+                                pointRadius: 3,
+                                pointBackgroundColor: '#5ac8fa'
                             }
                         ]
                     },
@@ -1350,9 +1387,14 @@ var guangdongGeoData = {"type": "FeatureCollection", "features": [{"type": "Feat
                             legend: { position: 'top' }
                         },
                         scales: {
+                            x: {
+                                display: true,
+                                title: { display: true, text: '日期' },
+                                ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } }
+                            },
                             y: {
-                                min: 20,
-                                max: 40,
+                                min: 25,
+                                max: 38,
                                 title: { display: true, text: '最高气温（°C）' },
                                 grid: { color: 'rgba(0,0,0,0.08)' }
                             }
@@ -1361,31 +1403,86 @@ var guangdongGeoData = {"type": "FeatureCollection", "features": [{"type": "Feat
                 });
             }
 
-            // Rainfall chart
-            const rainCanvas = document.getElementById('rainChart');
-            if (rainCanvas) {
-                const rainCtx = rainCanvas.getContext('2d');
-                if (window.rainChart && typeof window.rainChart.destroy === 'function') {
-                    window.rainChart.destroy();
+            // 30天降水量趋势图
+            const rain30Canvas = document.getElementById('rain30Chart');
+            if (rain30Canvas) {
+                const rain30Ctx = rain30Canvas.getContext('2d');
+                if (window.rain30Chart && typeof window.rain30Chart.destroy === 'function') {
+                    window.rain30Chart.destroy();
                 }
-                rainCtx.clearRect(0, 0, rainCanvas.width, rainCanvas.height);
+                rain30Ctx.clearRect(0, 0, rain30Canvas.width, rain30Canvas.height);
 
-                window.rainChart = new Chart(rainCtx, {
+                window.rain30Chart = new Chart(rain30Ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['广州', '深圳', '珠海', '佛山', '湛江', '茂名', '阳江'],
-                        datasets: [{
-                            label: '今日降水量（mm）',
-                            data: [10, 15, 20, 8, 25, 22, 20],
-                            backgroundColor: [
-                                'rgba(255, 107, 107, 0.7)',
-                                'rgba(79, 172, 254, 0.7)',
-                                'rgba(67, 233, 123, 0.7)',
-                                'rgba(118, 75, 162, 0.7)',
-                                'rgba(255, 149, 0, 0.7)',
-                                'rgba(255, 45, 85, 0.7)',
-                                'rgba(90, 200, 250, 0.7)'
-                            ],
+                        labels: dates30,
+                        datasets: [
+                            {
+                                label: '广州',
+                                data: [5,0,10,15,20,5,0,2,8,12,18,6,0,3,10,14,20,5,0,2,8,12,18,6,0,3,10,14,20,5],
+                                backgroundColor: 'rgba(255, 107, 107, 0.7)',
+                                borderColor: '#ff6b6b',
+                                borderWidth: 1
+                            },
+                            {
+                                label: '深圳',
+                                data: [3,0,8,12,18,4,0,1,6,10,15,5,0,2,8,12,18,4,0,1,6,10,15,5,0,2,8,12,18,4],
+                                backgroundColor: 'rgba(79, 172, 254, 0.7)',
+                                borderColor: '#4facfe',
+                                borderWidth: 1
+                            },
+                            {
+                                label: '珠海',
+                                data: [4,0,7,11,16,3,0,1,5,9,14,4,0,2,7,11,16,3,0,1,5,9,14,4,0,2,7,11,16,3],
+                                backgroundColor: 'rgba(67, 233, 123, 0.7)',
+                                borderColor: '#43e97b',
+                                borderWidth: 1
+                            },
+                            {
+                                label: '韶关',
+                                data: [2,1,5,8,12,2,0,1,4,7,10,3,0,1,5,8,12,2,0,1,4,7,10,3,0,1,5,8,12,2],
+                                backgroundColor: 'rgba(118, 75, 162, 0.7)',
+                                borderColor: '#764ba2',
+                                borderWidth: 1
+                            },
+                            {
+                                label: '阳江',
+                                data: [6,0,9,14,19,5,0,2,7,11,17,6,0,3,9,13,19,5,0,2,7,11,17,6,0,3,9,13,19,5],
+                                backgroundColor: 'rgba(255, 149, 0, 0.7)',
+                                borderColor: '#ff9500',
+                                borderWidth: 1
+                            },
+                            {
+                                label: '揭阳',
+                                data: [3,0,6,10,15,4,0,1,5,8,13,5,0,2,7,10,15,4,0,1,5,8,13,5,0,2,7,10,15,4],
+                                backgroundColor: 'rgba(90, 200, 250, 0.7)',
+                                borderColor: '#5ac8fa',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top' }
+                        },
+                        scales: {
+                            x: {
+                                display: true,
+                                title: { display: true, text: '日期' },
+                                ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } },
+                                grid: { display: false }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: '降水量（mm）' },
+                                grid: { color: 'rgba(0,0,0,0.08)' }
+                            }
+                        }
+                    }
+                });
+            }
                             borderColor: [
                                 '#ff6b6b',
                                 '#4facfe',
