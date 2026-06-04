@@ -1006,9 +1006,51 @@ body {
                 </div>
             </div>
 
-            <div class="info-box">
-                <strong>数据来源说明</strong>
-                大鹏和深圳迭福接收站的LNG报价数据通过豆包AI获取，珠海金湾和粤东揭阳的数据来自上海石油天然气交易中心（SHPGX）。所有数据均为2026年6月2日报价。
+            <!-- 数据来源说明 -->
+            <div class="data-card" style="background: #f8f8f8; border: 1px solid rgba(0,0,0,0.06);">
+                <div class="card-title" style="font-size: 14px; color: #86868b; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px;">数据来源说明</div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <!-- 豆包AI数据源 -->
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                            <div style="width: 8px; height: 8px; background: #ff9500; border-radius: 50%;"></div>
+                            <span style="font-size: 14px; font-weight: 600; color: #1a1a1a;">豆包AI</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 13px; color: #666;">大鹏接收站</span>
+                                <span style="font-size: 12px; color: #999; background: #f0f0f0; padding: 2px 8px; border-radius: 4px;">7300元/吨</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 13px; color: #666;">深圳迭福接收站</span>
+                                <span style="font-size: 12px; color: #999; background: #f0f0f0; padding: 2px 8px; border-radius: 4px;">6600元/吨</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SHPGX数据源 -->
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                            <div style="width: 8px; height: 8px; background: #34c759; border-radius: 50%;"></div>
+                            <span style="font-size: 14px; font-weight: 600; color: #1a1a1a;">上海石油天然气交易中心</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 13px; color: #666;">珠海金湾接收站</span>
+                                <span style="font-size: 12px; color: #999; background: #f0f0f0; padding: 2px 8px; border-radius: 4px;">6600元/吨</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 13px; color: #666;">粤东揭阳接收站</span>
+                                <span style="font-size: 12px; color: #999; background: #f0f0f0; padding: 2px 8px; border-radius: 4px;">6600元/吨</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06); font-size: 12px; color: #b0b0b0;">
+                    所有数据均为2026年6月2日报价
+                </div>
             </div>
 
             <!-- LNG Trend Chart -->
