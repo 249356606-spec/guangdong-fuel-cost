@@ -1311,14 +1311,14 @@ var guangdongGeoData = {"type": "FeatureCollection", "features": [{"type": "Feat
             const temp30Canvas = document.getElementById('temp30Chart');
             if (temp30Canvas) {
                 const temp30Ctx = temp30Canvas.getContext('2d');
-                if (window.temp30Chart && typeof window.temp30Chart.destroy === 'function') {
-                    window.temp30Chart.destroy();
+                if (window._temp30ChartInst && typeof window._temp30ChartInst.destroy === 'function') {
+                    window._temp30ChartInst.destroy();
                 }
                 temp30Ctx.clearRect(0, 0, temp30Canvas.width, temp30Canvas.height);
 
                 const dates30t = ["06-04", "06-05", "06-06", "06-07", "06-08", "06-09", "06-10", "06-11", "06-12", "06-13", "06-14", "06-15", "06-16", "06-17", "06-18", "06-19", "06-20", "06-21", "06-22", "06-23", "06-24", "06-25", "06-26", "06-27", "06-28", "06-29", "06-30", "07-01", "07-02", "07-03", "07-04"];
 
-                window.temp30Chart = new Chart(temp30Ctx, {
+                window._temp30ChartInst = new Chart(temp30Ctx, {
                     type: 'line',
                     data: {
                         labels: dates30t,
@@ -1351,14 +1351,14 @@ var guangdongGeoData = {"type": "FeatureCollection", "features": [{"type": "Feat
             const rain30Canvas = document.getElementById('rain30Chart');
             if (rain30Canvas) {
                 const rain30Ctx = rain30Canvas.getContext('2d');
-                if (window.rain30Chart && typeof window.rain30Chart.destroy === 'function') {
-                    window.rain30Chart.destroy();
+                if (window._rain30ChartInst && typeof window._rain30ChartInst.destroy === 'function') {
+                    window._rain30ChartInst.destroy();
                 }
                 rain30Ctx.clearRect(0, 0, rain30Canvas.width, rain30Canvas.height);
 
                 const dates30r = ["06-04", "06-05", "06-06", "06-07", "06-08", "06-09", "06-10", "06-11", "06-12", "06-13", "06-14", "06-15", "06-16", "06-17", "06-18", "06-19", "06-20", "06-21", "06-22", "06-23", "06-24", "06-25", "06-26", "06-27", "06-28", "06-29", "06-30", "07-01", "07-02", "07-03", "07-04"];
 
-                window.rain30Chart = new Chart(rain30Ctx, {
+                window._rain30ChartInst = new Chart(rain30Ctx, {
                     type: 'bar',
                     data: {
                         labels: dates30r,
