@@ -1270,7 +1270,18 @@ body {
             });
             
             document.getElementById('tab-' + tabName).classList.add('active');
-            event.target.classList.add('active');
+            // Fix: safely handle event.target
+            if (typeof event !== 'undefined' && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // Find the button by tabName
+                var btns = document.querySelectorAll('.tab-btn');
+                btns.forEach(function(btn) {
+                    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(tabName)) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
             
             if (tabName === 'coal') {
                 initCoalCharts();
