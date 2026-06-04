@@ -1656,3 +1656,21 @@ body {
     </script>
 </body>
 </html>
+
+<script>
+// Force initialization
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof switchTab === 'undefined') {
+        console.error('Functions not loaded, attempting re-execution');
+        var scripts = document.querySelectorAll('script');
+        var mainScript = scripts[scripts.length - 2]; // Get the previous script
+        if (mainScript && mainScript.textContent.includes('function switchTab')) {
+            eval(mainScript.textContent);
+        }
+    }
+    // Initialize coal charts on load
+    if (typeof initCoalCharts === 'function') {
+        initCoalCharts();
+    }
+});
+</script>
