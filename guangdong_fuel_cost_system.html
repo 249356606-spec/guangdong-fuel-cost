@@ -571,6 +571,174 @@ body {
     border-radius: 4px;
 }
 
+    
+        /* LNG Cards - Neumorphic Style */
+        .lng-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .lng-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: 
+                0 1px 2px rgba(0, 0, 0, 0.02),
+                0 2px 4px rgba(0, 0, 0, 0.04),
+                0 4px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lng-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #34c759, #30d158);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lng-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.04),
+                0 8px 16px rgba(0, 0, 0, 0.08),
+                0 16px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .lng-card:hover::before {
+            opacity: 1;
+        }
+
+        .lng-card.highlight {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border: none;
+        }
+
+        .lng-card.highlight::before {
+            background: linear-gradient(90deg, #ff9500, #ff6b00);
+            opacity: 1;
+        }
+
+        .lng-card.highlight .station-name {
+            color: #ffffff;
+        }
+
+        .lng-card.highlight .station-badge {
+            background: rgba(255, 149, 0, 0.2);
+            color: #ff9500;
+        }
+
+        .lng-card.highlight .price-value {
+            color: #ffffff;
+        }
+
+        .lng-card.highlight .price-unit {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .lng-card.highlight .meta-label {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .lng-card.highlight .meta-value {
+            color: #ffffff;
+        }
+
+        .lng-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .station-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .station-subtitle {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-weight: 400;
+        }
+
+        .station-badge {
+            padding: 4px 10px;
+            background: #fff3e0;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #ff9500;
+        }
+
+        .lng-price {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .price-value {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .price-unit {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .lng-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .meta-label {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .meta-value {
+            font-size: 13px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 1200px) {
+            .lng-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lng-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -693,56 +861,109 @@ body {
         <!-- Tab: LNG -->
         <div id="tab-lng" class="tab-content">
             <!-- National LNG Price -->
-            <div class="national-lng">
-                <div class="label">中国LNG出厂价格（全国）</div>
-                <div class="value">6190</div>
-                <div class="unit">元/吨</div>
-                <div class="date">数据来源：上海石油天然气交易中心 | 2026-06-01</div>
+            <!-- National LNG Price -->
+            <div class="data-card" style="background: #f8f8f8; border: 1px solid rgba(0,0,0,0.06);">
+                <div class="card-title" style="font-size: 14px; color: #86868b; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">中国LNG出厂价格</div>
+                <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 12px;">
+                    <span style="font-size: 48px; font-weight: 700; color: #1a1a1a; letter-spacing: -2px;">6190</span>
+                    <span style="font-size: 18px; color: #666;">元/吨</span>
+                </div>
+                <div style="margin-top: 12px; font-size: 13px; color: #999;">数据来源：上海石油天然气交易中心 | 2026-06-01</div>
             </div>
 
             <!-- Guangdong LNG Stations -->
-            <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 20px; color: #333;">🏭 广东LNG接收站报价（2026-06-02）</h3>
+            <div style="margin: 32px 0 24px;">
+                <h3 style="font-size: 20px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px;">广东LNG接收站报价</h3>
+                <p style="font-size: 14px; color: #999;">2026年6月2日 · 含税现货挂牌价</p>
+            </div>
             
             <div class="lng-grid">
-                <div class="lng-card zhuhaicard">
-                    <div class="station-name">珠海接收站（金湾）</div>
-                    <div class="price">6600</div>
-                    <div class="unit">元/吨</div>
-                    <div class="region">广东(粤东)</div>
-                    <div class="source">中海油广东分公司 | SHPGX</div>
+                <div class="lng-card highlight">
+                    <div class="lng-card-header">
+                        <div class="station-name">大鹏接收站</div>
+                        <div class="station-badge">最高价</div>
+                    </div>
+                    <div class="lng-price">
+                        <span class="price-value">7300</span>
+                        <span class="price-unit">元/吨</span>
+                    </div>
+                    <div class="lng-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">运营商</span>
+                            <span class="meta-value">中海油</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">来源</span>
+                            <span class="meta-value">豆包AI</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="lng-card zhuhaicard">
-                    <div class="station-name">珠海接收站（金湾）</div>
-                    <div class="price">6600</div>
-                    <div class="unit">元/吨</div>
-                    <div class="region">广东(除粤东)</div>
-                    <div class="source">中海油广东分公司 | SHPGX</div>
+                
+                <div class="lng-card">
+                    <div class="lng-card-header">
+                        <div class="station-name">珠海接收站</div>
+                        <div class="station-subtitle">金湾</div>
+                    </div>
+                    <div class="lng-price">
+                        <span class="price-value">6600</span>
+                        <span class="price-unit">元/吨</span>
+                    </div>
+                    <div class="lng-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">销售区域</span>
+                            <span class="meta-value">广东(粤东)</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">来源</span>
+                            <span class="meta-value">SHPGX</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="lng-card yuedong">
-                    <div class="station-name">粤东接收站（揭阳）</div>
-                    <div class="price">6600</div>
-                    <div class="unit">元/吨</div>
-                    <div class="region">广东(粤东)</div>
-                    <div class="source">中海油广东分公司 | SHPGX</div>
+                
+                <div class="lng-card">
+                    <div class="lng-card-header">
+                        <div class="station-name">深圳迭福接收站</div>
+                    </div>
+                    <div class="lng-price">
+                        <span class="price-value">6600</span>
+                        <span class="price-unit">元/吨</span>
+                    </div>
+                    <div class="lng-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">运营商</span>
+                            <span class="meta-value">国家管网集团</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">来源</span>
+                            <span class="meta-value">豆包AI</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="lng-card dapeng">
-                    <div class="station-name">大鹏接收站</div>
-                    <div class="price">7300</div>
-                    <div class="unit">元/吨</div>
-                    <div class="region">中海油</div>
-                    <div class="source">2026-06-02 | 来源：豆包AI</div>
-                </div>
-                <div class="lng-card diefu">
-                    <div class="station-name">深圳迭福接收站</div>
-                    <div class="price">6600</div>
-                    <div class="unit">元/吨</div>
-                    <div class="region">国家管网集团</div>
-                    <div class="source">2026-06-02 | 来源：豆包AI</div>
+                
+                <div class="lng-card">
+                    <div class="lng-card-header">
+                        <div class="station-name">粤东接收站</div>
+                        <div class="station-subtitle">揭阳</div>
+                    </div>
+                    <div class="lng-price">
+                        <span class="price-value">6600</span>
+                        <span class="price-unit">元/吨</span>
+                    </div>
+                    <div class="lng-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">销售区域</span>
+                            <span class="meta-value">广东(粤东)</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">来源</span>
+                            <span class="meta-value">SHPGX</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="info-box">
-                <strong>✅ 数据来源说明</strong>
+                <strong>数据来源说明</strong>
                 大鹏和深圳迭福接收站的LNG报价数据通过豆包AI获取，珠海金湾和粤东揭阳的数据来自上海石油天然气交易中心（SHPGX）。所有数据均为2026年6月2日报价。
             </div>
 
