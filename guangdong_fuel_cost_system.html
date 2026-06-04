@@ -1441,80 +1441,9 @@ body {
         // Initialize LNG chart
         function initLngChart() {
             // LNG趋势图已删除
-        },
-                        {
-                            label: '珠海金湾',
-                            data: [6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600],
-                            borderColor: '#667eea',
-                            backgroundColor: 'rgba(102, 126, 234, 0.15)',
-                            tension: 0.4,
-                            fill: true,
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            pointRadius: 5,
-                            pointBackgroundColor: '#667eea',
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 2
-                        },
-                        {
-                            label: '深圳迭福',
-                            data: [6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600],
-                            borderColor: '#43e97b',
-                            backgroundColor: 'rgba(67, 233, 123, 0.15)',
-                            tension: 0.4,
-                            fill: true,
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            pointRadius: 5,
-                            pointBackgroundColor: '#43e97b',
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 2
-                        },
-                        {
-                            label: '粤东揭阳',
-                            data: [6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600, 6600],
-                            borderColor: '#764ba2',
-                            backgroundColor: 'rgba(118, 75, 162, 0.15)',
-                            tension: 0.4,
-                            fill: true,
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            pointRadius: 5,
-                            pointBackgroundColor: '#764ba2',
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 2
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: { bottom: 20 }
-                    },
-                    plugins: {
-                        legend: { position: 'top' },
-                        tooltip: { mode: 'index', intersect: false }
-                    },
-                    scales: {
-                        x: { 
-                            display: true, 
-                            title: { display: true, text: '日期' },
-                            ticks: { maxRotation: 0, minRotation: 0 }
-                        },
-                        y: { 
-                            display: true, 
-                            title: { display: true, text: '价格（元/吨）' }, 
-                            min: 6000, 
-                            max: 8000,
-                            grid: { color: 'rgba(0,0,0,0.08)', drawBorder: false }
-                        }
-                    }
-                }
-            });
         }
 
-        // Initialize weather charts
+        
         function initWeatherCharts() {
             // Initialize Guangdong Map with ECharts
             const mapDom = document.getElementById('guangdongMap');
