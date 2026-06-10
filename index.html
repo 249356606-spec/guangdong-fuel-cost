@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=1920, initial-scale=1.0">
     <title>广东电力市场化电价影响因素分析系统 - 总览</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    <script src="guangdong_geo.js"></script>
     <style>
 /* ==================== 极简主义设计系统 ==================== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,18 +13,20 @@
     --bg: #f5f5f7;
     --surface: #ffffff;
     --text: #1d1d1f;
-    --text-secondary: #86868b;
-    --text-tertiary: #aeaeb2;
+    --text2: #86868b;
+    --text3: #aeaeb2;
     --accent: #007aff;
     --green: #30d158;
     --orange: #ff9f0a;
     --red: #ff453a;
+    --blue: #64d2ff;
     --purple: #bf5af2;
-    --teal: #64d2ff;
     --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
     --shadow-lg: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
-    --radius: 20px;
-    --radius-sm: 12px;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --gap: 12px;
+    --pad: 20px;
 }
 
 html, body {
@@ -39,14 +39,14 @@ html, body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* ==================== 主容器 16:9 ==================== */
+/* ==================== 三层布局结构 ==================== */
 .dashboard {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 56px 1fr;
-    grid-template-columns: 1fr;
+    grid-template-rows: 52px auto 1fr;
     gap: 0;
+    overflow: hidden;
 }
 
 /* ==================== 顶部导航 ==================== */
@@ -54,16 +54,22 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 32px;
-    background: rgba(255,255,255,0.72);
+    padding: 0 var(--pad);
+    background: rgba(255,255,255,0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(0,0,0,0.04);
     z-index: 100;
 }
 
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .topbar-title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: -0.2px;
 }
@@ -71,36 +77,137 @@ html, body {
 .topbar-right {
     display: flex;
     align-items: center;
-    gap: 20px;
-    font-size: 13px;
-    color: var(--text-secondary);
+    gap: 16px;
+    font-size: 12px;
+    color: var(--text2);
 }
 
 .live-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     background: var(--green);
     border-radius: 50%;
     animation: pulse 2s ease-in-out infinite;
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
 }
 
-/* ==================== 主内容区 ==================== */
-.main {
+.btn-detail {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 14px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-detail:hover { background: #0056b3; transform: translateY(-1px); }
+
+/* ==================== KPI行 ==================== */
+.kpi-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    gap: 16px;
-    padding: 16px 24px 20px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--gap);
+    padding: var(--gap) var(--pad) 0;
+}
+
+.kpi-card {
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: fadeIn 0.4s ease-out forwards;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+    position: relative;
     overflow: hidden;
 }
 
-/* ==================== 卡片通用 ==================== */
-.card {
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 10px 10px 0 0;
+}
+
+.kpi-card:nth-child(1)::before { background: var(--accent); }
+.kpi-card:nth-child(2)::before { background: var(--green); }
+.kpi-card:nth-child(3)::before { background: var(--orange); }
+.kpi-card:nth-child(4)::before { background: var(--red); }
+.kpi-card:nth-child(5)::before { background: var(--purple); }
+.kpi-card:nth-child(6)::before { background: var(--blue); }
+
+.kpi-card:nth-child(1) { animation-delay: 0.05s; }
+.kpi-card:nth-child(2) { animation-delay: 0.1s; }
+.kpi-card:nth-child(3) { animation-delay: 0.15s; }
+.kpi-card:nth-child(4) { animation-delay: 0.2s; }
+.kpi-card:nth-child(5) { animation-delay: 0.25s; }
+.kpi-card:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.kpi-label {
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.kpi-value {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+}
+
+.kpi-unit {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text3);
+}
+
+.kpi-spark {
+    height: 24px;
+    margin-top: 2px;
+}
+
+/* ==================== 中间图表区 ==================== */
+.charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--gap);
+    padding: var(--gap) var(--pad);
+    flex: 1;
+    min-height: 0;
+}
+
+.chart-panel {
     background: var(--surface);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
@@ -108,624 +215,480 @@ html, body {
     flex-direction: column;
     overflow: hidden;
     opacity: 0;
-    transform: translateY(12px);
-    animation: cardIn 0.5s ease-out forwards;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s ease-out forwards;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.card:nth-child(1) { animation-delay: 0.1s; }
-.card:nth-child(2) { animation-delay: 0.2s; }
-.card:nth-child(3) { animation-delay: 0.3s; }
+.chart-panel:nth-child(1) { animation-delay: 0.35s; }
+.chart-panel:nth-child(2) { animation-delay: 0.45s; }
+.chart-panel:nth-child(3) { animation-delay: 0.55s; }
 
-@keyframes cardIn {
-    to { opacity: 1; transform: translateY(0); }
+.chart-panel:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
-.card-header {
+.chart-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 22px 12px;
+    padding: 14px 18px 10px;
     flex-shrink: 0;
 }
 
-.card-label {
+.chart-title {
     font-size: 13px;
     font-weight: 600;
-    color: var(--text-secondary);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    color: var(--text);
 }
 
-.card-link {
-    font-size: 12px;
-    color: var(--accent);
-    text-decoration: none;
+.chart-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
     font-weight: 500;
-    opacity: 0;
-    transition: opacity 0.2s;
 }
 
-.card:hover .card-link { opacity: 1; }
+.badge-blue { background: rgba(0,122,255,0.1); color: var(--accent); }
+.badge-orange { background: rgba(255,159,10,0.1); color: var(--orange); }
+.badge-green { background: rgba(48,209,88,0.1); color: var(--green); }
 
-.card-body {
+.chart-body {
     flex: 1;
-    padding: 0 22px 18px;
+    padding: 0 14px 14px;
+    min-height: 0;
+    position: relative;
+}
+
+/* ==================== 底部详情区 ==================== */
+.detail-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--gap);
+    padding: 0 var(--pad) var(--gap);
+    height: 160px;
+}
+
+.detail-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 14px 18px;
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s ease-out forwards;
+    overflow: hidden;
 }
 
-/* ==================== 动力煤板块 ==================== */
-.coal-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 14px;
+.detail-card:nth-child(1) { animation-delay: 0.6s; }
+.detail-card:nth-child(2) { animation-delay: 0.7s; }
+.detail-card:nth-child(3) { animation-delay: 0.8s; }
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-shrink: 0;
 }
 
-.coal-item {
-    position: relative;
-    background: var(--bg);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.coal-item:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow);
-}
-
-.coal-item.highlight {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    color: #fff;
-}
-
-.coal-item .label {
-    font-size: 11px;
-    color: var(--text-tertiary);
-    margin-bottom: 6px;
-    font-weight: 500;
-}
-
-.coal-item.highlight .label { color: rgba(255,255,255,0.5); }
-
-.coal-item .value {
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -1px;
-    line-height: 1;
-}
-
-.coal-item .unit {
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    margin-left: 2px;
-}
-
-.coal-item.highlight .unit { color: rgba(255,255,255,0.5); }
-
-.coal-chart-wrap {
-    flex: 1;
-    min-height: 0;
-    position: relative;
-}
-
-/* ==================== LNG板块 ==================== */
-.lng-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 14px;
-}
-
-.lng-item {
-    background: var(--bg);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    position: relative;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.lng-item:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow);
-}
-
-.lng-item-dapeng {
-    background: linear-gradient(135deg, #ff453a 0%, #ff6961 100%);
-    color: #fff;
-}
-
-.lng-item-dapeng .lng-station { color: rgba(255,255,255,0.6); }
-
-.lng-station {
-    font-size: 11px;
-    color: var(--text-tertiary);
-    margin-bottom: 6px;
-    font-weight: 500;
-}
-
-.lng-price {
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -1px;
-    line-height: 1;
-}
-
-.lng-unit {
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--text-secondary);
-    margin-left: 2px;
-}
-
-.lng-item-dapeng .lng-unit { color: rgba(255,255,255,0.6); }
-
-.lng-chart-wrap {
-    flex: 1;
-    min-height: 0;
-    position: relative;
-}
-
-/* ==================== 天气板块 ==================== */
-.weather-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 12px;
-}
-
-.weather-item {
-    background: var(--bg);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    text-align: center;
-    transition: transform 0.2s;
-}
-
-.weather-item:hover { transform: translateY(-1px); }
-
-.weather-city {
+.detail-title {
     font-size: 12px;
     font-weight: 600;
     color: var(--text);
-    margin-bottom: 4px;
 }
 
-.weather-icon {
-    font-size: 22px;
-    margin: 4px 0;
-}
-
-.weather-temp {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -1px;
-}
-
-.weather-desc {
-    font-size: 10px;
-    color: var(--text-tertiary);
-    margin-top: 2px;
-}
-
-.weather-chart-wrap {
-    flex: 1;
-    min-height: 0;
-    position: relative;
-}
-
-/* ==================== 数字动画 ==================== */
-.count-up {
-    display: inline-block;
-}
-
-/* ==================== 进入动画 ==================== */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-in {
-    animation: fadeInUp 0.4s ease-out forwards;
-}
-
-/* ==================== 底部信息 ==================== */
-.bottom-info {
-    position: fixed;
-    bottom: 12px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 11px;
-    color: var(--text-tertiary);
-    z-index: 50;
-}
-
-/* ==================== 进入详情按钮 ==================== */
-.enter-detail {
-    position: absolute;
-    bottom: 14px;
-    right: 18px;
+.detail-link {
     font-size: 11px;
     color: var(--accent);
-    cursor: pointer;
     text-decoration: none;
     font-weight: 500;
-    opacity: 0.6;
+    opacity: 0.7;
     transition: opacity 0.2s;
 }
 
-.enter-detail:hover { opacity: 1; }
+.detail-link:hover { opacity: 1; }
+
+.detail-grid {
+    flex: 1;
+    display: grid;
+    gap: 6px;
+    overflow: hidden;
+}
+
+.detail-grid.coal {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.detail-grid.lng {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.detail-grid.weather {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+}
+
+.detail-item {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.15s;
+}
+
+.detail-item:hover { transform: scale(1.02); }
+
+.detail-item.highlight {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    color: #fff;
+    position: relative;
+}
+
+.detail-item.highlight .di-label { color: rgba(255,255,255,0.5); }
+.detail-item.highlight .di-value { color: #fff; }
+
+.detail-item.highlight::after {
+    content: attr(data-badge);
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 8px;
+    padding: 1px 4px;
+    background: rgba(255,69,58,0.9);
+    color: #fff;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.di-label {
+    font-size: 9px;
+    color: var(--text3);
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.di-value {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1;
+}
+
+.di-unit {
+    font-size: 9px;
+    font-weight: 400;
+    color: var(--text3);
+    margin-left: 1px;
+}
+
+.detail-item.highlight .di-unit { color: rgba(255,255,255,0.4); }
+
+/* ==================== 底部信息 ==================== */
+.footer {
+    position: fixed;
+    bottom: 8px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: var(--text3);
+    z-index: 50;
+    pointer-events: none;
+}
     </style>
 </head>
 <body>
 <div class="dashboard">
     <!-- 顶部导航 -->
     <div class="topbar">
-        <div class="topbar-title">广东电力市场化电价影响因素分析系统</div>
+        <div class="topbar-left">
+            <span class="topbar-title">广东电力市场化电价影响因素分析系统</span>
+        </div>
         <div class="topbar-right">
             <div class="live-dot"></div>
-            <span id="updateTime">数据更新: --</span>
-            <a href="guangdong_fuel_cost_system.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">详细数据 →</a>
+            <span id="updateTime">--</span>
+            <a href="guangdong_fuel_cost_system.html" class="btn-detail">详细数据 →</a>
         </div>
     </div>
 
-    <!-- 主内容三栏 -->
-    <div class="main">
-        <!-- 动力煤 -->
-        <div class="card" id="cardCoal">
-            <div class="card-header">
-                <span class="card-label">动力煤 CCTD</span>
-                <a href="guangdong_fuel_cost_system.html" class="card-link">查看详情 →</a>
+    <!-- KPI行：6个核心指标 -->
+    <div class="kpi-row">
+        <div class="kpi-card">
+            <span class="kpi-label">CCTD 5500大卡</span>
+            <span class="kpi-value"><span class="count-up" data-target="717">0</span><span class="kpi-unit">元/吨</span></span>
+            <canvas class="kpi-spark" id="spark1"></canvas>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">CCTD 5000大卡</span>
+            <span class="kpi-value"><span class="count-up" data-target="650">0</span><span class="kpi-unit">元/吨</span></span>
+            <canvas class="kpi-spark" id="spark2"></canvas>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">CCTD 4500大卡</span>
+            <span class="kpi-value"><span class="count-up" data-target="582">0</span><span class="kpi-unit">元/吨</span></span>
+            <canvas class="kpi-spark" id="spark3"></canvas>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">大鹏 LNG</span>
+            <span class="kpi-value"><span class="count-up" data-target="7300">0</span><span class="kpi-unit">元/吨</span></span>
+            <canvas class="kpi-spark" id="spark4"></canvas>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">广州 最高温</span>
+            <span class="kpi-value"><span class="count-up" data-target="32">0</span><span class="kpi-unit">°C</span></span>
+            <canvas class="kpi-spark" id="spark5"></canvas>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">年长协 5500大卡</span>
+            <span class="kpi-value"><span class="count-up" data-target="697">0</span><span class="kpi-unit">元/吨</span></span>
+            <canvas class="kpi-spark" id="spark6"></canvas>
+        </div>
+    </div>
+
+    <!-- 中间图表区 -->
+    <div class="charts-row">
+        <div class="chart-panel">
+            <div class="chart-header">
+                <span class="chart-title">动力煤价格走势</span>
+                <span class="chart-badge badge-blue">CCTD</span>
             </div>
-            <div class="card-body">
-                <div class="coal-grid">
-                    <div class="coal-item highlight">
-                        <div class="label">5500大卡 综合交易</div>
-                        <div class="value"><span class="count-up" data-target="717">0</span><span class="unit">元/吨</span></div>
-                    </div>
-                    <div class="coal-item">
-                        <div class="label">5000大卡 综合交易</div>
-                        <div class="value"><span class="count-up" data-target="650">0</span><span class="unit">元/吨</span></div>
-                    </div>
-                    <div class="coal-item">
-                        <div class="label">4500大卡 综合交易</div>
-                        <div class="value"><span class="count-up" data-target="582">0</span><span class="unit">元/吨</span></div>
-                    </div>
-                    <div class="coal-item">
-                        <div class="label">5500大卡 年度长协</div>
-                        <div class="value"><span class="count-up" data-target="697">0</span><span class="unit">元/吨</span></div>
-                    </div>
+            <div class="chart-body"><canvas id="coalChart"></canvas></div>
+        </div>
+        <div class="chart-panel">
+            <div class="chart-header">
+                <span class="chart-title">LNG接收站价格</span>
+                <span class="chart-badge badge-orange">4站点</span>
+            </div>
+            <div class="chart-body"><canvas id="lngChart"></canvas></div>
+        </div>
+        <div class="chart-panel">
+            <div class="chart-header">
+                <span class="chart-title">6城市气温趋势</span>
+                <span class="chart-badge badge-green">10日</span>
+            </div>
+            <div class="chart-body"><canvas id="weatherChart"></canvas></div>
+        </div>
+    </div>
+
+    <!-- 底部详情区 -->
+    <div class="detail-row">
+        <!-- 动力煤详情 -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <span class="detail-title">动力煤 CCTD</span>
+                <a href="guangdong_fuel_cost_system.html" class="detail-link">查看详情 →</a>
+            </div>
+            <div class="detail-grid coal">
+                <div class="detail-item highlight" data-badge="基准价">
+                    <span class="di-label">5500 综合交易</span>
+                    <span class="di-value">717<span class="di-unit">元/吨</span></span>
                 </div>
-                <div class="coal-chart-wrap">
-                    <canvas id="coalMiniChart"></canvas>
+                <div class="detail-item">
+                    <span class="di-label">5000 综合交易</span>
+                    <span class="di-value">650<span class="di-unit">元/吨</span></span>
+                </div>
+                <div class="detail-item">
+                    <span class="di-label">4500 综合交易</span>
+                    <span class="di-value">582<span class="di-unit">元/吨</span></span>
+                </div>
+                <div class="detail-item">
+                    <span class="di-label">5500 年度长协</span>
+                    <span class="di-value">697<span class="di-unit">元/吨</span></span>
                 </div>
             </div>
-            <a href="guangdong_fuel_cost_system.html" class="enter-detail">详细分析 →</a>
         </div>
 
-        <!-- LNG -->
-        <div class="card" id="cardLng">
-            <div class="card-header">
-                <span class="card-label">液化天然气 LNG</span>
-                <a href="guangdong_fuel_cost_system.html" class="card-link">查看详情 →</a>
+        <!-- LNG详情 -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <span class="detail-title">液化天然气 LNG</span>
+                <a href="guangdong_fuel_cost_system.html" class="detail-link">查看详情 →</a>
             </div>
-            <div class="card-body">
-                <div class="lng-grid">
-                    <div class="lng-item lng-item-dapeng">
-                        <div class="lng-station">大鹏接收站</div>
-                        <div class="lng-price"><span class="count-up" data-target="7300">0</span><span class="lng-unit">元/吨</span></div>
-                    </div>
-                    <div class="lng-item">
-                        <div class="lng-station">珠海金湾</div>
-                        <div class="lng-price"><span class="count-up" data-target="6600">0</span><span class="lng-unit">元/吨</span></div>
-                    </div>
-                    <div class="lng-item">
-                        <div class="lng-station">深圳迭福</div>
-                        <div class="lng-price"><span class="count-up" data-target="6500">0</span><span class="lng-unit">元/吨</span></div>
-                    </div>
-                    <div class="lng-item">
-                        <div class="lng-station">粤东揭阳</div>
-                        <div class="lng-price"><span class="count-up" data-target="6600">0</span><span class="lng-unit">元/吨</span></div>
-                    </div>
+            <div class="detail-grid lng">
+                <div class="detail-item highlight" data-badge="最高价">
+                    <span class="di-label">大鹏接收站</span>
+                    <span class="di-value">7300<span class="di-unit">元/吨</span></span>
                 </div>
-                <div class="lng-chart-wrap">
-                    <canvas id="lngMiniChart"></canvas>
+                <div class="detail-item">
+                    <span class="di-label">珠海金湾</span>
+                    <span class="di-value">6600<span class="di-unit">元/吨</span></span>
+                </div>
+                <div class="detail-item">
+                    <span class="di-label">深圳迭福</span>
+                    <span class="di-value">6500<span class="di-unit">元/吨</span></span>
+                </div>
+                <div class="detail-item">
+                    <span class="di-label">粤东揭阳</span>
+                    <span class="di-value">6600<span class="di-unit">元/吨</span></span>
                 </div>
             </div>
-            <a href="guangdong_fuel_cost_system.html" class="enter-detail">详细分析 →</a>
         </div>
 
-        <!-- 天气 -->
-        <div class="card" id="cardWeather">
-            <div class="card-header">
-                <span class="card-label">天气预报 6城市</span>
-                <a href="guangdong_fuel_cost_system.html" class="card-link">查看详情 →</a>
+        <!-- 天气详情 -->
+        <div class="detail-card">
+            <div class="detail-header">
+                <span class="detail-title">天气预报 6城市</span>
+                <a href="guangdong_fuel_cost_system.html" class="detail-link">查看详情 →</a>
             </div>
-            <div class="card-body">
-                <div class="weather-grid">
-                    <div class="weather-item">
-                        <div class="weather-city">广州</div>
-                        <div class="weather-icon">⛅</div>
-                        <div class="weather-temp">32°</div>
-                        <div class="weather-desc">多云转阵雨</div>
-                    </div>
-                    <div class="weather-item">
-                        <div class="weather-city">深圳</div>
-                        <div class="weather-icon">🌧</div>
-                        <div class="weather-temp">31°</div>
-                        <div class="weather-desc">阵雨</div>
-                    </div>
-                    <div class="weather-item">
-                        <div class="weather-city">珠海</div>
-                        <div class="weather-icon">🌧</div>
-                        <div class="weather-temp">30°</div>
-                        <div class="weather-desc">中雨</div>
-                    </div>
-                    <div class="weather-item">
-                        <div class="weather-city">韶关</div>
-                        <div class="weather-icon">☀️</div>
-                        <div class="weather-temp">28°</div>
-                        <div class="weather-desc">晴</div>
-                    </div>
-                    <div class="weather-item">
-                        <div class="weather-city">阳江</div>
-                        <div class="weather-icon">🌧</div>
-                        <div class="weather-temp">31°</div>
-                        <div class="weather-desc">大雨</div>
-                    </div>
-                    <div class="weather-item">
-                        <div class="weather-city">揭阳</div>
-                        <div class="weather-icon">⛅</div>
-                        <div class="weather-temp">30°</div>
-                        <div class="weather-desc">多云转阵雨</div>
-                    </div>
+            <div class="detail-grid weather">
+                <div class="detail-item">
+                    <span class="di-label">广州</span>
+                    <span class="di-value">32<span class="di-unit">°C</span></span>
                 </div>
-                <div class="weather-chart-wrap">
-                    <canvas id="weatherMiniChart"></canvas>
+                <div class="detail-item">
+                    <span class="di-label">深圳</span>
+                    <span class="di-value">31<span class="di-unit">°C</span></span>
+                </div>
+                <div class="detail-item">
+                    <span class="di-label">珠海</span>
+                    <span class="di-value">30<span class="di-unit">°C</span></span>
+                </div>
+                <div class="detail-item">
+                    <span class="di-label">韶关</span>
+                    <span class="di-value">28<span class="di-unit">°C</span></span>
+                </div>
+                <div class="detail-item">
+                    <span class="di-label">阳江</span>
+                    <span class="di-value">31<span class="di-unit">°C</span></span>
+                </div>
+                <div class="detail-item">
+                    <span class="di-label">揭阳</span>
+                    <span class="di-value">30<span class="di-unit">°C</span></span>
                 </div>
             </div>
-            <a href="guangdong_fuel_cost_system.html" class="enter-detail">详细分析 →</a>
         </div>
     </div>
 </div>
 
-<div class="bottom-info">广东电力市场化电价影响因素分析系统 · 数据来源：CCTD / SHPGX / 中国天气网</div>
+<div class="footer">数据来源：CCTD / SHPGX / 中国天气网 · 更新时间：2026-06-11</div>
 
 <script>
 // ==================== 数字递增动画 ====================
 function animateCountUp() {
     document.querySelectorAll('.count-up').forEach(el => {
         const target = parseInt(el.dataset.target);
-        const duration = 1200;
+        const duration = 1000;
         const start = performance.now();
-        
         function update(now) {
-            const elapsed = now - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
+            const p = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
             el.textContent = Math.round(target * eased);
-            if (progress < 1) requestAnimationFrame(update);
+            if (p < 1) requestAnimationFrame(update);
         }
         requestAnimationFrame(update);
     });
 }
 
+// ==================== 迷你火花图 ====================
+function drawSparkline(canvasId, data, color) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.parentElement.clientWidth - 32;
+    const h = canvas.height = 24;
+    
+    const min = Math.min(...data) * 0.98;
+    const max = Math.max(...data) * 1.02;
+    const range = max - min || 1;
+    
+    ctx.clearRect(0, 0, w, h);
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([3, 3]);
+    
+    data.forEach((v, i) => {
+        const x = (i / (data.length - 1)) * w;
+        const y = h - ((v - min) / range) * h;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    
+    // 端点
+    const lastX = w;
+    const lastY = h - ((data[data.length - 1] - min) / range) * h;
+    ctx.beginPath();
+    ctx.arc(lastX, lastY, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+}
+
 // ==================== 更新时间 ====================
 function updateTimestamp() {
     const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, '0');
-    const d = String(now.getDate()).padStart(2, '0');
-    document.getElementById('updateTime').textContent = `数据更新: ${y}-${m}-${d}`;
+    document.getElementById('updateTime').textContent = 
+        `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
 }
 
-// ==================== 动力煤迷你图 ====================
-function initCoalMiniChart() {
-    const ctx = document.getElementById('coalMiniChart');
-    if (!ctx) return;
-    
-    const dates = ['05-06','05-07','05-08','05-09','05-11','05-12','05-13','05-14','05-15','05-16','05-17','05-18','05-19','05-20','05-21','05-22','05-23','05-24','05-25','05-26'];
-    const data5500 = [720,718,715,717,719,721,718,716,717,715,714,716,718,717,715,713,712,714,716,717];
-    const data5000 = [655,653,650,652,654,656,653,651,650,648,647,649,651,650,648,646,645,647,649,650];
-    
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: [{
-                label: '5500大卡',
-                data: data5500,
-                borderColor: '#007aff',
-                borderWidth: 2,
-                borderDash: [4, 4],
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                tension: 0.4,
-                fill: false
-            }, {
-                label: '5000大卡',
-                data: data5000,
-                borderColor: '#30d158',
-                borderWidth: 2,
-                borderDash: [4, 4],
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                tension: 0.4,
-                fill: false
-            }]
+// ==================== 主图表 ====================
+function initCharts() {
+    const dates = ['05-06','05-08','05-10','05-12','05-14','05-16','05-18','05-20','05-22','05-24','05-26'];
+    const commonOpts = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: true, position: 'top', align: 'end', labels: { boxWidth: 10, boxHeight: 2, padding: 8, font: { size: 10 } } } },
+        scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 6 } },
+            y: { position: 'right', grid: { color: 'rgba(0,0,0,0.03)' }, ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 4 } }
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    align: 'end',
-                    labels: { boxWidth: 12, boxHeight: 2, padding: 8, font: { size: 10 }, usePointStyle: false }
-                }
-            },
-            scales: {
-                x: {
-                    display: true,
-                    grid: { display: false },
-                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 6 }
-                },
-                y: {
-                    display: true,
-                    position: 'right',
-                    grid: { color: 'rgba(0,0,0,0.03)' },
-                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 4 }
-                }
-            },
-            interaction: { mode: 'index', intersect: false },
-            animation: { duration: 1500, easing: 'easeOutQuart' }
-        }
+        interaction: { mode: 'index', intersect: false },
+        animation: { duration: 1200, easing: 'easeOutQuart' }
+    };
+    const ds = (label, data, color) => ({
+        label, data, borderColor: color, borderWidth: 2, borderDash: [4,4],
+        pointRadius: 0, pointHoverRadius: 3, tension: 0.4, fill: false
     });
-}
 
-// ==================== LNG迷你图 ====================
-function initLngMiniChart() {
-    const ctx = document.getElementById('lngMiniChart');
-    if (!ctx) return;
-    
-    const dates = ['05-06','05-07','05-08','05-09','05-11','05-12','05-13','05-14','05-15','05-16','05-17','05-18','05-19','05-20','05-21','05-22','05-23','05-24','05-25','05-26'];
-    const dapeng = [7100,7150,7200,7250,7280,7300,7290,7280,7270,7260,7250,7260,7270,7280,7290,7300,7310,7300,7290,7300];
-    const zhuhaiv = [6400,6420,6450,6480,6500,6520,6540,6560,6580,6590,6600,6590,6580,6590,6600,6610,6600,6590,6600,6600];
-    
-    new Chart(ctx, {
+    // 动力煤
+    new Chart(document.getElementById('coalChart'), {
         type: 'line',
         data: {
             labels: dates,
-            datasets: [{
-                label: '大鹏',
-                data: dapeng,
-                borderColor: '#ff453a',
-                borderWidth: 2,
-                borderDash: [4, 4],
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                tension: 0.4,
-                fill: false
-            }, {
-                label: '珠海金湾',
-                data: zhuhaiv,
-                borderColor: '#ff9f0a',
-                borderWidth: 2,
-                borderDash: [4, 4],
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                tension: 0.4,
-                fill: false
-            }]
+            datasets: [
+                ds('5500大卡', [720,715,717,721,716,715,716,717,714,716,717], '#007aff'),
+                ds('5000大卡', [655,650,652,656,651,648,649,650,647,649,650], '#30d158'),
+                ds('4500大卡', [585,580,582,586,581,578,579,580,577,579,582], '#ff9f0a')
+            ]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    align: 'end',
-                    labels: { boxWidth: 12, boxHeight: 2, padding: 8, font: { size: 10 }, usePointStyle: false }
-                }
-            },
-            scales: {
-                x: {
-                    display: true,
-                    grid: { display: false },
-                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 6 }
-                },
-                y: {
-                    display: true,
-                    position: 'right',
-                    grid: { color: 'rgba(0,0,0,0.03)' },
-                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 4 }
-                }
-            },
-            interaction: { mode: 'index', intersect: false },
-            animation: { duration: 1500, easing: 'easeOutQuart' }
-        }
+        options: commonOpts
     });
-}
 
-// ==================== 天气迷你图 ====================
-function initWeatherMiniChart() {
-    const ctx = document.getElementById('weatherMiniChart');
-    if (!ctx) return;
-    
-    const dates = ['06-12','06-13','06-14','06-15','06-16','06-17','06-18','06-19','06-20','06-21'];
-    const gz = [32,31,30,29,30,31,32,33,32,31];
-    const sz = [31,30,29,28,29,30,31,32,31,30];
-    const zs = [30,29,28,27,28,29,30,31,30,29];
-    
-    new Chart(ctx, {
+    // LNG
+    new Chart(document.getElementById('lngChart'), {
         type: 'line',
         data: {
             labels: dates,
-            datasets: [{
-                label: '广州',
-                data: gz,
-                borderColor: '#ff453a',
-                borderWidth: 2,
-                borderDash: [4, 4],
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                tension: 0.4,
-                fill: false
-            }, {
-                label: '深圳',
-                data: sz,
-                borderColor: '#007aff',
-                borderWidth: 2,
-                borderDash: [4, 4],
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                tension: 0.4,
-                fill: false
-            }, {
-                label: '珠海',
-                data: zs,
-                borderColor: '#30d158',
-                borderWidth: 2,
-                borderDash: [4, 4],
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                tension: 0.4,
-                fill: false
-            }]
+            datasets: [
+                ds('大鹏', [7100,7200,7250,7280,7290,7260,7270,7290,7300,7290,7300], '#ff453a'),
+                ds('珠海金湾', [6400,6450,6500,6540,6580,6590,6600,6590,6600,6610,6600], '#ff9f0a'),
+                ds('深圳迭福', [6350,6400,6450,6480,6500,6490,6500,6510,6500,6490,6500], '#bf5af2'),
+                ds('粤东揭阳', [6400,6450,6480,6520,6560,6580,6600,6590,6600,6610,6600], '#64d2ff')
+            ]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    align: 'end',
-                    labels: { boxWidth: 12, boxHeight: 2, padding: 8, font: { size: 10 }, usePointStyle: false }
-                }
-            },
-            scales: {
-                x: {
-                    display: true,
-                    grid: { display: false },
-                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 5 }
-                },
-                y: {
-                    display: true,
-                    position: 'right',
-                    grid: { color: 'rgba(0,0,0,0.03)' },
-                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 4, callback: v => v + '°' }
-                }
-            },
-            interaction: { mode: 'index', intersect: false },
-            animation: { duration: 1500, easing: 'easeOutQuart' }
-        }
+        options: commonOpts
+    });
+
+    // 天气
+    new Chart(document.getElementById('weatherChart'), {
+        type: 'line',
+        data: {
+            labels: ['06-12','06-13','06-14','06-15','06-16','06-17','06-18','06-19','06-20','06-21'],
+            datasets: [
+                ds('广州', [32,31,30,29,30,31,32,33,32,31], '#ff453a'),
+                ds('深圳', [31,30,29,28,29,30,31,32,31,30], '#007aff'),
+                ds('珠海', [30,29,28,27,28,29,30,31,30,29], '#30d158')
+            ]
+        },
+        options: { ...commonOpts, scales: { ...commonOpts.scales, y: { ...commonOpts.scales.y, ticks: { ...commonOpts.scales.y.ticks, callback: v => v + '°' } } } }
     });
 }
 
@@ -733,9 +696,18 @@ function initWeatherMiniChart() {
 document.addEventListener('DOMContentLoaded', function() {
     updateTimestamp();
     animateCountUp();
-    initCoalMiniChart();
-    initLngMiniChart();
-    initWeatherMiniChart();
+    
+    // 火花图数据
+    setTimeout(() => {
+        drawSparkline('spark1', [720,718,715,717,719,721,718,716,717,715,714,716,718,717,715,713,712,714,716,717], '#007aff');
+        drawSparkline('spark2', [655,653,650,652,654,656,653,651,650,648,647,649,651,650,648,646,645,647,649,650], '#30d158');
+        drawSparkline('spark3', [585,583,580,582,584,586,583,581,580,578,577,579,581,580,578,576,575,577,579,582], '#ff9f0a');
+        drawSparkline('spark4', [7100,7150,7200,7250,7280,7300,7290,7280,7270,7260,7250,7260,7270,7280,7290,7300,7310,7300,7290,7300], '#ff453a');
+        drawSparkline('spark5', [30,31,32,33,32,31,30,29,30,31,32,33,34,33,32,31,30,31,32,32], '#bf5af2');
+        drawSparkline('spark6', [700,698,697,696,697,698,697,696,697,698,697,696,697,698,697,696,697,698,697,697], '#64d2ff');
+    }, 100);
+    
+    initCharts();
 });
 </script>
 </body>
