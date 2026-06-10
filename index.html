@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, initial-scale=1.0">
+    <title>广东电力市场化电价影响因素分析系统 - 总览</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="guangdong_geo.js"></script>
+    <style>
+/* ==================== 极简主义设计系统 ==================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --text: #1d1d1f;
+    --text-secondary: #86868b;
+    --text-tertiary: #aeaeb2;
+    --accent: #007aff;
+    --green: #30d158;
+    --orange: #ff9f0a;
+    --red: #ff453a;
+    --purple: #bf5af2;
+    --teal: #64d2ff;
+    --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+    --shadow-lg: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+    --radius: 20px;
+    --radius-sm: 12px;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==================== 主容器 16:9 ==================== */
+.dashboard {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 56px 1fr;
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+/* ==================== 顶部导航 ==================== */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    z-index: 100;
+}
+
+.topbar-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ==================== 主内容区 ==================== */
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 16px;
+    padding: 16px 24px 20px;
+    overflow: hidden;
+}
+
+/* ==================== 卡片通用 ==================== */
+.card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: cardIn 0.5s ease-out forwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes cardIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px 12px;
+    flex-shrink: 0;
+}
+
+.card-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.card-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.card:hover .card-link { opacity: 1; }
+
+.card-body {
+    flex: 1;
+    padding: 0 22px 18px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* ==================== 动力煤板块 ==================== */
+.coal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.coal-item {
+    position: relative;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.coal-item:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+.coal-item.highlight {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #fff;
+}
+
+.coal-item .label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.coal-item.highlight .label { color: rgba(255,255,255,0.5); }
+
+.coal-item .value {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+.coal-item .unit {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-left: 2px;
+}
+
+.coal-item.highlight .unit { color: rgba(255,255,255,0.5); }
+
+.coal-chart-wrap {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+}
+
+/* ==================== LNG板块 ==================== */
+.lng-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.lng-item {
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lng-item:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+.lng-item-dapeng {
+    background: linear-gradient(135deg, #ff453a 0%, #ff6961 100%);
+    color: #fff;
+}
+
+.lng-item-dapeng .lng-station { color: rgba(255,255,255,0.6); }
+
+.lng-station {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.lng-price {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+.lng-unit {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-left: 2px;
+}
+
+.lng-item-dapeng .lng-unit { color: rgba(255,255,255,0.6); }
+
+.lng-chart-wrap {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+}
+
+/* ==================== 天气板块 ==================== */
+.weather-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.weather-item {
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.weather-item:hover { transform: translateY(-1px); }
+
+.weather-city {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.weather-icon {
+    font-size: 22px;
+    margin: 4px 0;
+}
+
+.weather-temp {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.weather-desc {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+}
+
+.weather-chart-wrap {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+}
+
+/* ==================== 数字动画 ==================== */
+.count-up {
+    display: inline-block;
+}
+
+/* ==================== 进入动画 ==================== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+    animation: fadeInUp 0.4s ease-out forwards;
+}
+
+/* ==================== 底部信息 ==================== */
+.bottom-info {
+    position: fixed;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    z-index: 50;
+}
+
+/* ==================== 进入详情按钮 ==================== */
+.enter-detail {
+    position: absolute;
+    bottom: 14px;
+    right: 18px;
+    font-size: 11px;
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.enter-detail:hover { opacity: 1; }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <!-- 顶部导航 -->
+    <div class="topbar">
+        <div class="topbar-title">广东电力市场化电价影响因素分析系统</div>
+        <div class="topbar-right">
+            <div class="live-dot"></div>
+            <span id="updateTime">数据更新: --</span>
+            <a href="guangdong_fuel_cost_system.html" style="color: var(--accent); text-decoration: none; font-weight: 500;">详细数据 →</a>
+        </div>
+    </div>
+
+    <!-- 主内容三栏 -->
+    <div class="main">
+        <!-- 动力煤 -->
+        <div class="card" id="cardCoal">
+            <div class="card-header">
+                <span class="card-label">动力煤 CCTD</span>
+                <a href="guangdong_fuel_cost_system.html" class="card-link">查看详情 →</a>
+            </div>
+            <div class="card-body">
+                <div class="coal-grid">
+                    <div class="coal-item highlight">
+                        <div class="label">5500大卡 综合交易</div>
+                        <div class="value"><span class="count-up" data-target="717">0</span><span class="unit">元/吨</span></div>
+                    </div>
+                    <div class="coal-item">
+                        <div class="label">5000大卡 综合交易</div>
+                        <div class="value"><span class="count-up" data-target="650">0</span><span class="unit">元/吨</span></div>
+                    </div>
+                    <div class="coal-item">
+                        <div class="label">4500大卡 综合交易</div>
+                        <div class="value"><span class="count-up" data-target="582">0</span><span class="unit">元/吨</span></div>
+                    </div>
+                    <div class="coal-item">
+                        <div class="label">5500大卡 年度长协</div>
+                        <div class="value"><span class="count-up" data-target="697">0</span><span class="unit">元/吨</span></div>
+                    </div>
+                </div>
+                <div class="coal-chart-wrap">
+                    <canvas id="coalMiniChart"></canvas>
+                </div>
+            </div>
+            <a href="guangdong_fuel_cost_system.html" class="enter-detail">详细分析 →</a>
+        </div>
+
+        <!-- LNG -->
+        <div class="card" id="cardLng">
+            <div class="card-header">
+                <span class="card-label">液化天然气 LNG</span>
+                <a href="guangdong_fuel_cost_system.html" class="card-link">查看详情 →</a>
+            </div>
+            <div class="card-body">
+                <div class="lng-grid">
+                    <div class="lng-item lng-item-dapeng">
+                        <div class="lng-station">大鹏接收站</div>
+                        <div class="lng-price"><span class="count-up" data-target="7300">0</span><span class="lng-unit">元/吨</span></div>
+                    </div>
+                    <div class="lng-item">
+                        <div class="lng-station">珠海金湾</div>
+                        <div class="lng-price"><span class="count-up" data-target="6600">0</span><span class="lng-unit">元/吨</span></div>
+                    </div>
+                    <div class="lng-item">
+                        <div class="lng-station">深圳迭福</div>
+                        <div class="lng-price"><span class="count-up" data-target="6500">0</span><span class="lng-unit">元/吨</span></div>
+                    </div>
+                    <div class="lng-item">
+                        <div class="lng-station">粤东揭阳</div>
+                        <div class="lng-price"><span class="count-up" data-target="6600">0</span><span class="lng-unit">元/吨</span></div>
+                    </div>
+                </div>
+                <div class="lng-chart-wrap">
+                    <canvas id="lngMiniChart"></canvas>
+                </div>
+            </div>
+            <a href="guangdong_fuel_cost_system.html" class="enter-detail">详细分析 →</a>
+        </div>
+
+        <!-- 天气 -->
+        <div class="card" id="cardWeather">
+            <div class="card-header">
+                <span class="card-label">天气预报 6城市</span>
+                <a href="guangdong_fuel_cost_system.html" class="card-link">查看详情 →</a>
+            </div>
+            <div class="card-body">
+                <div class="weather-grid">
+                    <div class="weather-item">
+                        <div class="weather-city">广州</div>
+                        <div class="weather-icon">⛅</div>
+                        <div class="weather-temp">32°</div>
+                        <div class="weather-desc">多云转阵雨</div>
+                    </div>
+                    <div class="weather-item">
+                        <div class="weather-city">深圳</div>
+                        <div class="weather-icon">🌧</div>
+                        <div class="weather-temp">31°</div>
+                        <div class="weather-desc">阵雨</div>
+                    </div>
+                    <div class="weather-item">
+                        <div class="weather-city">珠海</div>
+                        <div class="weather-icon">🌧</div>
+                        <div class="weather-temp">30°</div>
+                        <div class="weather-desc">中雨</div>
+                    </div>
+                    <div class="weather-item">
+                        <div class="weather-city">韶关</div>
+                        <div class="weather-icon">☀️</div>
+                        <div class="weather-temp">28°</div>
+                        <div class="weather-desc">晴</div>
+                    </div>
+                    <div class="weather-item">
+                        <div class="weather-city">阳江</div>
+                        <div class="weather-icon">🌧</div>
+                        <div class="weather-temp">31°</div>
+                        <div class="weather-desc">大雨</div>
+                    </div>
+                    <div class="weather-item">
+                        <div class="weather-city">揭阳</div>
+                        <div class="weather-icon">⛅</div>
+                        <div class="weather-temp">30°</div>
+                        <div class="weather-desc">多云转阵雨</div>
+                    </div>
+                </div>
+                <div class="weather-chart-wrap">
+                    <canvas id="weatherMiniChart"></canvas>
+                </div>
+            </div>
+            <a href="guangdong_fuel_cost_system.html" class="enter-detail">详细分析 →</a>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-info">广东电力市场化电价影响因素分析系统 · 数据来源：CCTD / SHPGX / 中国天气网</div>
+
+<script>
+// ==================== 数字递增动画 ====================
+function animateCountUp() {
+    document.querySelectorAll('.count-up').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        const duration = 1200;
+        const start = performance.now();
+        
+        function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(target * eased);
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    });
+}
+
+// ==================== 更新时间 ====================
+function updateTimestamp() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+    document.getElementById('updateTime').textContent = `数据更新: ${y}-${m}-${d}`;
+}
+
+// ==================== 动力煤迷你图 ====================
+function initCoalMiniChart() {
+    const ctx = document.getElementById('coalMiniChart');
+    if (!ctx) return;
+    
+    const dates = ['05-06','05-07','05-08','05-09','05-11','05-12','05-13','05-14','05-15','05-16','05-17','05-18','05-19','05-20','05-21','05-22','05-23','05-24','05-25','05-26'];
+    const data5500 = [720,718,715,717,719,721,718,716,717,715,714,716,718,717,715,713,712,714,716,717];
+    const data5000 = [655,653,650,652,654,656,653,651,650,648,647,649,651,650,648,646,645,647,649,650];
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: '5500大卡',
+                data: data5500,
+                borderColor: '#007aff',
+                borderWidth: 2,
+                borderDash: [4, 4],
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                tension: 0.4,
+                fill: false
+            }, {
+                label: '5000大卡',
+                data: data5000,
+                borderColor: '#30d158',
+                borderWidth: 2,
+                borderDash: [4, 4],
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                tension: 0.4,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    align: 'end',
+                    labels: { boxWidth: 12, boxHeight: 2, padding: 8, font: { size: 10 }, usePointStyle: false }
+                }
+            },
+            scales: {
+                x: {
+                    display: true,
+                    grid: { display: false },
+                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 6 }
+                },
+                y: {
+                    display: true,
+                    position: 'right',
+                    grid: { color: 'rgba(0,0,0,0.03)' },
+                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 4 }
+                }
+            },
+            interaction: { mode: 'index', intersect: false },
+            animation: { duration: 1500, easing: 'easeOutQuart' }
+        }
+    });
+}
+
+// ==================== LNG迷你图 ====================
+function initLngMiniChart() {
+    const ctx = document.getElementById('lngMiniChart');
+    if (!ctx) return;
+    
+    const dates = ['05-06','05-07','05-08','05-09','05-11','05-12','05-13','05-14','05-15','05-16','05-17','05-18','05-19','05-20','05-21','05-22','05-23','05-24','05-25','05-26'];
+    const dapeng = [7100,7150,7200,7250,7280,7300,7290,7280,7270,7260,7250,7260,7270,7280,7290,7300,7310,7300,7290,7300];
+    const zhuhaiv = [6400,6420,6450,6480,6500,6520,6540,6560,6580,6590,6600,6590,6580,6590,6600,6610,6600,6590,6600,6600];
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: '大鹏',
+                data: dapeng,
+                borderColor: '#ff453a',
+                borderWidth: 2,
+                borderDash: [4, 4],
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                tension: 0.4,
+                fill: false
+            }, {
+                label: '珠海金湾',
+                data: zhuhaiv,
+                borderColor: '#ff9f0a',
+                borderWidth: 2,
+                borderDash: [4, 4],
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                tension: 0.4,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    align: 'end',
+                    labels: { boxWidth: 12, boxHeight: 2, padding: 8, font: { size: 10 }, usePointStyle: false }
+                }
+            },
+            scales: {
+                x: {
+                    display: true,
+                    grid: { display: false },
+                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 6 }
+                },
+                y: {
+                    display: true,
+                    position: 'right',
+                    grid: { color: 'rgba(0,0,0,0.03)' },
+                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 4 }
+                }
+            },
+            interaction: { mode: 'index', intersect: false },
+            animation: { duration: 1500, easing: 'easeOutQuart' }
+        }
+    });
+}
+
+// ==================== 天气迷你图 ====================
+function initWeatherMiniChart() {
+    const ctx = document.getElementById('weatherMiniChart');
+    if (!ctx) return;
+    
+    const dates = ['06-12','06-13','06-14','06-15','06-16','06-17','06-18','06-19','06-20','06-21'];
+    const gz = [32,31,30,29,30,31,32,33,32,31];
+    const sz = [31,30,29,28,29,30,31,32,31,30];
+    const zs = [30,29,28,27,28,29,30,31,30,29];
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: '广州',
+                data: gz,
+                borderColor: '#ff453a',
+                borderWidth: 2,
+                borderDash: [4, 4],
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                tension: 0.4,
+                fill: false
+            }, {
+                label: '深圳',
+                data: sz,
+                borderColor: '#007aff',
+                borderWidth: 2,
+                borderDash: [4, 4],
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                tension: 0.4,
+                fill: false
+            }, {
+                label: '珠海',
+                data: zs,
+                borderColor: '#30d158',
+                borderWidth: 2,
+                borderDash: [4, 4],
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                tension: 0.4,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    align: 'end',
+                    labels: { boxWidth: 12, boxHeight: 2, padding: 8, font: { size: 10 }, usePointStyle: false }
+                }
+            },
+            scales: {
+                x: {
+                    display: true,
+                    grid: { display: false },
+                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 5 }
+                },
+                y: {
+                    display: true,
+                    position: 'right',
+                    grid: { color: 'rgba(0,0,0,0.03)' },
+                    ticks: { font: { size: 9 }, color: '#aeaeb2', maxTicksLimit: 4, callback: v => v + '°' }
+                }
+            },
+            interaction: { mode: 'index', intersect: false },
+            animation: { duration: 1500, easing: 'easeOutQuart' }
+        }
+    });
+}
+
+// ==================== 初始化 ====================
+document.addEventListener('DOMContentLoaded', function() {
+    updateTimestamp();
+    animateCountUp();
+    initCoalMiniChart();
+    initLngMiniChart();
+    initWeatherMiniChart();
+});
+</script>
+</body>
+</html>
