@@ -6,7 +6,6 @@
     <title>广东电力市场化电价影响因素分析系统 - 总览</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-/* ==================== 极简主义 + 暖色调设计系统 ==================== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -17,17 +16,16 @@
     --text3: #b0b0b0;
     --accent: #e8614d;
     --accent-light: #fdf0ee;
-    --accent-dark: #d4503c;
     --green: #4caf50;
     --orange: #ff9800;
     --blue: #5c9ce6;
     --purple: #9b7fd4;
     --shadow: 0 1px 2px rgba(0,0,0,0.03), 0 4px 16px rgba(0,0,0,0.02);
     --shadow-hover: 0 2px 8px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.03);
-    --radius: 20px;
-    --radius-sm: 14px;
-    --gap: 14px;
-    --pad: 24px;
+    --radius: 16px;
+    --radius-sm: 12px;
+    --gap: 10px;
+    --pad: 16px;
 }
 
 html, body {
@@ -40,16 +38,16 @@ html, body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* ==================== 主容器 ==================== */
+/* 主容器 - 严格100vh */
 .dashboard {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 60px 1fr;
+    grid-template-rows: 48px 1fr;
     overflow: hidden;
 }
 
-/* ==================== 顶部导航 ==================== */
+/* 顶部导航 */
 .topbar {
     display: flex;
     align-items: center;
@@ -58,55 +56,50 @@ html, body {
     background: var(--surface);
     border-bottom: 1px solid rgba(0,0,0,0.04);
     z-index: 100;
+    flex-shrink: 0;
 }
 
 .topbar-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .logo {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     background: var(--accent);
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
 }
 
 .topbar-title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
-    color: var(--text);
-}
-
-.topbar-subtitle {
-    font-size: 11px;
-    color: var(--text3);
 }
 
 .topbar-right {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
 }
 
 .topbar-time {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 13px;
+    gap: 6px;
+    font-size: 12px;
     color: var(--text2);
 }
 
 .live-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     background: var(--green);
     border-radius: 50%;
     animation: pulse 2s ease-in-out infinite;
@@ -118,51 +111,48 @@ html, body {
 }
 
 .btn-home {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
+    padding: 6px 14px;
     background: var(--accent);
     color: #fff;
-    border-radius: 10px;
-    font-size: 13px;
+    border-radius: 8px;
+    font-size: 12px;
     font-weight: 500;
     text-decoration: none;
     transition: all 0.2s;
 }
 
-.btn-home:hover {
-    background: var(--accent-dark);
-    transform: translateY(-1px);
-}
+.btn-home:hover { background: #d4503c; }
 
-/* ==================== 主内容区 - 不对称网格 ==================== */
+/* 主内容区 - 严格填充剩余空间 */
 .main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr 1fr;
     gap: var(--gap);
     padding: var(--gap) var(--pad);
+    min-height: 0;
     overflow: hidden;
 }
 
-/* ==================== 卡片通用 ==================== */
+/* 卡片通用 */
 .card {
     background: var(--surface);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    padding: 20px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
     opacity: 0;
-    transform: translateY(8px);
-    animation: fadeIn 0.4s ease-out forwards;
-    transition: box-shadow 0.25s, transform 0.25s;
+    transform: translateY(6px);
+    animation: fadeIn 0.35s ease-out forwards;
+    transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .card:hover {
     box-shadow: var(--shadow-hover);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 @keyframes fadeIn {
@@ -176,105 +166,98 @@ html, body {
 .card:nth-child(5) { animation-delay: 0.25s; }
 .card:nth-child(6) { animation-delay: 0.3s; }
 .card:nth-child(7) { animation-delay: 0.35s; }
+.card:nth-child(8) { animation-delay: 0.4s; }
 
 .card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
 }
 
 .card-title {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    color: var(--text);
 }
 
 .card-badge {
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 8px;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
     font-weight: 500;
     background: var(--accent-light);
     color: var(--accent);
 }
 
 .card-link {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--accent);
     text-decoration: none;
     font-weight: 500;
-    opacity: 0.8;
-    transition: opacity 0.2s;
 }
 
-.card-link:hover { opacity: 1; }
-
-/* ==================== KPI大卡片 ==================== */
+/* KPI大卡片 */
 .kpi-large {
     grid-column: span 2;
-    padding: 24px;
+    padding: 16px 18px;
 }
 
 .kpi-value {
-    font-size: 42px;
+    font-size: 32px;
     font-weight: 700;
-    letter-spacing: -2px;
+    letter-spacing: -1.5px;
     line-height: 1;
-    color: var(--text);
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
-.kpi-value .accent {
-    color: var(--accent);
-}
+.kpi-value .accent { color: var(--accent); }
 
 .kpi-unit {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: var(--text3);
-    margin-left: 4px;
+    margin-left: 3px;
 }
 
 .kpi-label {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text2);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .kpi-change {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
-    padding: 4px 8px;
-    border-radius: 6px;
-    margin-top: 8px;
+    padding: 3px 6px;
+    border-radius: 5px;
+    margin-top: 6px;
 }
 
-.kpi-change.up {
-    background: #fef3f2;
-    color: var(--accent);
+.kpi-change.up { background: #fef3f2; color: var(--accent); }
+.kpi-change.down { background: #f0fdf4; color: var(--green); }
+
+.chart-wrap {
+    flex: 1;
+    min-height: 0;
+    position: relative;
 }
 
-.kpi-change.down {
-    background: #f0fdf4;
-    color: var(--green);
-}
-
-/* ==================== 环形图卡片 ==================== */
+/* 环形图卡片 */
 .ring-card {
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding: 12px;
 }
 
 .ring-wrap {
     position: relative;
-    width: 100px;
-    height: 100px;
-    margin: 8px 0;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
 }
 
 .ring-center {
@@ -286,30 +269,29 @@ html, body {
 }
 
 .ring-percent {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
-    color: var(--text);
 }
 
 .ring-label {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--text3);
 }
 
-/* ==================== 迷你图卡片 ==================== */
-.mini-chart-wrap {
-    flex: 1;
-    min-height: 0;
-    position: relative;
+.ring-desc {
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 6px;
 }
 
-/* ==================== 列表卡片 ==================== */
+/* 列表卡片 */
 .list-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 7px 0;
     border-bottom: 1px solid rgba(0,0,0,0.03);
+    flex-shrink: 0;
 }
 
 .list-item:last-child { border-bottom: none; }
@@ -317,47 +299,50 @@ html, body {
 .list-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .list-dot {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     flex-shrink: 0;
 }
 
 .list-name {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
-    color: var(--text);
 }
 
 .list-value {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    color: var(--text);
 }
 
 .list-unit {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--text3);
     margin-left: 2px;
 }
 
-/* ==================== 天气网格 ==================== */
+/* 天气网格 */
 .weather-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    gap: 6px;
     flex: 1;
+    min-height: 0;
 }
 
 .weather-item {
     background: var(--bg);
-    border-radius: 12px;
-    padding: 12px 8px;
+    border-radius: 10px;
+    padding: 10px 6px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     transition: transform 0.15s;
 }
 
@@ -366,12 +351,11 @@ html, body {
 .weather-city {
     font-size: 11px;
     font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .weather-temp {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--accent);
     letter-spacing: -1px;
@@ -380,23 +364,20 @@ html, body {
 .weather-desc {
     font-size: 9px;
     color: var(--text3);
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
-/* ==================== 网格布局 ==================== */
+/* 网格跨度 */
 .span-2 { grid-column: span 2; }
-.span-3 { grid-column: span 3; }
-.span-4 { grid-column: span 4; }
-.row-span-2 { grid-row: span 2; }
 
-/* ==================== 底部信息 ==================== */
+/* 底部信息 */
 .footer {
     position: fixed;
-    bottom: 10px;
+    bottom: 6px;
     left: 0;
     right: 0;
     text-align: center;
-    font-size: 10px;
+    font-size: 9px;
     color: var(--text3);
     z-index: 50;
     pointer-events: none;
@@ -405,14 +386,10 @@ html, body {
 </head>
 <body>
 <div class="dashboard">
-    <!-- 顶部导航 -->
     <div class="topbar">
         <div class="topbar-left">
             <div class="logo">粤</div>
-            <div>
-                <div class="topbar-title">广东电力市场化电价分析</div>
-                <div class="topbar-subtitle">Electricity Market Price Analysis</div>
-            </div>
+            <div class="topbar-title">广东电力市场化电价分析</div>
         </div>
         <div class="topbar-right">
             <div class="topbar-time">
@@ -423,10 +400,9 @@ html, body {
         </div>
     </div>
 
-    <!-- 主内容区 - 不对称网格 -->
     <div class="main">
-        <!-- 动力煤主KPI -->
-        <div class="card kpi-large" id="cardCoalMain">
+        <!-- 第一行：2个KPI大卡 + 2个环形图 -->
+        <div class="card kpi-large">
             <div class="card-header">
                 <span class="card-title">CCTD 动力煤</span>
                 <span class="card-badge">综合交易</span>
@@ -434,11 +410,10 @@ html, body {
             <div class="kpi-label">5500大卡基准价</div>
             <div class="kpi-value"><span class="accent">717</span><span class="kpi-unit">元/吨</span></div>
             <div class="kpi-change down">较上周 -0.3%</div>
-            <div class="mini-chart-wrap"><canvas id="coalMainChart"></canvas></div>
+            <div class="chart-wrap"><canvas id="coalMainChart"></canvas></div>
         </div>
 
-        <!-- LNG主KPI -->
-        <div class="card kpi-large" id="cardLngMain">
+        <div class="card kpi-large">
             <div class="card-header">
                 <span class="card-title">LNG 接收站</span>
                 <span class="card-badge">4站点</span>
@@ -446,10 +421,9 @@ html, body {
             <div class="kpi-label">大鹏接收站（最高价）</div>
             <div class="kpi-value"><span class="accent">7300</span><span class="kpi-unit">元/吨</span></div>
             <div class="kpi-change up">较上周 +0.5%</div>
-            <div class="mini-chart-wrap"><canvas id="lngMainChart"></canvas></div>
+            <div class="chart-wrap"><canvas id="lngMainChart"></canvas></div>
         </div>
 
-        <!-- 环形图 - LNG占比 -->
         <div class="card ring-card">
             <div class="card-header" style="width:100%">
                 <span class="card-title">LNG价差分布</span>
@@ -461,10 +435,9 @@ html, body {
                     <div class="ring-label">价差区间</div>
                 </div>
             </div>
-            <div style="font-size:11px; color:var(--text3); margin-top:8px">大鹏 vs 其他站点</div>
+            <div class="ring-desc">大鹏 vs 其他站点</div>
         </div>
 
-        <!-- 环形图 - 煤炭占比 -->
         <div class="card ring-card">
             <div class="card-header" style="width:100%">
                 <span class="card-title">煤价等级分布</span>
@@ -476,57 +449,56 @@ html, body {
                     <div class="ring-label">热值等级</div>
                 </div>
             </div>
-            <div style="font-size:11px; color:var(--text3); margin-top:8px">5500 / 5000 / 4500大卡</div>
+            <div class="ring-desc">5500 / 5000 / 4500大卡</div>
         </div>
 
-        <!-- 动力煤详情列表 -->
-        <div class="card" id="cardCoalDetail">
+        <!-- 第二行：2个详情列表 + 天气 + 温度趋势 -->
+        <div class="card">
             <div class="card-header">
                 <span class="card-title">CCTD 价格明细</span>
-                <a href="guangdong_fuel_cost_system.html" class="card-link">查看全部 →</a>
+                <a href="guangdong_fuel_cost_system.html" class="card-link">全部 →</a>
             </div>
             <div class="list-item">
                 <div class="list-left">
                     <div class="list-dot" style="background:var(--accent)"></div>
-                    <span class="list-name">5500大卡 综合交易</span>
+                    <span class="list-name">5500 综合交易</span>
                 </div>
                 <span class="list-value">717<span class="list-unit">元/吨</span></span>
             </div>
             <div class="list-item">
                 <div class="list-left">
                     <div class="list-dot" style="background:var(--blue)"></div>
-                    <span class="list-name">5000大卡 综合交易</span>
+                    <span class="list-name">5000 综合交易</span>
                 </div>
                 <span class="list-value">650<span class="list-unit">元/吨</span></span>
             </div>
             <div class="list-item">
                 <div class="list-left">
                     <div class="list-dot" style="background:var(--green)"></div>
-                    <span class="list-name">4500大卡 综合交易</span>
+                    <span class="list-name">4500 综合交易</span>
                 </div>
                 <span class="list-value">582<span class="list-unit">元/吨</span></span>
             </div>
             <div class="list-item">
                 <div class="list-left">
                     <div class="list-dot" style="background:var(--purple)"></div>
-                    <span class="list-name">5500大卡 年度长协</span>
+                    <span class="list-name">5500 年度长协</span>
                 </div>
                 <span class="list-value">697<span class="list-unit">元/吨</span></span>
             </div>
             <div class="list-item">
                 <div class="list-left">
                     <div class="list-dot" style="background:var(--orange)"></div>
-                    <span class="list-name">5000大卡 年度长协</span>
+                    <span class="list-name">5000 年度长协</span>
                 </div>
                 <span class="list-value">634<span class="list-unit">元/吨</span></span>
             </div>
         </div>
 
-        <!-- LNG详情列表 -->
-        <div class="card" id="cardLngDetail">
+        <div class="card">
             <div class="card-header">
                 <span class="card-title">LNG 接收站价格</span>
-                <a href="guangdong_fuel_cost_system.html" class="card-link">查看全部 →</a>
+                <a href="guangdong_fuel_cost_system.html" class="card-link">全部 →</a>
             </div>
             <div class="list-item">
                 <div class="list-left">
@@ -556,11 +528,10 @@ html, body {
                 </div>
                 <span class="list-value">6600<span class="list-unit">元/吨</span></span>
             </div>
-            <div class="mini-chart-wrap" style="margin-top:12px"><canvas id="lngDetailChart"></canvas></div>
+            <div class="chart-wrap" style="margin-top:8px"><canvas id="lngDetailChart"></canvas></div>
         </div>
 
-        <!-- 天气卡片 -->
-        <div class="card span-2" id="cardWeather">
+        <div class="card span-2">
             <div class="card-header">
                 <span class="card-title">6城市天气预报</span>
                 <span class="card-badge">实时</span>
@@ -598,54 +569,25 @@ html, body {
                 </div>
             </div>
         </div>
-
-        <!-- 温度趋势小图 -->
-        <div class="card">
-            <div class="card-header">
-                <span class="card-title">气温趋势</span>
-                <span class="card-badge">10日</span>
-            </div>
-            <div class="mini-chart-wrap"><canvas id="tempTrendChart"></canvas></div>
-        </div>
     </div>
 </div>
 
 <div class="footer">数据来源：CCTD / SHPGX / 中国天气网</div>
 
 <script>
-// ==================== 数字递增动画 ====================
-function animateCountUp() {
-    document.querySelectorAll('.count-up').forEach(el => {
-        const target = parseInt(el.dataset.target);
-        const duration = 1000;
-        const start = performance.now();
-        function update(now) {
-            const p = Math.min((now - start) / duration, 1);
-            el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
-            if (p < 1) requestAnimationFrame(update);
-        }
-        requestAnimationFrame(update);
-    });
-}
-
-// ==================== 更新时间 ====================
 function updateTimestamp() {
     const now = new Date();
     document.getElementById('updateTime').textContent = 
         `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} 更新`;
 }
 
-// ==================== 图表配置 ====================
 const commonOpts = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: { legend: { display: false } },
-    scales: {
-        x: { display: false },
-        y: { display: false }
-    },
+    scales: { x: { display: false }, y: { display: false } },
     elements: { point: { radius: 0 } },
-    animation: { duration: 1500, easing: 'easeOutQuart' }
+    animation: { duration: 1200, easing: 'easeOutQuart' }
 };
 
 const lineDs = (data, color) => ({
@@ -654,69 +596,36 @@ const lineDs = (data, color) => ({
 });
 
 function initCharts() {
-    // 动力煤主图
     new Chart(document.getElementById('coalMainChart'), {
         type: 'line',
-        data: {
-            labels: Array(20).fill(''),
-            datasets: [lineDs([720,718,715,717,719,721,718,716,717,715,714,716,718,717,715,713,712,714,716,717], '#e8614d')]
-        },
+        data: { labels: Array(20).fill(''), datasets: [lineDs([720,718,715,717,719,721,718,716,717,715,714,716,718,717,715,713,712,714,716,717], '#e8614d')] },
         options: commonOpts
     });
 
-    // LNG主图
     new Chart(document.getElementById('lngMainChart'), {
         type: 'line',
-        data: {
-            labels: Array(20).fill(''),
-            datasets: [lineDs([7100,7150,7200,7250,7280,7300,7290,7280,7270,7260,7250,7260,7270,7280,7290,7300,7310,7300,7290,7300], '#e8614d')]
-        },
+        data: { labels: Array(20).fill(''), datasets: [lineDs([7100,7150,7200,7250,7280,7300,7290,7280,7270,7260,7250,7260,7270,7280,7290,7300,7310,7300,7290,7300], '#e8614d')] },
         options: commonOpts
     });
 
-    // LNG环形图
     new Chart(document.getElementById('ringChart'), {
         type: 'doughnut',
         data: {
             labels: ['大鹏', '珠海金湾', '深圳迭福', '粤东揭阳'],
-            datasets: [{
-                data: [7300, 6600, 6500, 6600],
-                backgroundColor: ['#e8614d', '#ff9800', '#5c9ce6', '#4caf50'],
-                borderWidth: 0,
-                borderRadius: 4
-            }]
+            datasets: [{ data: [7300, 6600, 6500, 6600], backgroundColor: ['#e8614d', '#ff9800', '#5c9ce6', '#4caf50'], borderWidth: 0, borderRadius: 3 }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '70%',
-            plugins: { legend: { display: false } },
-            animation: { duration: 1200, easing: 'easeOutQuart' }
-        }
+        options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false } }, animation: { duration: 1000 } }
     });
 
-    // 煤价环形图
     new Chart(document.getElementById('ringChart2'), {
         type: 'doughnut',
         data: {
             labels: ['5500大卡', '5000大卡', '4500大卡'],
-            datasets: [{
-                data: [717, 650, 582],
-                backgroundColor: ['#e8614d', '#5c9ce6', '#4caf50'],
-                borderWidth: 0,
-                borderRadius: 4
-            }]
+            datasets: [{ data: [717, 650, 582], backgroundColor: ['#e8614d', '#5c9ce6', '#4caf50'], borderWidth: 0, borderRadius: 3 }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '70%',
-            plugins: { legend: { display: false } },
-            animation: { duration: 1200, easing: 'easeOutQuart' }
-        }
+        options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false } }, animation: { duration: 1000 } }
     });
 
-    // LNG详情迷你图
     new Chart(document.getElementById('lngDetailChart'), {
         type: 'line',
         data: {
@@ -728,31 +637,10 @@ function initCharts() {
         },
         options: commonOpts
     });
-
-    // 温度趋势图
-    new Chart(document.getElementById('tempTrendChart'), {
-        type: 'line',
-        data: {
-            labels: ['12','13','14','15','16','17','18','19','20','21'],
-            datasets: [
-                lineDs([32,31,30,29,30,31,32,33,32,31], '#e8614d'),
-                lineDs([31,30,29,28,29,30,31,32,31,30], '#5c9ce6'),
-                lineDs([30,29,28,27,28,29,30,31,30,29], '#4caf50')
-            ]
-        },
-        options: {
-            ...commonOpts,
-            plugins: {
-                legend: { display: true, position: 'top', align: 'end', labels: { boxWidth: 8, boxHeight: 2, padding: 6, font: { size: 9 } } }
-            }
-        }
-    });
 }
 
-// ==================== 初始化 ====================
 document.addEventListener('DOMContentLoaded', function() {
     updateTimestamp();
-    animateCountUp();
     initCharts();
 });
 </script>
