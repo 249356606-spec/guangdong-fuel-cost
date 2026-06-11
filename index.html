@@ -394,73 +394,140 @@ html, body {
     text-overflow: ellipsis;
 }
     
+
 /* ==================== 移动端适配 ==================== */
 @media (max-width: 768px) {
     :root {
         --gap: 8px;
-        --pad: 12px;
+        --pad: 10px;
+    }
+    
+    html, body {
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
     }
     
     .dashboard {
-        grid-template-rows: 44px 1fr 20px;
+        height: auto;
+        min-height: 100vh;
+        grid-template-rows: 44px auto 20px;
     }
     
     .topbar {
-        padding: 0 12px;
+        padding: 0 10px;
+        flex-wrap: nowrap;
     }
     
     .topbar-title {
-        font-size: 13px;
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .topbar-right {
+        gap: 8px;
+        flex-shrink: 0;
     }
     
     .topbar-time {
-        font-size: 11px;
+        font-size: 10px;
     }
     
     .btn-home {
-        padding: 5px 10px;
-        font-size: 11px;
+        padding: 5px 8px;
+        font-size: 10px;
     }
     
     .main {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 10px;
+        overflow: visible;
+    }
+    
+    .card {
+        border-radius: 12px;
+        padding: 12px;
     }
     
     .procurement-card {
-        grid-column: span 1;
         padding: 14px;
     }
     
-    .procurement-value {
-        font-size: 28px;
+    .procurement-label {
+        font-size: 10px;
     }
     
     .procurement-name {
         font-size: 12px;
+        margin-bottom: 6px;
     }
     
-    .chart-card {
-        grid-column: span 1;
+    .procurement-value {
+        font-size: 30px;
+    }
+    
+    .procurement-unit {
+        font-size: 11px;
+    }
+    
+    .procurement-change {
+        font-size: 10px;
+    }
+    
+    .card-header {
+        margin-bottom: 8px;
     }
     
     .card-title {
         font-size: 11px;
     }
     
-    .bar-card {
-        grid-column: span 1;
+    .chart-card {
+        min-height: 180px;
+    }
+    
+    .chart-wrap {
+        min-height: 120px;
+    }
+    
+    .chart-roller {
+        height: 22px;
+        font-size: 8px;
+        gap: 6px;
+    }
+    
+    .roller-label {
+        font-size: 8px;
+    }
+    
+    .roller-value {
+        font-size: 8px;
+    }
+    
+    .bar-card .bar-list {
+        gap: 6px;
+    }
+    
+    .bar-item {
+        gap: 6px;
     }
     
     .bar-label {
-        width: 60px;
-        font-size: 10px;
+        width: 55px;
+        font-size: 9px;
+    }
+    
+    .bar-track {
+        height: 16px;
     }
     
     .bar-fill::after {
-        font-size: 9px;
+        font-size: 8px;
+        right: 4px;
     }
     
     .weather-grid {
@@ -470,6 +537,7 @@ html, body {
     
     .weather-item {
         padding: 8px 4px;
+        border-radius: 8px;
     }
     
     .weather-city {
@@ -484,48 +552,32 @@ html, body {
         font-size: 8px;
     }
     
-    .chart-roller {
-        height: 24px;
-        font-size: 9px;
-        gap: 10px;
-    }
-    
-    .roller-label {
-        font-size: 9px;
-    }
-    
-    .roller-value {
-        font-size: 9px;
-    }
-    
     .footer {
-        font-size: 9px;
+        font-size: 8px;
+        height: 20px;
     }
 }
 
 @media (max-width: 480px) {
-    .main {
-        grid-template-columns: 1fr;
+    .topbar-title {
+        font-size: 11px;
     }
     
-    .procurement-card {
-        grid-column: span 1;
+    .procurement-value {
+        font-size: 26px;
     }
     
-    .chart-card {
-        grid-column: span 1;
+    .procurement-name {
+        font-size: 11px;
     }
     
-    .bar-card {
-        grid-column: span 1;
+    .weather-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
     
-    .topbar-right {
-        gap: 10px;
-    }
-    
-    .topbar-time span {
-        display: none;
+    .bar-label {
+        width: 50px;
+        font-size: 8px;
     }
 }
 
