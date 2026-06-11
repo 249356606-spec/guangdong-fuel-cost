@@ -740,32 +740,41 @@ body {
             }
         }
     
-/* 返回主页按钮 */
+/* 返回主页按钮 - 极简主义 */
 .btn-home {
     position: fixed;
-    top: 16px;
-    right: 20px;
+    top: 20px;
+    right: 24px;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 7px 16px;
-    background: rgba(232, 97, 77, 0.9);
-    color: #fff;
-    border-radius: 8px;
+    gap: 4px;
+    padding: 6px 12px;
+    background: transparent;
+    color: #86868b;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 6px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(232, 97, 77, 0.25);
-    transition: all 0.2s;
+    transition: all 0.2s ease;
     z-index: 1000;
-    backdrop-filter: blur(10px);
-    letter-spacing: 0.2px;
+    letter-spacing: 0.1px;
 }
 
 .btn-home:hover {
-    background: rgba(212, 80, 60, 0.95);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(232, 97, 77, 0.35);
+    color: #1a1a1a;
+    border-color: rgba(0,0,0,0.15);
+    background: rgba(0,0,0,0.02);
+}
+
+.btn-home svg {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.2s ease;
+}
+
+.btn-home:hover svg {
+    transform: translateX(-2px);
 }
 
 </style>
@@ -773,7 +782,7 @@ body {
 <body>
     <div class="container">
         <!-- Header -->
-        <a href="index.html" class="btn-home">总览主页 ←</a>
+        <a href="index.html" class="btn-home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>总览</a>
 
         <div class="header">
             <h1>广东电力市场化电价影响因素分析系统</h1>
