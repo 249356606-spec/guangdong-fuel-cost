@@ -394,139 +394,100 @@ html, body {
     text-overflow: ellipsis;
 }
     
-
-
-
 /* ==================== 移动端适配 ==================== */
-@media only screen and (max-width: 768px) {
-    html, body {
-        width: 100%;
-        height: auto;
-        min-height: 100vh;
-        overflow-x: hidden;
-        overflow-y: auto;
-        background: #f5f5f7;
+@media (max-width: 768px) {
+    :root {
+        --gap: 8px;
+        --pad: 12px;
     }
     
     .dashboard {
-        width: 100%;
-        height: auto;
-        min-height: 100vh;
-        grid-template-rows: 48px auto;
-        background: #fff;
+        grid-template-rows: 44px 1fr 20px;
     }
     
     .topbar {
-        padding: 0 14px;
-        border-bottom: 1px solid rgba(0,0,0,0.06);
+        padding: 0 12px;
     }
     
     .topbar-title {
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 13px;
     }
     
     .topbar-time {
         font-size: 11px;
     }
     
-    .topbar-time .live-dot {
-        width: 6px;
-        height: 6px;
-    }
-    
     .btn-home {
-        padding: 6px 12px;
-        font-size: 12px;
-        border-radius: 6px;
+        padding: 5px 10px;
+        font-size: 11px;
     }
     
     .main {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 12px !important;
-        padding: 14px !important;
-        overflow: visible !important;
-        height: auto !important;
-        min-height: 0 !important;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
-    .card {
-        width: 100% !important;
-        min-height: auto !important;
-        flex-shrink: 0 !important;
-        border-radius: 12px !important;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
-    }
-    
-    /* 采购成本卡片 */
     .procurement-card {
-        padding: 16px !important;
-    }
-    
-    .procurement-label {
-        font-size: 12px;
-        margin-bottom: 4px;
-    }
-    
-    .procurement-name {
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 8px;
+        grid-column: span 1;
+        padding: 14px;
     }
     
     .procurement-value {
-        font-size: 34px;
-        letter-spacing: -1.5px;
+        font-size: 28px;
     }
     
-    .procurement-unit {
-        font-size: 13px;
+    .procurement-name {
+        font-size: 12px;
     }
     
-    .procurement-change {
-        font-size: 11px;
-        padding: 4px 8px;
-        margin-top: 8px;
-    }
-    
-    /* 走势图卡片 */
     .chart-card {
-        padding: 14px !important;
-        min-height: 220px !important;
-    }
-    
-    .card-header {
-        margin-bottom: 10px;
+        grid-column: span 1;
     }
     
     .card-title {
-        font-size: 13px;
+        font-size: 11px;
     }
     
-    .card-badge {
+    .bar-card {
+        grid-column: span 1;
+    }
+    
+    .bar-label {
+        width: 60px;
         font-size: 10px;
-        padding: 3px 8px;
     }
     
-    .chart-wrap {
-        min-height: 150px !important;
-    }
-    
-    .chart-roller {
-        height: 26px;
+    .bar-fill::after {
         font-size: 9px;
-        gap: 8px;
-        border-radius: 0 0 12px 12px;
     }
     
-    .roller-item {
+    .weather-grid {
+        grid-template-columns: repeat(3, 1fr);
         gap: 4px;
     }
     
-    .roller-dot {
-        width: 5px;
-        height: 5px;
+    .weather-item {
+        padding: 8px 4px;
+    }
+    
+    .weather-city {
+        font-size: 10px;
+    }
+    
+    .weather-temp {
+        font-size: 16px;
+    }
+    
+    .weather-desc {
+        font-size: 8px;
+    }
+    
+    .chart-roller {
+        height: 24px;
+        font-size: 9px;
+        gap: 10px;
     }
     
     .roller-label {
@@ -535,91 +496,36 @@ html, body {
     
     .roller-value {
         font-size: 9px;
-        font-weight: 600;
     }
     
-    /* 条形图卡片 */
-    .bar-card {
-        padding: 14px !important;
-    }
-    
-    .bar-list {
-        gap: 10px !important;
-    }
-    
-    .bar-item {
-        gap: 8px;
-    }
-    
-    .bar-label {
-        width: 70px !important;
-        font-size: 11px !important;
-        text-align: right;
-    }
-    
-    .bar-track {
-        height: 22px !important;
-        border-radius: 11px;
-    }
-    
-    .bar-fill {
-        border-radius: 11px;
-    }
-    
-    .bar-fill::after {
-        font-size: 10px !important;
-        right: 8px !important;
-    }
-    
-    /* 天气卡片 */
-    .weather-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 8px !important;
-    }
-    
-    .weather-item {
-        padding: 12px 8px !important;
-        border-radius: 10px;
-    }
-    
-    .weather-city {
-        font-size: 12px;
-        margin-bottom: 4px;
-    }
-    
-    .weather-temp {
-        font-size: 20px;
-        margin-bottom: 2px;
-    }
-    
-    .weather-desc {
-        font-size: 10px;
-    }
-    
-    /* 底部 */
     .footer {
-        height: 32px !important;
-        font-size: 10px !important;
-        border-top: 1px solid rgba(0,0,0,0.04);
+        font-size: 9px;
     }
 }
 
-@media only screen and (max-width: 480px) {
-    .topbar-title {
-        font-size: 13px;
+@media (max-width: 480px) {
+    .main {
+        grid-template-columns: 1fr;
     }
     
-    .procurement-value {
-        font-size: 30px;
+    .procurement-card {
+        grid-column: span 1;
     }
     
-    .weather-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
+    .chart-card {
+        grid-column: span 1;
     }
     
-    .bar-label {
-        width: 60px !important;
-        font-size: 10px !important;
+    .bar-card {
+        grid-column: span 1;
+    }
+    
+    .topbar-right {
+        gap: 10px;
+    }
+    
+    .topbar-time span {
+        display: none;
     }
 }
 
@@ -764,32 +670,32 @@ html, body {
                 <div class="weather-item">
                     <div class="weather-city">广州</div>
                     <div class="weather-temp">32°</div>
-                    <div class="weather-desc">多云转阵雨</div>
-                </div>
-                <div class="weather-item">
-                    <div class="weather-city">深圳</div>
-                    <div class="weather-temp">31°</div>
-                    <div class="weather-desc">阵雨</div>
-                </div>
-                <div class="weather-item">
-                    <div class="weather-city">珠海</div>
-                    <div class="weather-temp">30°</div>
-                    <div class="weather-desc">中雨</div>
-                </div>
-                <div class="weather-item">
-                    <div class="weather-city">韶关</div>
-                    <div class="weather-temp">28°</div>
                     <div class="weather-desc">晴</div>
                 </div>
                 <div class="weather-item">
+                    <div class="weather-city">深圳</div>
+                    <div class="weather-temp">29°</div>
+                    <div class="weather-desc">多云</div>
+                </div>
+                <div class="weather-item">
+                    <div class="weather-city">珠海</div>
+                    <div class="weather-temp">29°</div>
+                    <div class="weather-desc">多云</div>
+                </div>
+                <div class="weather-item">
+                    <div class="weather-city">韶关</div>
+                    <div class="weather-temp">30°</div>
+                    <div class="weather-desc">多云</div>
+                </div>
+                <div class="weather-item">
                     <div class="weather-city">阳江</div>
-                    <div class="weather-temp">31°</div>
-                    <div class="weather-desc">大雨</div>
+                    <div class="weather-temp">30°</div>
+                    <div class="weather-desc">多云</div>
                 </div>
                 <div class="weather-item">
                     <div class="weather-city">揭阳</div>
-                    <div class="weather-temp">30°</div>
-                    <div class="weather-desc">多云转阵雨</div>
+                    <div class="weather-temp">29°</div>
+                    <div class="weather-desc">多云</div>
                 </div>
             </div>
         </div>
