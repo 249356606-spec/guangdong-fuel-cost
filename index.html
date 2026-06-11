@@ -555,7 +555,7 @@ html, body {
                 <span class="procurement-value">810</span>
                 <span class="procurement-unit">元/吨</span>
             </div>
-            <div class="procurement-change down">较上期 -0.5%</div>
+            <div class="procurement-change" id="coalChange"></div>
         </div>
 
         <div class="card procurement-card lng">
@@ -565,7 +565,7 @@ html, body {
                 <span class="procurement-value">7300</span>
                 <span class="procurement-unit">元/吨</span>
             </div>
-            <div class="procurement-change up">较上期 +0.5%</div>
+            <div class="procurement-change" id="lngChange"></div>
         </div>
 
         <div class="card procurement-card weather-top">
@@ -705,6 +705,16 @@ html, body {
 </div>
 
 <script>
+// 计算较上期变化百分比
+function calcChange(current, previous) {
+    if (!previous || previous === 0) return { text: '较上期 --', cls: '' };
+    const pct = ((current - previous) / previous * 100).toFixed(1);
+    const sign = pct > 0 ? '+' : '';
+    const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : '';
+    return { text: `较上期 ${sign}${pct}%`, cls };
+}
+
+// 更新时间戳
 function updateTimestamp() {
     const now = new Date();
     document.getElementById('updateTime').textContent = 
@@ -843,6 +853,21 @@ document.addEventListener('DOMContentLoaded', function() {
     updateTimestamp();
     initCharts();
     
+    // 动态计算较上期变化
+    const coalLatest = coalData.values[0][coalData.values[0].length - 1];
+    const coalPrev = coalData.values[0][coalData.values[0].length - 2];
+    const coalChange = calcChange(coalLatest, coalPrev);
+    const coalEl = document.getElementById('coalChange');
+    coalEl.textContent = coalChange.text;
+    if (coalChange.cls) coalEl.classList.add(coalChange.cls);
+
+    const lngLatest = lngData.values[0][lngData.values[0].length - 1];
+    const lngPrev = lngData.values[0][lngData.values[0].length - 2];
+    const lngChange = calcChange(lngLatest, lngPrev);
+    const lngEl = document.getElementById('lngChange');
+    lngEl.textContent = lngChange.text;
+    if (lngChange.cls) lngEl.classList.add(lngChange.cls);
+
     // 启动轮动动画
     createRollerItems('coalRoller', coalData, '元/吨');
     createRollerItems('lngRoller', lngData, '元/吨');
