@@ -777,6 +777,142 @@ body {
     transform: translateX(-2px);
 }
 
+
+/* ==================== 移动端适配 ==================== */
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+    
+    .container {
+        border-radius: 0;
+        min-height: 100vh;
+    }
+    
+    .header {
+        padding: 20px 16px 16px;
+    }
+    
+    .header h1 {
+        font-size: 20px;
+    }
+    
+    .header .subtitle {
+        font-size: 12px;
+    }
+    
+    .btn-home {
+        top: 12px;
+        right: 12px;
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+    
+    .tab-nav {
+        padding: 0 12px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .tab-btn {
+        padding: 10px 16px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 12px;
+    }
+    
+    .metric-card {
+        padding: 14px;
+    }
+    
+    .metric-card .value {
+        font-size: 24px;
+    }
+    
+    .cctd-info {
+        grid-template-columns: 1fr;
+        padding: 12px;
+    }
+    
+    .charts-grid {
+        grid-template-columns: 1fr;
+        padding: 12px;
+    }
+    
+    .chart-card {
+        min-height: 250px;
+    }
+    
+    .data-table-section {
+        padding: 12px;
+        overflow-x: auto;
+    }
+    
+    .data-table {
+        font-size: 12px;
+        min-width: 600px;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 8px 10px;
+    }
+    
+    .lng-stations {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 12px;
+    }
+    
+    .lng-card {
+        padding: 16px;
+    }
+    
+    .lng-card .price-value {
+        font-size: 28px;
+    }
+    
+    .weather-section {
+        padding: 12px;
+    }
+    
+    .weather-map-container {
+        height: 300px;
+    }
+    
+    .weather-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .weather-card {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .header h1 {
+        font-size: 18px;
+    }
+    
+    .tab-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .lng-stations {
+        grid-template-columns: 1fr;
+    }
+}
+
 </style>
 </head>
 <body>

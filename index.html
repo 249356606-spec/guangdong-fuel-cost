@@ -393,7 +393,143 @@ html, body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-    </style>
+    
+/* ==================== 移动端适配 ==================== */
+@media (max-width: 768px) {
+    :root {
+        --gap: 8px;
+        --pad: 12px;
+    }
+    
+    .dashboard {
+        grid-template-rows: 44px 1fr 20px;
+    }
+    
+    .topbar {
+        padding: 0 12px;
+    }
+    
+    .topbar-title {
+        font-size: 13px;
+    }
+    
+    .topbar-time {
+        font-size: 11px;
+    }
+    
+    .btn-home {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+    
+    .main {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .procurement-card {
+        grid-column: span 1;
+        padding: 14px;
+    }
+    
+    .procurement-value {
+        font-size: 28px;
+    }
+    
+    .procurement-name {
+        font-size: 12px;
+    }
+    
+    .chart-card {
+        grid-column: span 1;
+    }
+    
+    .card-title {
+        font-size: 11px;
+    }
+    
+    .bar-card {
+        grid-column: span 1;
+    }
+    
+    .bar-label {
+        width: 60px;
+        font-size: 10px;
+    }
+    
+    .bar-fill::after {
+        font-size: 9px;
+    }
+    
+    .weather-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+    }
+    
+    .weather-item {
+        padding: 8px 4px;
+    }
+    
+    .weather-city {
+        font-size: 10px;
+    }
+    
+    .weather-temp {
+        font-size: 16px;
+    }
+    
+    .weather-desc {
+        font-size: 8px;
+    }
+    
+    .chart-roller {
+        height: 24px;
+        font-size: 9px;
+        gap: 10px;
+    }
+    
+    .roller-label {
+        font-size: 9px;
+    }
+    
+    .roller-value {
+        font-size: 9px;
+    }
+    
+    .footer {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        grid-template-columns: 1fr;
+    }
+    
+    .procurement-card {
+        grid-column: span 1;
+    }
+    
+    .chart-card {
+        grid-column: span 1;
+    }
+    
+    .bar-card {
+        grid-column: span 1;
+    }
+    
+    .topbar-right {
+        gap: 10px;
+    }
+    
+    .topbar-time span {
+        display: none;
+    }
+}
+
+</style>
 </head>
 <body>
 <div class="dashboard">
