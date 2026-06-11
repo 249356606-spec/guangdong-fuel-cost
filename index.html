@@ -41,7 +41,7 @@ html, body {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-rows: 48px 1fr;
+    grid-template-rows: 48px 1fr 24px;
     overflow: hidden;
 }
 
@@ -159,6 +159,9 @@ html, body {
 .card:nth-child(4) { animation-delay: 0.2s; }
 .card:nth-child(5) { animation-delay: 0.25s; }
 .card:nth-child(6) { animation-delay: 0.3s; }
+.card:nth-child(7) { animation-delay: 0.35s; }
+.card:nth-child(8) { animation-delay: 0.4s; }
+.card:nth-child(9) { animation-delay: 0.45s; }
 
 .card-header {
     display: flex;
@@ -186,9 +189,8 @@ html, body {
     font-weight: 500;
 }
 
-/* 第一行：关键采购成本大卡片 */
+/* 第一行：关键采购成本卡片 */
 .procurement-card {
-    grid-column: span 1;
     padding: 18px 20px;
     position: relative;
 }
@@ -207,11 +209,8 @@ html, body {
 .procurement-card.lng::before { background: var(--orange); }
 .procurement-card.weather-top::before { background: var(--blue); }
 
-.procurement-label {
-    font-size: 11px;
-    color: var(--text2);
-    margin-bottom: 4px;
-}
+.procurement-label { font-size: 11px; color: var(--text2); margin-bottom: 4px; }
+.procurement-name { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
 
 .procurement-main {
     display: flex;
@@ -228,17 +227,7 @@ html, body {
     color: var(--accent);
 }
 
-.procurement-unit {
-    font-size: 13px;
-    color: var(--text3);
-}
-
-.procurement-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 8px;
-}
+.procurement-unit { font-size: 13px; color: var(--text3); }
 
 .procurement-change {
     display: inline-flex;
@@ -252,9 +241,9 @@ html, body {
 .procurement-change.up { background: #fef3f2; color: var(--accent); }
 .procurement-change.down { background: #f0fdf4; color: var(--green); }
 
-/* 第二行：走势图 */
+/* 走势图卡片 - 带轮动信息 */
 .chart-card {
-    grid-column: span 1;
+    position: relative;
 }
 
 .chart-wrap {
@@ -263,10 +252,52 @@ html, body {
     position: relative;
 }
 
-/* 第三行：价格对比条形图 + 天气 */
-.bar-card {
-    grid-column: span 1;
+/* 轮动信息条 */
+.chart-roller {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 28px;
+    background: rgba(248,247,244,0.95);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-size: 10px;
+    color: var(--text2);
+    border-top: 1px solid rgba(0,0,0,0.04);
+    z-index: 10;
+    overflow: hidden;
 }
+
+.roller-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: rollerFade 0.4s ease-out forwards;
+    white-space: nowrap;
+}
+
+.roller-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.roller-label { color: var(--text3); }
+.roller-value { font-weight: 600; color: var(--text); }
+
+@keyframes rollerFade {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 条形图卡片 */
+.bar-card { }
 
 .bar-list {
     flex: 1;
@@ -296,7 +327,6 @@ html, body {
     background: var(--bg);
     border-radius: 10px;
     overflow: hidden;
-    position: relative;
 }
 
 .bar-fill {
@@ -345,26 +375,23 @@ html, body {
 }
 
 .weather-item:hover { transform: scale(1.03); }
-
 .weather-city { font-size: 11px; font-weight: 600; margin-bottom: 2px; }
 .weather-temp { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: -1px; }
 .weather-desc { font-size: 9px; color: var(--text3); margin-top: 1px; }
 
-/* 网格跨度 */
-.span-2 { grid-column: span 2; }
-.span-3 { grid-column: span 3; }
-
-/* 底部信息 */
+/* 底部信息栏 */
 .footer {
-    position: fixed;
-    bottom: 6px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--pad);
+    font-size: 10px;
     color: var(--text3);
-    z-index: 50;
-    pointer-events: none;
+    background: var(--bg);
+    border-top: 1px solid rgba(0,0,0,0.03);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
     </style>
 </head>
@@ -385,7 +412,7 @@ html, body {
     </div>
 
     <div class="main">
-        <!-- 第一行：3个关键采购成本卡片 -->
+        <!-- 第一行：关键采购成本 -->
         <div class="card procurement-card coal">
             <div class="procurement-label">动力煤采购成本</div>
             <div class="procurement-name">澳洲优混 5500大卡</div>
@@ -416,29 +443,32 @@ html, body {
             <div class="procurement-change" style="background:#e3f2fd;color:var(--blue)">多云转阵雨</div>
         </div>
 
-        <!-- 第二行：3个走势图 -->
-        <div class="card chart-card">
+        <!-- 第二行：走势图 + 轮动信息 -->
+        <div class="card chart-card" id="coalChartCard">
             <div class="card-header">
                 <span class="card-title">动力煤 10日走势</span>
                 <span class="card-badge">广州港</span>
             </div>
             <div class="chart-wrap"><canvas id="coalChart"></canvas></div>
+            <div class="chart-roller" id="coalRoller"></div>
         </div>
 
-        <div class="card chart-card">
+        <div class="card chart-card" id="lngChartCard">
             <div class="card-header">
                 <span class="card-title">LNG 10日走势</span>
                 <span class="card-badge">4站点</span>
             </div>
             <div class="chart-wrap"><canvas id="lngChart"></canvas></div>
+            <div class="chart-roller" id="lngRoller"></div>
         </div>
 
-        <div class="card chart-card">
+        <div class="card chart-card" id="tempChartCard">
             <div class="card-header">
                 <span class="card-title">气温 10日趋势</span>
                 <span class="card-badge">6城市</span>
             </div>
             <div class="chart-wrap"><canvas id="tempChart"></canvas></div>
+            <div class="chart-roller" id="tempRoller"></div>
         </div>
 
         <!-- 第三行：价格对比 + 天气 -->
@@ -496,7 +526,7 @@ html, body {
             </div>
         </div>
 
-        <div class="card span-1">
+        <div class="card">
             <div class="card-header">
                 <span class="card-title">6城市天气</span>
                 <span class="card-badge">实时</span>
@@ -535,9 +565,9 @@ html, body {
             </div>
         </div>
     </div>
-</div>
 
-<div class="footer">数据来源：CCTD / SHPGX / 中国天气网</div>
+    <div class="footer">数据来源：CCTD / SHPGX / 中国天气网</div>
+</div>
 
 <script>
 function updateTimestamp() {
@@ -546,6 +576,81 @@ function updateTimestamp() {
         `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} 更新`;
 }
 
+// ==================== 走势图数据 ====================
+const dates10 = ['06-02','06-03','06-04','06-05','06-06','06-07','06-08','06-09','06-10','06-11'];
+
+const coalData = {
+    labels: ['澳洲优混5500', '优混5500', '大混1#5000'],
+    colors: ['#e8614d', '#ff9800', '#5c9ce6'],
+    values: [
+        [960,962,965,958,963,968,965,960,965,965],
+        [935,938,940,935,938,942,940,935,940,940],
+        [850,852,855,848,852,858,855,850,855,855]
+    ]
+};
+
+const lngData = {
+    labels: ['大鹏', '珠海金湾', '深圳迭福', '粤东揭阳'],
+    colors: ['#e8614d', '#ff9800', '#5c9ce6', '#4caf50'],
+    values: [
+        [7200,7220,7250,7260,7280,7290,7300,7290,7300,7300],
+        [6500,6520,6540,6560,6580,6590,6600,6590,6600,6600],
+        [6400,6420,6440,6460,6480,6490,6500,6490,6500,6500],
+        [6500,6520,6540,6560,6580,6590,6600,6590,6600,6600]
+    ]
+};
+
+const tempData = {
+    labels: ['广州', '深圳', '珠海'],
+    colors: ['#e8614d', '#5c9ce6', '#4caf50'],
+    values: [
+        [30,31,32,33,32,31,30,31,32,32],
+        [29,30,31,32,31,30,29,30,31,31],
+        [28,29,30,31,30,29,28,29,30,30]
+    ]
+};
+
+// ==================== 轮动动画 ====================
+function createRollerItems(containerId, data, unit) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    let currentIndex = 0;
+    
+    function showNext() {
+        // 清空容器
+        container.innerHTML = '';
+        
+        // 显示当天所有数据
+        const date = dates10[currentIndex];
+        
+        data.labels.forEach((label, i) => {
+            const item = document.createElement('div');
+            item.className = 'roller-item';
+            item.style.animationDelay = `${i * 0.1}s`;
+            item.innerHTML = `
+                <div class="roller-dot" style="background:${data.colors[i]}"></div>
+                <span class="roller-label">${label}</span>
+                <span class="roller-value">${data.values[i][currentIndex]}${unit}</span>
+            `;
+            container.appendChild(item);
+        });
+        
+        // 添加日期
+        const dateItem = document.createElement('div');
+        dateItem.className = 'roller-item';
+        dateItem.style.animationDelay = `${data.labels.length * 0.1}s`;
+        dateItem.innerHTML = `<span class="roller-label" style="margin-left:8px">${date}</span>`;
+        container.appendChild(dateItem);
+        
+        currentIndex = (currentIndex + 1) % dates10.length;
+    }
+    
+    showNext();
+    setInterval(showNext, 3000);
+}
+
+// ==================== 图表配置 ====================
 const commonOpts = {
     responsive: true,
     maintainAspectRatio: false,
@@ -566,55 +671,46 @@ const ds = (label, data, color) => ({
 });
 
 function initCharts() {
-    const dates10 = ['06-02','06-03','06-04','06-05','06-06','06-07','06-08','06-09','06-10','06-11'];
-
-    // 动力煤10日走势
+    // 动力煤
     new Chart(document.getElementById('coalChart'), {
         type: 'line',
         data: {
             labels: dates10,
-            datasets: [
-                ds('澳洲优混5500', [960,962,965,958,963,968,965,960,965,965], '#e8614d'),
-                ds('优混5500', [935,938,940,935,938,942,940,935,940,940], '#ff9800'),
-                ds('大混1#5000', [850,852,855,848,852,858,855,850,855,855], '#5c9ce6')
-            ]
+            datasets: coalData.labels.map((label, i) => ds(label, coalData.values[i], coalData.colors[i]))
         },
         options: commonOpts
     });
 
-    // LNG 10日走势
+    // LNG
     new Chart(document.getElementById('lngChart'), {
         type: 'line',
         data: {
             labels: dates10,
-            datasets: [
-                ds('大鹏', [7200,7220,7250,7260,7280,7290,7300,7290,7300,7300], '#e8614d'),
-                ds('珠海金湾', [6500,6520,6540,6560,6580,6590,6600,6590,6600,6600], '#ff9800'),
-                ds('深圳迭福', [6400,6420,6440,6460,6480,6490,6500,6490,6500,6500], '#5c9ce6'),
-                ds('粤东揭阳', [6500,6520,6540,6560,6580,6590,6600,6590,6600,6600], '#4caf50')
-            ]
+            datasets: lngData.labels.map((label, i) => ds(label, lngData.values[i], lngData.colors[i]))
         },
         options: commonOpts
     });
 
-    // 气温10日趋势
+    // 气温
     new Chart(document.getElementById('tempChart'), {
         type: 'line',
         data: {
             labels: dates10,
-            datasets: [
-                ds('广州', [30,31,32,33,32,31,30,31,32,32], '#e8614d'),
-                ds('深圳', [29,30,31,32,31,30,29,30,31,31], '#5c9ce6'),
-                ds('珠海', [28,29,30,31,30,29,28,29,30,30], '#4caf50')
-            ]
+            datasets: tempData.labels.map((label, i) => ds(label, tempData.values[i], tempData.colors[i]))
         },
         options: { ...commonOpts, scales: { ...commonOpts.scales, y: { ...commonOpts.scales.y, ticks: { ...commonOpts.scales.y.ticks, callback: v => v + '°' } } } }
     });
 }
 
+// ==================== 初始化 ====================
 document.addEventListener('DOMContentLoaded', function() {
     updateTimestamp();
     initCharts();
+    
+    // 启动轮动动画
+    createRollerItems('coalRoller', coalData, '元/吨');
+    createRollerItems('lngRoller', lngData, '元/吨');
+    createRollerItems('tempRoller', tempData, '°C');
 });
 </script>
 </body>
