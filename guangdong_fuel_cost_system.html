@@ -779,8 +779,9 @@ body {
 
 
 
+
 /* ==================== 移动端适配 ==================== */
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     body {
         padding: 0;
         overflow: auto;
@@ -793,23 +794,11 @@ body {
     }
     
     .header {
-        padding: 16px 12px 12px;
+        padding: 16px 14px 12px;
     }
     
     .header h1 {
         font-size: 18px;
-        line-height: 1.3;
-    }
-    
-    .header .subtitle {
-        font-size: 11px;
-        margin-top: 8px;
-    }
-    
-    .header .update-time {
-        font-size: 11px;
-        padding: 6px 12px;
-        margin-top: 10px;
     }
     
     .btn-home {
@@ -823,11 +812,6 @@ body {
         padding: 0 10px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-    
-    .tab-nav::-webkit-scrollbar {
-        display: none;
     }
     
     .tab-btn {
@@ -836,166 +820,67 @@ body {
         white-space: nowrap;
     }
     
+    .tab-content {
+        padding: 10px;
+    }
+    
     .metrics-grid {
         grid-template-columns: 1fr 1fr;
         gap: 8px;
-        padding: 10px;
     }
     
     .metric-card {
         padding: 12px;
     }
     
-    .metric-card .label {
-        font-size: 11px;
-    }
-    
     .metric-card .value {
         font-size: 22px;
-    }
-    
-    .metric-card .unit {
-        font-size: 11px;
     }
     
     .cctd-info {
         grid-template-columns: 1fr;
         gap: 10px;
-        padding: 10px;
-    }
-    
-    .cctd-column {
-        padding: 12px;
-    }
-    
-    .cctd-column h3 {
-        font-size: 14px;
-        margin-bottom: 10px;
-    }
-    
-    .cctd-item {
-        gap: 8px;
-        padding: 8px 0;
-    }
-    
-    .cctd-item .grade {
-        font-size: 12px;
-    }
-    
-    .cctd-item .price {
-        font-size: 14px;
     }
     
     .charts-grid {
         grid-template-columns: 1fr;
-        padding: 10px;
         gap: 10px;
     }
     
     .chart-card {
-        min-height: 220px;
-        padding: 12px;
-    }
-    
-    .chart-card h3 {
-        font-size: 14px;
-        margin-bottom: 10px;
+        min-height: 250px;
     }
     
     .data-table-section {
-        padding: 10px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
     
     .data-table {
-        font-size: 11px;
         min-width: 500px;
-    }
-    
-    .data-table th,
-    .data-table td {
-        padding: 8px;
+        font-size: 11px;
     }
     
     .lng-stations {
         grid-template-columns: 1fr;
-        gap: 8px;
-        padding: 10px;
-    }
-    
-    .lng-card {
-        padding: 14px;
-    }
-    
-    .lng-card .station-name {
-        font-size: 14px;
+        gap: 10px;
     }
     
     .lng-card .price-value {
         font-size: 26px;
     }
     
-    .lng-card .price-unit {
-        font-size: 12px;
-    }
-    
     .weather-section {
         padding: 10px;
     }
     
-    .weather-section h2 {
-        font-size: 16px;
-        margin-bottom: 12px;
-    }
-    
     .weather-map-container {
         height: 250px;
-        margin-bottom: 12px;
     }
     
     .weather-cards {
         grid-template-columns: 1fr 1fr;
         gap: 8px;
-    }
-    
-    .weather-card {
-        padding: 10px;
-    }
-    
-    .weather-card .city {
-        font-size: 13px;
-    }
-    
-    .weather-card .temp {
-        font-size: 18px;
-    }
-    
-    .weather-card .desc {
-        font-size: 11px;
-    }
-}
-
-@media (max-width: 480px) {
-    .header h1 {
-        font-size: 16px;
-    }
-    
-    .metrics-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .tab-btn {
-        padding: 8px 12px;
-        font-size: 12px;
-    }
-    
-    .weather-cards {
-        grid-template-columns: 1fr;
-    }
-    
-    .lng-stations {
-        grid-template-columns: 1fr;
     }
 }
 
