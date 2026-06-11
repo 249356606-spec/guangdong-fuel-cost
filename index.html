@@ -23,7 +23,6 @@
     --shadow: 0 1px 2px rgba(0,0,0,0.03), 0 4px 16px rgba(0,0,0,0.02);
     --shadow-hover: 0 2px 8px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.03);
     --radius: 16px;
-    --radius-sm: 12px;
     --gap: 10px;
     --pad: 16px;
 }
@@ -38,7 +37,6 @@ html, body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* 主容器 - 严格100vh */
 .dashboard {
     width: 100vw;
     height: 100vh;
@@ -56,7 +54,6 @@ html, body {
     background: var(--surface);
     border-bottom: 1px solid rgba(0,0,0,0.04);
     z-index: 100;
-    flex-shrink: 0;
 }
 
 .topbar-left {
@@ -78,10 +75,7 @@ html, body {
     font-weight: 700;
 }
 
-.topbar-title {
-    font-size: 14px;
-    font-weight: 600;
-}
+.topbar-title { font-size: 14px; font-weight: 600; }
 
 .topbar-right {
     display: flex;
@@ -123,11 +117,11 @@ html, body {
 
 .btn-home:hover { background: #d4503c; }
 
-/* 主内容区 - 严格填充剩余空间 */
+/* 主内容区 */
 .main {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr;
     gap: var(--gap);
     padding: var(--gap) var(--pad);
     min-height: 0;
@@ -165,8 +159,6 @@ html, body {
 .card:nth-child(4) { animation-delay: 0.2s; }
 .card:nth-child(5) { animation-delay: 0.25s; }
 .card:nth-child(6) { animation-delay: 0.3s; }
-.card:nth-child(7) { animation-delay: 0.35s; }
-.card:nth-child(8) { animation-delay: 0.4s; }
 
 .card-header {
     display: flex;
@@ -176,10 +168,7 @@ html, body {
     flex-shrink: 0;
 }
 
-.card-title {
-    font-size: 12px;
-    font-weight: 600;
-}
+.card-title { font-size: 12px; font-weight: 600; }
 
 .card-badge {
     font-size: 10px;
@@ -197,47 +186,76 @@ html, body {
     font-weight: 500;
 }
 
-/* KPI大卡片 */
-.kpi-large {
-    grid-column: span 2;
-    padding: 16px 18px;
+/* 第一行：关键采购成本大卡片 */
+.procurement-card {
+    grid-column: span 1;
+    padding: 18px 20px;
+    position: relative;
 }
 
-.kpi-value {
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -1.5px;
-    line-height: 1;
-    margin-bottom: 2px;
+.procurement-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
 }
 
-.kpi-value .accent { color: var(--accent); }
+.procurement-card.coal::before { background: var(--accent); }
+.procurement-card.lng::before { background: var(--orange); }
+.procurement-card.weather-top::before { background: var(--blue); }
 
-.kpi-unit {
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--text3);
-    margin-left: 3px;
-}
-
-.kpi-label {
+.procurement-label {
     font-size: 11px;
     color: var(--text2);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
-.kpi-change {
+.procurement-main {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.procurement-value {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1;
+    color: var(--accent);
+}
+
+.procurement-unit {
+    font-size: 13px;
+    color: var(--text3);
+}
+
+.procurement-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.procurement-change {
     display: inline-flex;
     align-items: center;
     font-size: 11px;
     font-weight: 500;
-    padding: 3px 6px;
+    padding: 3px 8px;
     border-radius: 5px;
-    margin-top: 6px;
 }
 
-.kpi-change.up { background: #fef3f2; color: var(--accent); }
-.kpi-change.down { background: #f0fdf4; color: var(--green); }
+.procurement-change.up { background: #fef3f2; color: var(--accent); }
+.procurement-change.down { background: #f0fdf4; color: var(--green); }
+
+/* 第二行：走势图 */
+.chart-card {
+    grid-column: span 1;
+}
 
 .chart-wrap {
     flex: 1;
@@ -245,85 +263,65 @@ html, body {
     position: relative;
 }
 
-/* 环形图卡片 */
-.ring-card {
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 12px;
+/* 第三行：价格对比条形图 + 天气 */
+.bar-card {
+    grid-column: span 1;
 }
 
-.ring-wrap {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    flex-shrink: 0;
-}
-
-.ring-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-.ring-percent {
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.ring-label {
-    font-size: 9px;
-    color: var(--text3);
-}
-
-.ring-desc {
-    font-size: 10px;
-    color: var(--text3);
-    margin-top: 6px;
-}
-
-/* 列表卡片 */
-.list-item {
+.bar-list {
+    flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 7px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.03);
-    flex-shrink: 0;
-}
-
-.list-item:last-child { border-bottom: none; }
-
-.list-left {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 8px;
+    justify-content: center;
 }
 
-.list-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
+.bar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bar-label {
+    font-size: 11px;
+    color: var(--text2);
+    width: 80px;
+    text-align: right;
     flex-shrink: 0;
 }
 
-.list-name {
-    font-size: 11px;
-    font-weight: 500;
+.bar-track {
+    flex: 1;
+    height: 20px;
+    background: var(--bg);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
 }
 
-.list-value {
-    font-size: 13px;
+.bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1.2s ease-out;
+    position: relative;
+}
+
+.bar-fill::after {
+    content: attr(data-value);
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
     font-weight: 600;
+    color: #fff;
 }
 
-.list-unit {
-    font-size: 9px;
-    color: var(--text3);
-    margin-left: 2px;
-}
+.bar-fill.accent { background: linear-gradient(90deg, #e8614d, #f0826f); }
+.bar-fill.orange { background: linear-gradient(90deg, #ff9800, #ffb74d); }
+.bar-fill.blue { background: linear-gradient(90deg, #5c9ce6, #7db8f0); }
+.bar-fill.green { background: linear-gradient(90deg, #4caf50, #81c784); }
+.bar-fill.purple { background: linear-gradient(90deg, #9b7fd4, #b39ddb); }
 
 /* 天气网格 */
 .weather-grid {
@@ -348,27 +346,13 @@ html, body {
 
 .weather-item:hover { transform: scale(1.03); }
 
-.weather-city {
-    font-size: 11px;
-    font-weight: 600;
-    margin-bottom: 2px;
-}
-
-.weather-temp {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: -1px;
-}
-
-.weather-desc {
-    font-size: 9px;
-    color: var(--text3);
-    margin-top: 1px;
-}
+.weather-city { font-size: 11px; font-weight: 600; margin-bottom: 2px; }
+.weather-temp { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: -1px; }
+.weather-desc { font-size: 9px; color: var(--text3); margin-top: 1px; }
 
 /* 网格跨度 */
 .span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
 
 /* 底部信息 */
 .footer {
@@ -401,139 +385,120 @@ html, body {
     </div>
 
     <div class="main">
-        <!-- 第一行：2个KPI大卡 + 2个环形图 -->
-        <div class="card kpi-large">
-            <div class="card-header">
-                <span class="card-title">CCTD 动力煤</span>
-                <span class="card-badge">综合交易</span>
+        <!-- 第一行：3个关键采购成本卡片 -->
+        <div class="card procurement-card coal">
+            <div class="procurement-label">动力煤采购成本</div>
+            <div class="procurement-name">澳洲优混 5500大卡</div>
+            <div class="procurement-main">
+                <span class="procurement-value">965</span>
+                <span class="procurement-unit">元/吨</span>
             </div>
-            <div class="kpi-label">5500大卡基准价</div>
-            <div class="kpi-value"><span class="accent">717</span><span class="kpi-unit">元/吨</span></div>
-            <div class="kpi-change down">较上周 -0.3%</div>
-            <div class="chart-wrap"><canvas id="coalMainChart"></canvas></div>
+            <div class="procurement-change down">较上期 -0.5%</div>
         </div>
 
-        <div class="card kpi-large">
+        <div class="card procurement-card lng">
+            <div class="procurement-label">LNG采购成本</div>
+            <div class="procurement-name">大鹏接收站</div>
+            <div class="procurement-main">
+                <span class="procurement-value">7300</span>
+                <span class="procurement-unit">元/吨</span>
+            </div>
+            <div class="procurement-change up">较上期 +0.5%</div>
+        </div>
+
+        <div class="card procurement-card weather-top">
+            <div class="procurement-label">广州气温</div>
+            <div class="procurement-name">今日最高温</div>
+            <div class="procurement-main">
+                <span class="procurement-value">32</span>
+                <span class="procurement-unit">°C</span>
+            </div>
+            <div class="procurement-change" style="background:#e3f2fd;color:var(--blue)">多云转阵雨</div>
+        </div>
+
+        <!-- 第二行：3个走势图 -->
+        <div class="card chart-card">
             <div class="card-header">
-                <span class="card-title">LNG 接收站</span>
+                <span class="card-title">动力煤 10日走势</span>
+                <span class="card-badge">广州港</span>
+            </div>
+            <div class="chart-wrap"><canvas id="coalChart"></canvas></div>
+        </div>
+
+        <div class="card chart-card">
+            <div class="card-header">
+                <span class="card-title">LNG 10日走势</span>
                 <span class="card-badge">4站点</span>
             </div>
-            <div class="kpi-label">大鹏接收站（最高价）</div>
-            <div class="kpi-value"><span class="accent">7300</span><span class="kpi-unit">元/吨</span></div>
-            <div class="kpi-change up">较上周 +0.5%</div>
-            <div class="chart-wrap"><canvas id="lngMainChart"></canvas></div>
+            <div class="chart-wrap"><canvas id="lngChart"></canvas></div>
         </div>
 
-        <div class="card ring-card">
-            <div class="card-header" style="width:100%">
-                <span class="card-title">LNG价差分布</span>
-            </div>
-            <div class="ring-wrap">
-                <canvas id="ringChart"></canvas>
-                <div class="ring-center">
-                    <div class="ring-percent">700</div>
-                    <div class="ring-label">价差区间</div>
-                </div>
-            </div>
-            <div class="ring-desc">大鹏 vs 其他站点</div>
-        </div>
-
-        <div class="card ring-card">
-            <div class="card-header" style="width:100%">
-                <span class="card-title">煤价等级分布</span>
-            </div>
-            <div class="ring-wrap">
-                <canvas id="ringChart2"></canvas>
-                <div class="ring-center">
-                    <div class="ring-percent">3</div>
-                    <div class="ring-label">热值等级</div>
-                </div>
-            </div>
-            <div class="ring-desc">5500 / 5000 / 4500大卡</div>
-        </div>
-
-        <!-- 第二行：2个详情列表 + 天气 + 温度趋势 -->
-        <div class="card">
+        <div class="card chart-card">
             <div class="card-header">
-                <span class="card-title">CCTD 价格明细</span>
-                <a href="guangdong_fuel_cost_system.html" class="card-link">全部 →</a>
+                <span class="card-title">气温 10日趋势</span>
+                <span class="card-badge">6城市</span>
             </div>
-            <div class="list-item">
-                <div class="list-left">
-                    <div class="list-dot" style="background:var(--accent)"></div>
-                    <span class="list-name">5500 综合交易</span>
-                </div>
-                <span class="list-value">717<span class="list-unit">元/吨</span></span>
+            <div class="chart-wrap"><canvas id="tempChart"></canvas></div>
+        </div>
+
+        <!-- 第三行：价格对比 + 天气 -->
+        <div class="card bar-card">
+            <div class="card-header">
+                <span class="card-title">广州港煤炭价格</span>
+                <a href="guangdong_fuel_cost_system.html" class="card-link">详情 →</a>
             </div>
-            <div class="list-item">
-                <div class="list-left">
-                    <div class="list-dot" style="background:var(--blue)"></div>
-                    <span class="list-name">5000 综合交易</span>
+            <div class="bar-list">
+                <div class="bar-item">
+                    <span class="bar-label">澳洲优混5500</span>
+                    <div class="bar-track"><div class="bar-fill accent" style="width:100%" data-value="965"></div></div>
                 </div>
-                <span class="list-value">650<span class="list-unit">元/吨</span></span>
-            </div>
-            <div class="list-item">
-                <div class="list-left">
-                    <div class="list-dot" style="background:var(--green)"></div>
-                    <span class="list-name">4500 综合交易</span>
+                <div class="bar-item">
+                    <span class="bar-label">优混5500</span>
+                    <div class="bar-track"><div class="bar-fill orange" style="width:97%" data-value="940"></div></div>
                 </div>
-                <span class="list-value">582<span class="list-unit">元/吨</span></span>
-            </div>
-            <div class="list-item">
-                <div class="list-left">
-                    <div class="list-dot" style="background:var(--purple)"></div>
-                    <span class="list-name">5500 年度长协</span>
+                <div class="bar-item">
+                    <span class="bar-label">大混1#5000</span>
+                    <div class="bar-track"><div class="bar-fill blue" style="width:89%" data-value="855"></div></div>
                 </div>
-                <span class="list-value">697<span class="list-unit">元/吨</span></span>
-            </div>
-            <div class="list-item">
-                <div class="list-left">
-                    <div class="list-dot" style="background:var(--orange)"></div>
-                    <span class="list-name">5000 年度长协</span>
+                <div class="bar-item">
+                    <span class="bar-label">印尼煤1#4800</span>
+                    <div class="bar-track"><div class="bar-fill green" style="width:81%" data-value="780"></div></div>
                 </div>
-                <span class="list-value">634<span class="list-unit">元/吨</span></span>
+                <div class="bar-item">
+                    <span class="bar-label">印尼煤2#4500</span>
+                    <div class="bar-track"><div class="bar-fill purple" style="width:77%" data-value="745"></div></div>
+                </div>
             </div>
         </div>
 
-        <div class="card">
+        <div class="card bar-card">
             <div class="card-header">
-                <span class="card-title">LNG 接收站价格</span>
-                <a href="guangdong_fuel_cost_system.html" class="card-link">全部 →</a>
+                <span class="card-title">LNG接收站价格</span>
+                <a href="guangdong_fuel_cost_system.html" class="card-link">详情 →</a>
             </div>
-            <div class="list-item">
-                <div class="list-left">
-                    <div class="list-dot" style="background:var(--accent)"></div>
-                    <span class="list-name">大鹏接收站</span>
+            <div class="bar-list">
+                <div class="bar-item">
+                    <span class="bar-label">大鹏</span>
+                    <div class="bar-track"><div class="bar-fill accent" style="width:100%" data-value="7300"></div></div>
                 </div>
-                <span class="list-value" style="color:var(--accent)">7300<span class="list-unit">元/吨</span></span>
-            </div>
-            <div class="list-item">
-                <div class="list-left">
-                    <div class="list-dot" style="background:var(--orange)"></div>
-                    <span class="list-name">珠海金湾</span>
+                <div class="bar-item">
+                    <span class="bar-label">珠海金湾</span>
+                    <div class="bar-track"><div class="bar-fill orange" style="width:90%" data-value="6600"></div></div>
                 </div>
-                <span class="list-value">6600<span class="list-unit">元/吨</span></span>
-            </div>
-            <div class="list-item">
-                <div class="list-left">
-                    <div class="list-dot" style="background:var(--blue)"></div>
-                    <span class="list-name">深圳迭福</span>
+                <div class="bar-item">
+                    <span class="bar-label">粤东揭阳</span>
+                    <div class="bar-track"><div class="bar-fill blue" style="width:90%" data-value="6600"></div></div>
                 </div>
-                <span class="list-value">6500<span class="list-unit">元/吨</span></span>
-            </div>
-            <div class="list-item">
-                <div class="list-left">
-                    <div class="list-dot" style="background:var(--green)"></div>
-                    <span class="list-name">粤东揭阳</span>
+                <div class="bar-item">
+                    <span class="bar-label">深圳迭福</span>
+                    <div class="bar-track"><div class="bar-fill green" style="width:89%" data-value="6500"></div></div>
                 </div>
-                <span class="list-value">6600<span class="list-unit">元/吨</span></span>
             </div>
-            <div class="chart-wrap" style="margin-top:8px"><canvas id="lngDetailChart"></canvas></div>
         </div>
 
-        <div class="card span-2">
+        <div class="card span-1">
             <div class="card-header">
-                <span class="card-title">6城市天气预报</span>
+                <span class="card-title">6城市天气</span>
                 <span class="card-badge">实时</span>
             </div>
             <div class="weather-grid">
@@ -584,58 +549,66 @@ function updateTimestamp() {
 const commonOpts = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { x: { display: false }, y: { display: false } },
-    elements: { point: { radius: 0 } },
+    plugins: {
+        legend: { display: true, position: 'top', align: 'end', labels: { boxWidth: 8, boxHeight: 2, padding: 6, font: { size: 9 } } }
+    },
+    scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#b0b0b0', maxTicksLimit: 5 } },
+        y: { position: 'right', grid: { color: 'rgba(0,0,0,0.03)' }, ticks: { font: { size: 9 }, color: '#b0b0b0', maxTicksLimit: 4 } }
+    },
+    interaction: { mode: 'index', intersect: false },
     animation: { duration: 1200, easing: 'easeOutQuart' }
 };
 
-const lineDs = (data, color) => ({
-    data, borderColor: color, borderWidth: 2, borderDash: [4,4],
-    tension: 0.4, fill: false
+const ds = (label, data, color) => ({
+    label, data, borderColor: color, borderWidth: 2, borderDash: [4,4],
+    pointRadius: 0, pointHoverRadius: 3, tension: 0.4, fill: false
 });
 
 function initCharts() {
-    new Chart(document.getElementById('coalMainChart'), {
-        type: 'line',
-        data: { labels: Array(20).fill(''), datasets: [lineDs([720,718,715,717,719,721,718,716,717,715,714,716,718,717,715,713,712,714,716,717], '#e8614d')] },
-        options: commonOpts
-    });
+    const dates10 = ['06-02','06-03','06-04','06-05','06-06','06-07','06-08','06-09','06-10','06-11'];
 
-    new Chart(document.getElementById('lngMainChart'), {
-        type: 'line',
-        data: { labels: Array(20).fill(''), datasets: [lineDs([7100,7150,7200,7250,7280,7300,7290,7280,7270,7260,7250,7260,7270,7280,7290,7300,7310,7300,7290,7300], '#e8614d')] },
-        options: commonOpts
-    });
-
-    new Chart(document.getElementById('ringChart'), {
-        type: 'doughnut',
-        data: {
-            labels: ['大鹏', '珠海金湾', '深圳迭福', '粤东揭阳'],
-            datasets: [{ data: [7300, 6600, 6500, 6600], backgroundColor: ['#e8614d', '#ff9800', '#5c9ce6', '#4caf50'], borderWidth: 0, borderRadius: 3 }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false } }, animation: { duration: 1000 } }
-    });
-
-    new Chart(document.getElementById('ringChart2'), {
-        type: 'doughnut',
-        data: {
-            labels: ['5500大卡', '5000大卡', '4500大卡'],
-            datasets: [{ data: [717, 650, 582], backgroundColor: ['#e8614d', '#5c9ce6', '#4caf50'], borderWidth: 0, borderRadius: 3 }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false } }, animation: { duration: 1000 } }
-    });
-
-    new Chart(document.getElementById('lngDetailChart'), {
+    // 动力煤10日走势
+    new Chart(document.getElementById('coalChart'), {
         type: 'line',
         data: {
-            labels: Array(15).fill(''),
+            labels: dates10,
             datasets: [
-                lineDs([7100,7200,7250,7280,7290,7260,7270,7290,7300,7290,7300,7310,7300,7290,7300], '#e8614d'),
-                lineDs([6400,6450,6500,6540,6580,6590,6600,6590,6600,6610,6600,6590,6600,6610,6600], '#ff9800')
+                ds('澳洲优混5500', [960,962,965,958,963,968,965,960,965,965], '#e8614d'),
+                ds('优混5500', [935,938,940,935,938,942,940,935,940,940], '#ff9800'),
+                ds('大混1#5000', [850,852,855,848,852,858,855,850,855,855], '#5c9ce6')
             ]
         },
         options: commonOpts
+    });
+
+    // LNG 10日走势
+    new Chart(document.getElementById('lngChart'), {
+        type: 'line',
+        data: {
+            labels: dates10,
+            datasets: [
+                ds('大鹏', [7200,7220,7250,7260,7280,7290,7300,7290,7300,7300], '#e8614d'),
+                ds('珠海金湾', [6500,6520,6540,6560,6580,6590,6600,6590,6600,6600], '#ff9800'),
+                ds('深圳迭福', [6400,6420,6440,6460,6480,6490,6500,6490,6500,6500], '#5c9ce6'),
+                ds('粤东揭阳', [6500,6520,6540,6560,6580,6590,6600,6590,6600,6600], '#4caf50')
+            ]
+        },
+        options: commonOpts
+    });
+
+    // 气温10日趋势
+    new Chart(document.getElementById('tempChart'), {
+        type: 'line',
+        data: {
+            labels: dates10,
+            datasets: [
+                ds('广州', [30,31,32,33,32,31,30,31,32,32], '#e8614d'),
+                ds('深圳', [29,30,31,32,31,30,29,30,31,31], '#5c9ce6'),
+                ds('珠海', [28,29,30,31,30,29,28,29,30,30], '#4caf50')
+            ]
+        },
+        options: { ...commonOpts, scales: { ...commonOpts.scales, y: { ...commonOpts.scales.y, ticks: { ...commonOpts.scales.y.ticks, callback: v => v + '°' } } } }
     });
 }
 
