@@ -575,7 +575,7 @@ html, body {
                 <span class="procurement-value">32</span>
                 <span class="procurement-unit">°C</span>
             </div>
-            <div class="procurement-change" style="background:#e3f2fd;color:var(--blue)">多云</div>
+            <div class="procurement-change" style="background:#e3f2fd;color:var(--blue)">中雨</div>
         </div>
 
         <!-- 第二行：走势图 + 轮动信息 -->
@@ -670,32 +670,32 @@ html, body {
                 <div class="weather-item">
                     <div class="weather-city">广州</div>
                     <div class="weather-temp">32°</div>
-                    <div class="weather-desc">多云</div>
+                    <div class="weather-desc">中雨</div>
                 </div>
                 <div class="weather-item">
                     <div class="weather-city">深圳</div>
-                    <div class="weather-temp">29°</div>
-                    <div class="weather-desc">阴转多云</div>
+                    <div class="weather-temp">31°</div>
+                    <div class="weather-desc">中雨转大雨</div>
                 </div>
                 <div class="weather-item">
                     <div class="weather-city">珠海</div>
-                    <div class="weather-temp">28°</div>
-                    <div class="weather-desc">阴转多云</div>
+                    <div class="weather-temp">31°</div>
+                    <div class="weather-desc">中雨转大雨</div>
                 </div>
                 <div class="weather-item">
                     <div class="weather-city">韶关</div>
-                    <div class="weather-temp">31°</div>
-                    <div class="weather-desc">阴转多云</div>
+                    <div class="weather-temp">30°</div>
+                    <div class="weather-desc">雷阵雨转中雨</div>
                 </div>
                 <div class="weather-item">
                     <div class="weather-city">阳江</div>
-                    <div class="weather-temp">31°</div>
-                    <div class="weather-desc">阴转雷阵雨</div>
+                    <div class="weather-temp">32°</div>
+                    <div class="weather-desc">中雨</div>
                 </div>
                 <div class="weather-item">
                     <div class="weather-city">揭阳</div>
-                    <div class="weather-temp">29°</div>
-                    <div class="weather-desc">阴转多云</div>
+                    <div class="weather-temp">28°</div>
+                    <div class="weather-desc">中雨</div>
                 </div>
             </div>
         </div>
@@ -722,7 +722,7 @@ function updateTimestamp() {
 }
 
 // ==================== 走势图数据 ====================
-const dates10 = ['06-02','06-03','06-04','06-05','06-06','06-07','06-08','06-09','06-10','06-11'];
+const dates10 = ['06-13','06-14','06-15','06-16','06-17','06-18','06-19','06-20','06-21','06-22'];
 
 const coalData = {
     labels: ['澳洲优混5500', '优混5500', '大混1#5000'],
@@ -749,9 +749,9 @@ const tempData = {
     labels: ['广州', '深圳', '珠海'],
     colors: ['#e8614d', '#5c9ce6', '#4caf50'],
     values: [
-        [32, 29, 27, 26, 26, 27, 28, 30, 31, 29],
-        [29, 29, 28, 28, 28, 29, 28, 29, 30, 28],
-        [28, 29, 29, 28, 28, 29, 29, 30, 30, 29]
+        [32, 29, 26, 26, 27, 28, 30, 32, 32, 26],
+        [31, 29, 28, 28, 29, 28, 30, 30, 31, 28],
+        [31, 30, 28, 28, 29, 29, 30, 30, 31, 29]
     ]
 };
 
