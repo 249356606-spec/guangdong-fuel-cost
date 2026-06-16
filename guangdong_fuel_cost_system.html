@@ -894,7 +894,7 @@ body {
         <div class="header">
             <h1>广东电力市场化电价影响因素分析系统</h1>
             
-            <div class="update-time">数据更新于 2026年6月15日 18:00</div>
+            <div class="update-time">数据更新于 2026年6月16日 18:03</div>
         </div>
 
         <!-- Tab Navigation -->
@@ -1077,7 +1077,7 @@ body {
             <!-- Guangdong LNG Stations -->
             <div style="margin: 32px 0 24px;">
                 <h3 style="font-size: 20px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px;">广东LNG接收站报价</h3>
-                <p style="font-size: 14px; color: #999;">2026年6月15日 · 含税现货挂牌价</p>
+                <p style="font-size: 14px; color: #999;">2026年6月16日 · 含税现货挂牌价</p>
             </div>
             
             <div class="lng-grid">
@@ -1221,7 +1221,7 @@ body {
                 </div>
                 
                 <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06); font-size: 12px; color: #b0b0b0;">
-                    数据更新时间：2026年6月15日 | 每日自动更新并对比SHPGX与豆包AI数据
+                    数据更新时间：2026年6月16日 | 每日自动更新并对比SHPGX与豆包AI数据
                 </div>
             </div>
 
@@ -1327,7 +1327,7 @@ body {
                 <div class="card-title">广东省实时气温地图</div>
                 <div id="guangdongMap" style="width: 100%; height: 500px;"></div>
                 <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #666;">
-                    数据更新时间：2026-06-15 | 数据来源：中国气象局
+                    数据更新时间：2026-06-16 | 数据来源：中国气象局
                 </div>
             </div>
 
@@ -1372,7 +1372,7 @@ body {
                     </table>
                 </div>
                 <div style="margin-top: 12px; font-size: 12px; color: #6e6e73;">
-                    数据来源：中国气象局（www.cma.gov.cn） | 中国天气网（www.weather.com.cn） | 更新时间：2026-06-15
+                    数据来源：中国气象局（www.cma.gov.cn） | 中国天气网（www.weather.com.cn） | 更新时间：2026-06-16
                 </div>
             </div>
 
@@ -1414,7 +1414,7 @@ body {
         <!-- Footer -->
         <div class="footer">
             <span class="source-badge">CCTD中国煤炭市场网</span>
-            <span>最后更新：2026年6月15日</span>
+            <span>最后更新：2026年6月16日</span>
         </div>
     </div>
 
@@ -1753,13 +1753,13 @@ body {
                 }
                 temp30Ctx.clearRect(0, 0, temp30Canvas.width, temp30Canvas.height);
 
-                const dates30t = ["06-16", "06-17", "06-18", "06-19", "06-20", "06-21", "06-22", "06-23", "06-24", "06-25", "06-26", "06-27", "06-28", "06-29", "06-30", "07-01", "07-02", "07-03", "07-04", "07-05", "07-06", "07-07", "07-08", "07-09", "07-10", "07-11", "07-12", "07-13", "07-14", "07-15"];
+                const dates30t = ["06-17", "06-18", "06-19", "06-20", "06-21", "06-22", "06-23", "06-24", "06-25", "06-26", "06-27", "06-28", "06-29", "06-30", "07-01", "07-02", "07-03", "07-04", "07-05", "07-06", "07-07", "07-08", "07-09", "07-10", "07-11", "07-12", "07-13", "07-14", "07-15", "07-16"];
 
                 window._temp30ChartInst = new Chart(temp30Ctx, {
                     type: 'line',
                     data: {
                         labels: dates30t,
-                        datasets: [{"label": "广州高温", "data": [30, 29, 31, 31, 34, 34, 33, 32, 33, 32, 28, 30, 31, 32, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 34, 34], "borderColor": "#ff6b6b", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#ff6b6b"}, {"label": "深圳高温", "data": [28, 28, 30, 31, 32, 32, 31, 31, 31, 31, 28, 31, 31, 31, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 33, 33], "borderColor": "#4facfe", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#4facfe"}, {"label": "珠海高温", "data": [28, 29, 31, 31, 32, 32, 31, 31, 31, 32, 29, 31, 31, 31, 31, 32, 31, 31, 31, 31, 31, 32, 32, 32, 31, 31, 32, 32, 32, 32], "borderColor": "#43e97b", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#43e97b"}, {"label": "韶关高温", "data": [32, 31, 30, 31, 33, 34, 32, 30, 31, 27, 31, 26, 29, 31, 32, 32, 32, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33], "borderColor": "#764ba2", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#764ba2"}, {"label": "阳江高温", "data": [28, 29, 31, 31, 32, 32, 32, 31, 32, 31, 30, 29, 30, 31, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32], "borderColor": "#ff9500", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#ff9500"}, {"label": "揭阳高温", "data": [29, 28, 29, 33, 33, 34, 33, 32, 31, 30, 30, 31, 34, 31, 33, 33, 33, 33, 33, 32, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33], "borderColor": "#5ac8fa", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#5ac8fa"}]
+                        datasets: [{"label": "广州高温", "data": [28, 30, 31, 33, 33, 34, 34, 34, 32, 26, 29, 30, 31, 32, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 34, 34, 34], "borderColor": "#ff6b6b", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#ff6b6b"}, {"label": "深圳高温", "data": [28, 30, 30, 31, 32, 32, 31, 31, 31, 29, 29, 31, 31, 31, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 33, 33, 33], "borderColor": "#4facfe", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#4facfe"}, {"label": "珠海高温", "data": [28, 30, 30, 31, 32, 32, 31, 31, 32, 31, 30, 31, 31, 31, 32, 31, 31, 31, 31, 31, 32, 32, 32, 31, 31, 32, 32, 32, 32, 32], "borderColor": "#43e97b", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#43e97b"}, {"label": "韶关高温", "data": [30, 29, 31, 32, 33, 34, 33, 32, 30, 26, 31, 27, 31, 32, 32, 32, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33], "borderColor": "#764ba2", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#764ba2"}, {"label": "阳江高温", "data": [29, 30, 30, 32, 32, 32, 32, 31, 32, 30, 32, 31, 31, 30, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32], "borderColor": "#ff9500", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#ff9500"}, {"label": "揭阳高温", "data": [28, 27, 32, 33, 34, 34, 34, 34, 34, 31, 28, 32, 33, 33, 33, 33, 33, 33, 32, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33], "borderColor": "#5ac8fa", "tension": 0.4, "fill": false, "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 3, "pointBackgroundColor": "#5ac8fa"}]
                     },
                     options: {
                         responsive: true,
@@ -1793,13 +1793,13 @@ body {
                 }
                 rain30Ctx.clearRect(0, 0, rain30Canvas.width, rain30Canvas.height);
 
-                const dates30r = ["06-16", "06-17", "06-18", "06-19", "06-20", "06-21", "06-22", "06-23", "06-24", "06-25", "06-26", "06-27", "06-28", "06-29", "06-30", "07-01", "07-02", "07-03", "07-04", "07-05", "07-06", "07-07", "07-08", "07-09", "07-10", "07-11", "07-12", "07-13", "07-14", "07-15"];
+                const dates30r = ["06-17", "06-18", "06-19", "06-20", "06-21", "06-22", "06-23", "06-24", "06-25", "06-26", "06-27", "06-28", "06-29", "06-30", "07-01", "07-02", "07-03", "07-04", "07-05", "07-06", "07-07", "07-08", "07-09", "07-10", "07-11", "07-12", "07-13", "07-14", "07-15", "07-16"];
 
                 window._rain30ChartInst = new Chart(rain30Ctx, {
                     type: 'bar',
                     data: {
                         labels: dates30r,
-                        datasets: [{"label": "广州", "data": [38.2, 50.0, 10.0, 0.9, 2.3, 0.0, 4.5, 14.5, 19.1, 23.0, 8.8, 23.2, 16.7, 6.2, 0.0, 0.0, 9.3, 14.5, 10.2, 13.2, 6.2, 0.0, 0.0, 0.0, 0.0, 0.0, 8.3, 0.0, 0.0, 0.0], "backgroundColor": "rgba(255,107,107,0.7)", "borderColor": "255", "borderWidth": 1}, {"label": "深圳", "data": [98.9, 35.0, 4.5, 2.4, 1.8, 0.0, 2.4, 2.6, 12.8, 25.5, 16.3, 13.8, 4.9, 3.5, 0.0, 0.0, 16.6, 14.4, 13.5, 9.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.5, 0.0, 0.0], "backgroundColor": "rgba(79,172,254,0.7)", "borderColor": "79", "borderWidth": 1}, {"label": "珠海", "data": [74.3, 49.7, 10.6, 0.1, 0.0, 0.0, 1.6, 0.3, 10.3, 14.8, 16.2, 7.6, 6.7, 4.4, 0.0, 0.0, 18.2, 26.0, 15.5, 7.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.1, 0.0, 0.0], "backgroundColor": "rgba(67,233,123,0.7)", "borderColor": "67", "borderWidth": 1}, {"label": "韶关", "data": [28.7, 38.6, 4.6, 10.0, 4.8, 11.8, 3.3, 7.7, 7.4, 32.8, 7.0, 27.5, 8.7, 12.0, 0.0, 0.0, 0.0, 17.8, 0.0, 14.3, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.5, 0.0, 0.0, 0.0], "backgroundColor": "rgba(118,75,162,0.7)", "borderColor": "118", "borderWidth": 1}, {"label": "阳江", "data": [49.0, 60.4, 10.0, 17.5, 0.9, 0.0, 0.2, 0.0, 11.0, 10.8, 17.6, 7.3, 7.4, 10.3, 0.0, 0.0, 7.4, 135.0, 17.8, 5.5, 8.7, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 10.4, 6.3, 10.1], "backgroundColor": "rgba(255,149,0,0.7)", "borderColor": "255", "borderWidth": 1}, {"label": "揭阳", "data": [44.0, 27.3, 10.0, 0.4, 0.0, 0.0, 2.8, 16.2, 13.0, 10.7, 11.6, 9.6, 5.6, 7.9, 0.0, 0.0, 17.6, 21.1, 22.1, 9.4, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.4, 0.0, 0.0, 0.0], "backgroundColor": "rgba(90,200,250,0.7)", "borderColor": "90", "borderWidth": 1}]
+                        datasets: [{"label": "广州", "data": [25.0, 10.0, 1.4, 0.8, 0.0, 0.0, 4.6, 0.8, 19.0, 4.1, 7.9, 10.1, 1.6, 0.1, 0.0, 9.34, 14.46, 10.25, 13.19, 6.16, 0.0, 0.0, 0.0, 0.0, 0.0, 8.31, 0.0, 0.0, 0.0, 13.11], "backgroundColor": "rgba(255,107,107,0.7)", "borderColor": "255", "borderWidth": 1}, {"label": "深圳", "data": [49.0, 10.0, 1.4, 0.0, 0.0, 0.0, 2.0, 0.9, 4.3, 7.0, 3.8, 0.7, 0.9, 0.0, 0.0, 16.61, 14.43, 13.49, 9.29, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.46, 0.0, 0.0, 17.73], "backgroundColor": "rgba(79,172,254,0.7)", "borderColor": "79", "borderWidth": 1}, {"label": "珠海", "data": [88.9, 24.0, 10.0, 0.0, 0.0, 0.0, 1.5, 0.4, 1.0, 4.5, 3.7, 1.7, 1.4, 0.0, 0.0, 18.19, 26.02, 15.53, 7.26, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.06, 0.0, 0.0, 18.52], "backgroundColor": "rgba(67,233,123,0.7)", "borderColor": "67", "borderWidth": 1}, {"label": "韶关", "data": [9.0, 15.9, 10.0, 3.1, 1.1, 3.0, 2.0, 2.8, 5.8, 8.9, 11.1, 5.4, 2.1, 0.4, 0.0, 0.0, 17.75, 0.0, 14.27, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.52, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "rgba(118,75,162,0.7)", "borderColor": "118", "borderWidth": 1}, {"label": "阳江", "data": [49.3, 10.0, 10.0, 9.2, 0.0, 0.0, 0.0, 0.6, 3.5, 2.7, 4.6, 1.8, 1.0, 0.8, 0.0, 7.42, 134.98, 17.8, 5.54, 8.69, 0.0, 0.0, 0.0, 0.0, 0.0, 5.05, 10.45, 6.28, 10.07, 10.92], "backgroundColor": "rgba(255,149,0,0.7)", "borderColor": "255", "borderWidth": 1}, {"label": "揭阳", "data": [9.9, 13.4, 0.2, 0.0, 0.0, 0.0, 0.6, 3.1, 11.1, 5.3, 8.1, 11.8, 6.6, 0.0, 0.0, 17.59, 21.05, 22.13, 9.38, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.44, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "rgba(90,200,250,0.7)", "borderColor": "90", "borderWidth": 1}]
                     },
                     options: {
                         responsive: true,
