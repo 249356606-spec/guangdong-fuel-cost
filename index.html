@@ -669,32 +669,32 @@ html, body {
             <div class="weather-grid">
                 <div class="weather-item">
                     <div class="weather-city">广州</div>
-                    <div class="weather-temp">28°</div>
+                    <div class="weather-temp">30°</div>
                     <div class="weather-desc">大雨</div>
                 </div>
                 <div class="weather-item">
                     <div class="weather-city">深圳</div>
-                    <div class="weather-temp">28°</div>
-                    <div class="weather-desc">大雨转中雨</div>
-                </div>
-                <div class="weather-item">
-                    <div class="weather-city">珠海</div>
-                    <div class="weather-temp">28°</div>
-                    <div class="weather-desc">暴雨转中雨</div>
-                </div>
-                <div class="weather-item">
-                    <div class="weather-city">韶关</div>
-                    <div class="weather-temp">30°</div>
-                    <div class="weather-desc">雷阵雨</div>
-                </div>
-                <div class="weather-item">
-                    <div class="weather-city">阳江</div>
                     <div class="weather-temp">29°</div>
                     <div class="weather-desc">大雨转中雨</div>
                 </div>
                 <div class="weather-item">
-                    <div class="weather-city">揭阳</div>
+                    <div class="weather-city">珠海</div>
+                    <div class="weather-temp">29°</div>
+                    <div class="weather-desc">暴雨转中雨</div>
+                </div>
+                <div class="weather-item">
+                    <div class="weather-city">韶关</div>
                     <div class="weather-temp">28°</div>
+                    <div class="weather-desc">雷阵雨</div>
+                </div>
+                <div class="weather-item">
+                    <div class="weather-city">阳江</div>
+                    <div class="weather-temp">30°</div>
+                    <div class="weather-desc">大雨转中雨</div>
+                </div>
+                <div class="weather-item">
+                    <div class="weather-city">揭阳</div>
+                    <div class="weather-temp">27°</div>
                     <div class="weather-desc">中雨转雷阵雨</div>
                 </div>
             </div>
@@ -718,45 +718,24 @@ function calcChange(current, previous) {
 function updateTimestamp() {
     const now = new Date();
     document.getElementById('updateTime').textContent = 
-        `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} 更新`;
+        '2026年6月17日 更新';
 }
 
 // ==================== 走势图数据 ====================
-const dates10 = ['06-07','06-08','06-09','06-10','06-11','06-12','06-13','06-14','06-15','06-16'];
+const dates10 = ["06-08", "06-09", "06-10", "06-11", "06-12", "06-13", "06-14", "06-15", "06-16", "06-17"];
 
 const coalData = {
     labels: ['澳洲优混5500', '优混5500', '大混1#5000'],
     colors: ['#e8614d', '#ff9800', '#5c9ce6'],
     values: [
         [960,962,965,958,963,968,965,960,965,965],
-        [935,938,940,935,938,942,940,935,940,935],
-        [850,852,855,848,852,858,855,850,855,850]
-    ]
-};
-
-const lngData = {
-    labels: ['大鹏', '珠海金湾', '深圳迭福', '粤东揭阳'],
-    colors: ['#e8614d', '#ff9800', '#5c9ce6', '#4caf50'],
+        [935,938,940,935,938,942,[[962, 965, 958, 963, 968, 965, 960, 965, 965, 965], [938, 940, 935, 938, 942, 940, 935, 940, 935, 935], [852, 855, 848, 852, 858, 855, 850, 855, 850, 850]]4d', '#ff9800', '#5c9ce6', '#4caf50'],
     values: [
         [7200,7220,7250,7260,7280,7290,7300,7290,7300,7300],
-        [6500,6520,6540,6560,6580,6590,6600,6590,6600,6600],
-        [6400,6420,6440,6460,6480,6490,6500,6490,6500,6590],
-        [6500,6520,6540,6560,6580,6590,6600,6590,6600,6600]
-    ]
-};
-
-const tempData = {
-    labels: ['广州', '深圳', '珠海'],
-    colors: ['#e8614d', '#5c9ce6', '#4caf50'],
+        [6500,6520,6540[[7220, 7250, 7260, 7280, 7290, 7300, 7290, 7300, 7300, 7300], [6520, 6540, 6560, 6580, 6590, 6600, 6590, 6600, 6600, 6600], [6420, 6440, 6460, 6480, 6490, 6500, 6490, 6500, 6590, 6590], [6520, 6540, 6560, 6580, 6590, 6600, 6590, 6600, 6600, 6600]]e6', '#4caf50'],
     values: [
         [32, 29, 26, 26, 27, 28, 30, 32, 32, 26],
-        [31, 29, 28, 28, 29, 28, 30, 30, 31, 28],
-        [31, 30, 28, 28, 29, 29, 30, 30, 31, 29]
-    ]
-};
-
-// ==================== 轮动动画 ====================
-function createRollerItems(containerId, data, unit) {
+        [31, 29, 28, 28, 29, 28, 3[[29, 26, 26, 27, 28, 30, 32, 32, 26, 26], [29, 28, 28, 29, 28, 30, 30, 31, 28, 28], [30, 28, 28, 29, 29, 30, 30, 31, 29, 29]]ainerId, data, unit) {
     const container = document.getElementById(containerId);
     if (!container) return;
     
